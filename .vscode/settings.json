@@ -1,0 +1,21 @@
+{
+    "files.exclude": {
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/CVS": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        ".idea": true,
+        "android/gradle": true,
+        "android/gradlew": true,
+        "android/gradlew.bat": true,
+        "**/*.properties": true,
+        "**/*.iml": true,
+        ".metadata": true,
+        "**/*.lock": true,
+        ".dart_tool": true,
+    },
+    "licenser.license": "MPLv2",
+    "explorerExclude.backup": {}
+}
