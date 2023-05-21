@@ -61,6 +61,7 @@ dev_dependencies:
   build_runner: ^2.3.3
   freezed: ^2.3.4
   json_serializable: ^6.6.2
+  http_mock_adapter: ^0.4.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
