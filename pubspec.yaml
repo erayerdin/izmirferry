@@ -46,6 +46,7 @@ dependencies:
   html: ^0.15.3
   freezed_annotation: ^2.2.0
   json_annotation: ^4.8.1
+  flutter_loggy_dio: ^3.0.1
 
 dev_dependencies:
   flutter_test:
