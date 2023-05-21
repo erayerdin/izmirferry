@@ -1,12 +1,27 @@
+import 'package:easy_localization/easy_localization.dart';
+import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:loggy/loggy.dart';
 
-void main() {
+Future<void> main() async {
+  // Localization
+  WidgetsFlutterBinding.ensureInitialized();
+  await EasyLocalization.ensureInitialized();
+
+  // Logging
   Loggy.initLoggy(
     logPrinter: const PrettyDeveloperPrinter(),
   );
-  runApp(const App());
+
+  runApp(
+    EasyLocalization(
+      supportedLocales: const [Locale("tr", "TR")],
+      path: "assets/translations",
+      assetLoader: YamlAssetLoader(),
+      child: const App(),
+    ),
+  );
 }
 
 class App extends StatelessWidget {
@@ -21,6 +36,9 @@ class App extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         appBarTheme: Theme.of(context).appBarTheme.copyWith(elevation: 4),
       ),
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       home: const HomePage(),
     );
   }
@@ -32,9 +50,9 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("İzmir Ferry")),
-      body: const Center(
-        child: Text('hello world'),
+      appBar: AppBar(title: const Text("izmir_ferry").tr()),
+      body: Center(
+        child: const Text('hello_world').tr(),
       ),
     );
   }
