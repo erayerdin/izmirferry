@@ -2,12 +2,16 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
+import 'package:izmirferry/shared/locator.dart';
 import 'package:loggy/loggy.dart';
 
 Future<void> main() async {
   // Localization
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
+  // Dependency Injection
+  initLocator();
 
   // Logging
   Loggy.initLoggy(
