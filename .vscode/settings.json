@@ -10,6 +10,7 @@
         "android/gradle": true,
         "android/gradlew": true,
         "android/gradlew.bat": true,
+        "android/.gradle": true,
         "**/*.properties": true,
         "**/*.iml": true,
         ".metadata": true,
