@@ -12,3 +12,8 @@ extension LogLevelExtension on Loggy {
   void trace(dynamic message, Object? error, StackTrace? stackTrace) =>
       log(_traceLevel, message, error, stackTrace);
 }
+
+mixin DataLoggy implements LoggyType {
+  @override
+  Loggy<DataLoggy> get loggy => Loggy<DataLoggy>('Data Loggy - $runtimeType');
+}
