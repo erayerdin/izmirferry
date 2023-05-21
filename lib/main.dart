@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:loggy/loggy.dart';
 
 void main() {
+  Loggy.initLoggy();
   runApp(const App());
 }
 
