@@ -6,6 +6,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:flutter_loggy_dio/flutter_loggy_dio.dart';
 import 'package:get_it/get_it.dart';
 
 void initLocator() {
@@ -22,8 +23,8 @@ void initLocator() {
 
   GetIt.I.registerLazySingleton<Dio>(
     () => Dio()
-      ..interceptors.add(
-        GetIt.I.get<DioCacheInterceptor>(),
+      ..interceptors.addAll(
+        [GetIt.I.get<DioCacheInterceptor>(), LoggyDioInterceptor()],
       ),
   );
 }
