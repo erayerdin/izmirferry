@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:loggy/loggy.dart';
 
 void main() {
-  Loggy.initLoggy();
+  Loggy.initLoggy(
+    logPrinter: const PrettyDeveloperPrinter(),
+  );
   runApp(const App());
 }
 
