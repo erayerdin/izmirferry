@@ -16,6 +16,7 @@
         ".metadata": true,
         "**/*.lock": true,
         ".dart_tool": true,
+        "build": true,
     },
     "licenser.license": "MPLv2",
     "explorerExclude.backup": {}
