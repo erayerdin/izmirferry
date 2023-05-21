@@ -8,6 +8,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:flutter_loggy_dio/flutter_loggy_dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:izmirferry/ferry/data/providers/schedule/schedule.provider.dart';
 
 void initLocator() {
   //-----//
@@ -26,5 +27,12 @@ void initLocator() {
       ..interceptors.addAll(
         [GetIt.I.get<DioCacheInterceptor>(), LoggyDioInterceptor()],
       ),
+  );
+
+  //-----------//
+  // Providers //
+  //-----------//
+  GetIt.I.registerLazySingleton<ScheduleProvider>(
+    () => IzdenizScheduleProvider(client: GetIt.I.get()),
   );
 }
