@@ -16,3 +16,23 @@ const List<Station> stations = [
   Station(id: 7, name: 'Üçkuyular'),
   Station(id: 1019, name: 'Karantina'),
 ];
+
+const Map<String, String> izdenizHeaders = {
+  'Host': 'www.izdeniz.com.tr',
+  'User-Agent':
+      'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/113.0.0.0 Safari/537.36',
+  'Accept': '*/*',
+  'Accept-Language': 'en-US,en;q=0.5',
+  'Accept-Encoding': 'gzip, deflate, br',
+  'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+  'X-Requested-With': 'XMLHttpRequest',
+  'Origin': 'https://www.izdeniz.com.tr',
+  'DNT': '1',
+  'Connection': 'keep-alive',
+  'Referer': 'https://www.izdeniz.com.tr/',
+  'Cookie': 'AspxAutoDetectCookieSupport=1',
+  'Sec-Fetch-Dest': 'empty',
+  'Sec-Fetch-Mode': 'cors',
+  'Sec-Fetch-Site': 'same-origin',
+  'TE': 'trailers'
+};
