@@ -19,12 +19,28 @@ class StationBloc extends Bloc<StationEvent, StationState> {
       emit(const StationState.loading());
 
       await event.map(
-        getEndStations: (event) async {
-          final stations = await _scheduleRepository.getEndStations(
+        load: (event) async {
+          final endStationsTask = _scheduleRepository.getEndStations(
             startStation: event.startStation,
             day: event.day,
           );
-          emit(StationState.loaded(stations: stations));
+          final schedulesTask = _scheduleRepository.getSchedules(
+            startStation: event.startStation,
+            endStation: event.endStation,
+            day: event.day,
+          );
+          final results = await Future.wait([endStationsTask, schedulesTask]);
+          final Iterable<Station> endStations = List<Station>.from(results[0]);
+          final Iterable<String> schedules = List<String>.from(results[1]);
+
+          emit(
+            StationState.loaded(
+              startStation: event.startStation,
+              endStations: endStations,
+              day: event.day,
+              schedules: schedules,
+            ),
+          );
         },
       );
     });

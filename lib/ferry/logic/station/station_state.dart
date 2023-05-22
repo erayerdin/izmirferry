@@ -4,6 +4,9 @@ part of 'station_bloc.dart';
 class StationState with _$StationState {
   const factory StationState.loading() = _LoadingState;
   const factory StationState.loaded({
-    required Iterable<Station> stations,
+    required Station startStation,
+    required Iterable<Station> endStations,
+    required Days day,
+    required Iterable<String> schedules,
   }) = _LoadedState;
 }
