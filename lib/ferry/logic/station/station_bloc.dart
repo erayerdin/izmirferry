@@ -11,12 +11,12 @@ part 'station_state.dart';
 
 class StationBloc extends Bloc<StationEvent, StationState> {
   late ScheduleRepository _scheduleRepository;
-  late Map<String, dynamic> _currentParams;
+  late Map<String, dynamic> currentParams;
 
   StationBloc({required ScheduleRepository scheduleRepository})
       : super(const StationState.loading()) {
     _scheduleRepository = scheduleRepository;
-    _currentParams = {
+    currentParams = {
       'startStation': allStation.firstWhere((s) => s.id == 1),
       'endStation': null,
       'day': Days.monday,
@@ -27,32 +27,32 @@ class StationBloc extends Bloc<StationEvent, StationState> {
 
       await event.map(
         changeStartStation: (event) {
-          _currentParams['startStation'] = event.station;
+          currentParams['startStation'] = event.station;
           add(
             StationEvent.load(
-              startStation: _currentParams['startStation'],
-              endStation: _currentParams['endStation'],
-              day: _currentParams['day'],
+              startStation: currentParams['startStation'],
+              endStation: currentParams['endStation'],
+              day: currentParams['day'],
             ),
           );
         },
         changeEndStation: (event) {
-          _currentParams['endStation'] = event.station;
+          currentParams['endStation'] = event.station;
           add(
             StationEvent.load(
-              startStation: _currentParams['startStation'],
-              endStation: _currentParams['endStation'],
-              day: _currentParams['day'],
+              startStation: currentParams['startStation'],
+              endStation: currentParams['endStation'],
+              day: currentParams['day'],
             ),
           );
         },
         changeDay: (event) {
-          _currentParams['day'] = event.day;
+          currentParams['day'] = event.day;
           add(
             StationEvent.load(
-              startStation: _currentParams['startStation'],
-              endStation: _currentParams['endStation'],
-              day: _currentParams['day'],
+              startStation: currentParams['startStation'],
+              endStation: currentParams['endStation'],
+              day: currentParams['day'],
             ),
           );
         },
@@ -70,9 +70,9 @@ class StationBloc extends Bloc<StationEvent, StationState> {
           final Iterable<Station> endStations = List<Station>.from(results[0]);
           final Iterable<String> schedules = List<String>.from(results[1]);
 
-          _currentParams['startStation'] = event.startStation;
-          _currentParams['endStation'] = event.endStation;
-          _currentParams['day'] = event.day;
+          currentParams['startStation'] = event.startStation;
+          currentParams['endStation'] = event.endStation;
+          currentParams['day'] = event.day;
 
           emit(
             StationState.loaded(
