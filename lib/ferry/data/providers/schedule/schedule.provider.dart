@@ -52,7 +52,8 @@ class IzdenizScheduleProvider extends ScheduleProvider {
 
     final tableRows = dom.getElementsByTagName('td');
     final hourRows = tableRows
-        .where((element) => element.className == '\\"sefertd\\"')
+        .where((element) => element.className == 'sefertd')
+        // .where((element) => element.className == '\\"sefertd\\"')
         .toList();
 
     return hourRows.map((e) => e.text.replaceAll('\\n', '').trim());
