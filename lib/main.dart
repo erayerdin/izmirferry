@@ -41,7 +41,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         colorSchemeSeed: Colors.blue,
-        appBarTheme: Theme.of(context).appBarTheme.copyWith(elevation: 4),
+        appBarTheme: Theme.of(context).appBarTheme.copyWith(elevation: 8),
       ),
       // Localization
       localizationsDelegates: context.localizationDelegates,
