@@ -6,6 +6,7 @@
 
 hello_world: "Merhaba, dünya!"
 izmir_ferry: "İzmir Vapur"
+no_station_found: "İstasyon bulunamadı."
 
 # Days
 monday: "Pazartesi"
