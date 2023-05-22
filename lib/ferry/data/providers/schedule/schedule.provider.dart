@@ -39,7 +39,12 @@ class IzdenizScheduleProvider extends ScheduleProvider {
     final Response<String> response = await _client.get(url);
 
     final dom = parse(response.data);
-    final hourDoms = dom.getElementsByClassName('sefertd');
-    return hourDoms.map((e) => e.text);
+
+    final tableRows = dom.getElementsByTagName('td');
+    final hourRows = tableRows
+        .where((element) => element.className == '\\"sefertd\\"')
+        .toList();
+
+    return hourRows.map((e) => e.text.replaceAll('\\n', '').trim());
   }
 }
