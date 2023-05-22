@@ -15,8 +15,20 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
       : super(const ScheduleState.loading()) {
     _scheduleRepository = scheduleRepository;
 
-    on<ScheduleEvent>((event, emit) {
-      // TODO: implement event handler
+    on<ScheduleEvent>((event, emit) async {
+      emit(const ScheduleState.loading());
+
+      await event.map(
+        getSchedules: (event) async {
+          final schedules = await _scheduleRepository.getSchedules(
+            startStation: event.startStation,
+            endStation: event.endStation,
+            day: event.day,
+          );
+
+          emit(ScheduleState.loaded(hours: schedules));
+        },
+      );
     });
   }
 }
