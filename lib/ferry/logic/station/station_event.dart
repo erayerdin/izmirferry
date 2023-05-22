@@ -7,4 +7,9 @@ class StationEvent with _$StationEvent {
     required Station endStation,
     required Days day,
   }) = _GetEndStationsEvent;
+  const factory StationEvent.changeStartStation(Station station) =
+      _ChangeStartStationEvent;
+  const factory StationEvent.changeEndStation(Station station) =
+      _ChangeEndStationEvent;
+  const factory StationEvent.changeDay(Days day) = _ChangeDayEvent;
 }
