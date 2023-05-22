@@ -43,7 +43,10 @@ class IzdenizScheduleProvider extends ScheduleProvider {
     final url =
         'https://www.izdeniz.com.tr/tr/HareketSaatleri/$startStationId/$endStationId/$dayId';
 
-    final Response<String> response = await _client.get(url);
+    final Response<String> response = await _client.get(
+      url,
+      options: Options(headers: izdenizHeaders),
+    );
 
     final dom = parse(response.data);
 
