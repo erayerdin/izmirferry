@@ -36,3 +36,10 @@ void initLocator() {
     () => IzdenizScheduleProvider(client: GetIt.I.get()),
   );
 }
+
+void initLocatorForTests() {
+  initLocator();
+
+  GetIt.I.unregister<Dio>();
+  GetIt.I.registerLazySingleton<Dio>(() => Dio());
+}
