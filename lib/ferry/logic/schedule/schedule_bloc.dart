@@ -12,7 +12,7 @@ class ScheduleBloc extends Bloc<ScheduleEvent, ScheduleState> {
   late ScheduleRepository _scheduleRepository;
 
   ScheduleBloc({required ScheduleRepository scheduleRepository})
-      : super(const ScheduleState.initial()) {
+      : super(const ScheduleState.loading()) {
     _scheduleRepository = scheduleRepository;
 
     on<ScheduleEvent>((event, emit) {
