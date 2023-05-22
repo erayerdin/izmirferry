@@ -8,7 +8,14 @@ import 'package:flutter/material.dart';
 import 'package:izmirferry/shared/constants.dart';
 
 class DaysMenuComponent extends StatelessWidget {
-  const DaysMenuComponent({super.key});
+  final Days? selectedDay;
+  final void Function(Days day) onChanged;
+
+  const DaysMenuComponent({
+    Key? key,
+    this.selectedDay,
+    required this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +26,11 @@ class DaysMenuComponent extends StatelessWidget {
             (d) => DropdownMenuItem(value: d.id, child: Text(d.localizedName)),
           )
           .toList(),
-      value: 1,
-      onChanged: (value) {},
+      value: selectedDay?.id,
+      onChanged: (value) {
+        final day = Days.values.firstWhere((d) => d.id == value);
+        onChanged(day);
+      },
     );
   }
 }

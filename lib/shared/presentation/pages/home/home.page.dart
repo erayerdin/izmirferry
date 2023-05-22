@@ -14,6 +14,7 @@ import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
 import 'package:izmirferry/shared/constants.dart';
 import 'package:izmirferry/shared/presentation/pages/home/days_menu.component.dart';
+import 'package:izmirferry/shared/presentation/pages/home/schedules_list.component.dart';
 import 'package:izmirferry/shared/presentation/pages/home/stations_menu.component.dart';
 
 @RoutePage()
@@ -22,36 +23,80 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final progressIndicator =
+        const LinearProgressIndicator().paddingOnly(top: 16, bottom: 16);
+    final stationBloc = StationBloc(scheduleRepository: GetIt.I.get());
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => StationBloc(scheduleRepository: GetIt.I.get())
+          create: (context) => stationBloc
             ..add(
-              StationEvent.getEndStations(
-                startStation: stations.firstWhere((s) => s.id == 1),
+              StationEvent.load(
+                startStation: allStation.firstWhere((s) => s.id == 1),
+                endStation: allStation.firstWhere((s) => s.id == 2),
                 day: Days.monday,
               ),
             ),
         ),
       ],
-      child: Scaffold(
-        appBar: AppBar(title: const Text("izmir_ferry").tr()),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const StationsMenuComponent(stations: stations),
-            BlocBuilder<StationBloc, StationState>(
-              builder: (context, state) => state.map(
-                loading: (state) => const LinearProgressIndicator()
-                    .paddingOnly(top: 16, bottom: 16),
-                loaded: (state) => StationsMenuComponent(
-                  stations: state.stations.toList(),
+      child: Builder(
+        builder: (context) => Scaffold(
+          appBar: AppBar(title: const Text("izmir_ferry").tr()),
+          body: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              BlocBuilder<StationBloc, StationState>(
+                builder: (context, state) => state.map(
+                  loading: (state) => progressIndicator,
+                  loaded: (state) => StationsMenuComponent(
+                    stations: allStation,
+                    selectedStation: stationBloc.currentParams['startStation'],
+                    onChanged: (station) {
+                      stationBloc.add(
+                        StationEvent.changeStartStation(station),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            const DaysMenuComponent(),
-          ],
-        ).paddingAll(16),
+              BlocBuilder<StationBloc, StationState>(
+                builder: (context, state) => state.map(
+                  loading: (state) => progressIndicator,
+                  loaded: (state) => StationsMenuComponent(
+                    stations: state.endStations.toList(),
+                    selectedStation: stationBloc.currentParams['endStation'],
+                    onChanged: (station) {
+                      stationBloc.add(
+                        StationEvent.changeEndStation(station),
+                      );
+                    },
+                  ),
+                ),
+              ),
+              BlocBuilder<StationBloc, StationState>(
+                builder: (context, state) => state.map(
+                  loading: (state) => progressIndicator,
+                  loaded: (state) => DaysMenuComponent(
+                    selectedDay: stationBloc.currentParams['day'],
+                    onChanged: (day) {
+                      stationBloc.add(StationEvent.changeDay(day));
+                    },
+                  ),
+                ),
+              ),
+              BlocBuilder<StationBloc, StationState>(
+                builder: (context, state) => state.map(
+                  loading: (state) =>
+                      const CircularProgressIndicator().toCenter(),
+                  loaded: (state) => SchedulesListComponent(
+                    schedules: state.schedules.toList(),
+                  ),
+                ),
+              ).expanded(),
+            ],
+          ).paddingAll(16),
+        ),
       ),
     );
   }
