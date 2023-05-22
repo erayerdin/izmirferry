@@ -40,63 +40,61 @@ class HomePage extends StatelessWidget {
             ),
         ),
       ],
-      child: Builder(
-        builder: (context) => Scaffold(
-          appBar: AppBar(title: const Text("izmir_ferry").tr()),
-          body: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              BlocBuilder<StationBloc, StationState>(
-                builder: (context, state) => state.map(
-                  loading: (state) => progressIndicator,
-                  loaded: (state) => StationsMenuComponent(
-                    stations: allStation,
-                    selectedStation: stationBloc.currentParams['startStation'],
-                    onChanged: (station) {
-                      stationBloc.add(
-                        StationEvent.changeStartStation(station),
-                      );
-                    },
-                  ),
+      child: Scaffold(
+        appBar: AppBar(title: const Text("izmir_ferry").tr()),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            BlocBuilder<StationBloc, StationState>(
+              builder: (context, state) => state.map(
+                loading: (state) => progressIndicator,
+                loaded: (state) => StationsMenuComponent(
+                  stations: allStation,
+                  selectedStation: stationBloc.currentParams['startStation'],
+                  onChanged: (station) {
+                    stationBloc.add(
+                      StationEvent.changeStartStation(station),
+                    );
+                  },
                 ),
               ),
-              BlocBuilder<StationBloc, StationState>(
-                builder: (context, state) => state.map(
-                  loading: (state) => progressIndicator,
-                  loaded: (state) => StationsMenuComponent(
-                    stations: state.endStations.toList(),
-                    selectedStation: stationBloc.currentParams['endStation'],
-                    onChanged: (station) {
-                      stationBloc.add(
-                        StationEvent.changeEndStation(station),
-                      );
-                    },
-                  ),
+            ),
+            BlocBuilder<StationBloc, StationState>(
+              builder: (context, state) => state.map(
+                loading: (state) => progressIndicator,
+                loaded: (state) => StationsMenuComponent(
+                  stations: state.endStations.toList(),
+                  selectedStation: stationBloc.currentParams['endStation'],
+                  onChanged: (station) {
+                    stationBloc.add(
+                      StationEvent.changeEndStation(station),
+                    );
+                  },
                 ),
               ),
-              BlocBuilder<StationBloc, StationState>(
-                builder: (context, state) => state.map(
-                  loading: (state) => progressIndicator,
-                  loaded: (state) => DaysMenuComponent(
-                    selectedDay: stationBloc.currentParams['day'],
-                    onChanged: (day) {
-                      stationBloc.add(StationEvent.changeDay(day));
-                    },
-                  ),
+            ),
+            BlocBuilder<StationBloc, StationState>(
+              builder: (context, state) => state.map(
+                loading: (state) => progressIndicator,
+                loaded: (state) => DaysMenuComponent(
+                  selectedDay: stationBloc.currentParams['day'],
+                  onChanged: (day) {
+                    stationBloc.add(StationEvent.changeDay(day));
+                  },
                 ),
               ),
-              BlocBuilder<StationBloc, StationState>(
-                builder: (context, state) => state.map(
-                  loading: (state) =>
-                      const CircularProgressIndicator().toCenter(),
-                  loaded: (state) => SchedulesListComponent(
-                    schedules: state.schedules.toList(),
-                  ),
+            ),
+            BlocBuilder<StationBloc, StationState>(
+              builder: (context, state) => state.map(
+                loading: (state) =>
+                    const CircularProgressIndicator().toCenter(),
+                loaded: (state) => SchedulesListComponent(
+                  schedules: state.schedules.toList(),
                 ),
-              ).expanded(),
-            ],
-          ).paddingAll(16),
-        ),
+              ),
+            ).expanded(),
+          ],
+        ).paddingAll(16),
       ),
     );
   }
