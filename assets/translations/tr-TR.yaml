@@ -6,3 +6,12 @@
 
 hello_world: "Merhaba, dünya!"
 izmir_ferry: "İzmir Vapur"
+
+# Days
+monday: "Pazartesi"
+tuesday: "Salı"
+wednesday: "Çarşamba"
+thursday: "Perşembe"
+friday: "Cuma"
+saturday: "Cumartesi"
+sunday: "Pazar"
