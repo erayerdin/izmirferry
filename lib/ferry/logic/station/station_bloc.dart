@@ -33,6 +33,7 @@ class StationBloc extends Bloc<StationEvent, StationState> {
               startStation: currentParams['startStation'],
               endStation: currentParams['endStation'],
               day: currentParams['day'],
+              isStartChange: true,
             ),
           );
         },
@@ -69,6 +70,11 @@ class StationBloc extends Bloc<StationEvent, StationState> {
           final results = await Future.wait([endStationsTask, schedulesTask]);
           final Iterable<Station> endStations = List<Station>.from(results[0]);
           final Iterable<String> schedules = List<String>.from(results[1]);
+
+          if (event.isStartChange) {
+            add(StationEvent.changeEndStation(endStations.first));
+            return;
+          }
 
           currentParams['startStation'] = event.startStation;
           currentParams['endStation'] = event.endStation;
