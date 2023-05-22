@@ -64,7 +64,7 @@ class IzdenizScheduleProvider extends ScheduleProvider {
     loggy.trace('start station id: $startStationId');
     loggy.trace('day id: $dayId');
 
-    final Response<List<Map<String, dynamic>>> response = await _client.post(
+    final Response<List<dynamic>> response = await _client.post(
       'https://www.izdeniz.com.tr/tr/IskeleGuncelle',
       data: {
         'kalkisIskele': startStationId,
@@ -76,6 +76,7 @@ class IzdenizScheduleProvider extends ScheduleProvider {
       ),
     );
 
-    return response.data!;
+    final data = List<Map<String, dynamic>>.from(response.data!);
+    return data;
   }
 }
