@@ -15,8 +15,18 @@ class StationBloc extends Bloc<StationEvent, StationState> {
       : super(const StationState.loading()) {
     _scheduleRepository = scheduleRepository;
 
-    on<StationEvent>((event, emit) {
-      // TODO: implement event handler
+    on<StationEvent>((event, emit) async {
+      emit(const StationState.loading());
+
+      await event.map(
+        getEndStations: (event) async {
+          final stations = await _scheduleRepository.getEndStations(
+            startStation: event.startStation,
+            day: event.day,
+          );
+          emit(StationState.loaded(stations: stations));
+        },
+      );
     });
   }
 }
