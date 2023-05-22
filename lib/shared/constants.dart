@@ -51,7 +51,7 @@ extension DaysExtension on Days {
       case Days.saturday:
         return 'saturday'.tr();
       case Days.sunday:
-        return 'sunday';
+        return 'sunday'.tr();
     }
   }
 }
