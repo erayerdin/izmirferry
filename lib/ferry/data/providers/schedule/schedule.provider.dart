@@ -14,6 +14,11 @@ abstract class ScheduleProvider with DataLoggy {
     required int endStationId,
     required int dayId,
   });
+
+  Future<Iterable<Map<String, dynamic>>> getEndStations({
+    required int startStationId,
+    required int dayId,
+  });
 }
 
 class IzdenizScheduleProvider extends ScheduleProvider {
@@ -29,6 +34,7 @@ class IzdenizScheduleProvider extends ScheduleProvider {
     required int endStationId,
     required int dayId,
   }) async {
+    loggy.debug('Getting schedules...');
     loggy.trace('start station id: $startStationId');
     loggy.trace('end station id: $endStationId');
     loggy.trace('day id: $dayId');
@@ -46,5 +52,26 @@ class IzdenizScheduleProvider extends ScheduleProvider {
         .toList();
 
     return hourRows.map((e) => e.text.replaceAll('\\n', '').trim());
+  }
+
+  @override
+  Future<Iterable<Map<String, dynamic>>> getEndStations({
+    required int startStationId,
+    required int dayId,
+  }) async {
+    loggy.debug('Getting end stations...');
+    loggy.trace('start station id: $startStationId');
+    loggy.trace('day id: $dayId');
+
+    final Response<List<Map<String, dynamic>>> response = await _client.post(
+      'https://www.izdeniz.com.tr/tr/IskeleGuncelle',
+      data: {
+        'kalkisIskele': startStationId,
+        'GunTipi': dayId,
+      },
+      options: Options(contentType: Headers.formUrlEncodedContentType),
+    );
+
+    return response.data!;
   }
 }

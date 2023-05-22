@@ -16,12 +16,38 @@ import 'package:izmirferry/shared/locator.dart';
 void main() {
   group('izdeniz schedule provider >>', () {
     late ScheduleProvider provider;
+    late Dio dio;
+    late DioAdapter dioAdapter;
 
-    setUpAll(() async {
+    setUpAll(() {
       initLocatorForTests();
 
-      final Dio dio = GetIt.I.get();
-      final dioAdapter = DioAdapter(dio: dio);
+      dio = GetIt.I.get();
+      dioAdapter = DioAdapter(dio: dio);
+
+      // dioAdapter.onRoute(
+      //   'route',
+      //   request: const Request(
+      //     method: RequestMethods.post,
+      //     data: 'kalkisIskele=100&GunTipi=1',
+      //   ),
+      //   (server) async {
+      //     final file = File('test_assets/endstations_invalid_sample.json');
+      //     final source = await file.readAsString();
+
+      //     return server.reply(200, source);
+      //   },
+      // );
+
+      provider = GetIt.I.get();
+    });
+
+    tearDownAll(() {
+      dioAdapter.reset();
+    });
+
+    test('get schedules', () async {
+      await Future.delayed(const Duration(seconds: 1));
 
       dioAdapter.onGet('https://www.izdeniz.com.tr/tr/HareketSaatleri/1/1/1',
           (server) async {
@@ -31,41 +57,6 @@ void main() {
         return server.reply(200, source);
       });
 
-      dioAdapter.onPost(
-          'https://www.izdeniz.com.tr/tr/IskeleGuncelle', (server) async {});
-
-      dioAdapter.onRoute(
-        'route',
-        request: const Request(
-          method: RequestMethods.post,
-          data: {'kalkisIskele': '1', 'gunTipi': '1'},
-        ),
-        (server) async {
-          final file = File('test_assets/endstations_valid_sample.json');
-          final source = await file.readAsString();
-
-          return server.reply(200, source);
-        },
-      );
-
-      dioAdapter.onRoute(
-        'route',
-        request: const Request(
-          method: RequestMethods.post,
-          data: {'kalkisIskele': '100', 'gunTipi': '1'},
-        ),
-        (server) async {
-          final file = File('test_assets/endstations_invalid_sample.json');
-          final source = await file.readAsString();
-
-          return server.reply(200, source);
-        },
-      );
-
-      provider = GetIt.I.get();
-    });
-
-    test('get schedules', () async {
       final schedules = (await provider.getSchedules(
         startStationId: 1,
         endStationId: 1,
@@ -81,6 +72,16 @@ void main() {
     });
 
     test('get valid end stations', () async {
+      dioAdapter.onPost(
+        'route',
+        (server) async {
+          final file = File('test_assets/endstations_valid_sample.json');
+          final source = await file.readAsString();
+
+          return server.reply(200, source);
+        },
+      );
+
       final stations = (await provider.getEndStations(
         startStationId: 1,
         dayId: 1,
