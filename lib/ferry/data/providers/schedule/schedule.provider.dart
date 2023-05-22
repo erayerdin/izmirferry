@@ -6,6 +6,7 @@
 
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
+import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/shared/logger.dart';
 
 abstract class ScheduleProvider with DataLoggy {
@@ -69,7 +70,10 @@ class IzdenizScheduleProvider extends ScheduleProvider {
         'kalkisIskele': startStationId,
         'GunTipi': dayId,
       },
-      options: Options(contentType: Headers.formUrlEncodedContentType),
+      options: Options(
+        contentType: Headers.formUrlEncodedContentType,
+        headers: izdenizHeaders,
+      ),
     );
 
     return response.data!;
