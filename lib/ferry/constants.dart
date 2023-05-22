@@ -6,7 +6,7 @@
 
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
 
-const List<Station> stations = [
+const List<Station> allStation = [
   Station(id: 1, name: 'Konak'),
   Station(id: 2, name: 'Karşıyaka'),
   Station(id: 3, name: 'Bostanlı'),

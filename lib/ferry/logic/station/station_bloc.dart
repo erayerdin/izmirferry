@@ -17,7 +17,7 @@ class StationBloc extends Bloc<StationEvent, StationState> {
       : super(const StationState.loading()) {
     _scheduleRepository = scheduleRepository;
     _currentParams = {
-      'startStation': stations.firstWhere((s) => s.id == 1),
+      'startStation': allStation.firstWhere((s) => s.id == 1),
       'endStation': null,
       'day': Days.monday,
     };
