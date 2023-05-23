@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -12,32 +14,40 @@ import 'package:izmirferry/shared/router.dart';
 import 'package:loggy/loggy.dart';
 
 Future<void> main() async {
-  // Localization
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
+  await runZonedGuarded<Future<void>>(
+    () async {
+      // Localization
+      WidgetsFlutterBinding.ensureInitialized();
+      await EasyLocalization.ensureInitialized();
 
-  // Dependency Injection
-  initLocator();
+      // Dependency Injection
+      initLocator();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
 
-  // Logging
-  Loggy.initLoggy(
-    logPrinter: kDebugMode
-        ? const PrettyDeveloperPrinter()
-        : CrashlyticsPrinter(crashlytics: FirebaseCrashlytics.instance),
-    logOptions: const LogOptions(kDebugMode ? traceLevel : LogLevel.warning),
-  );
+      // Logging
+      Loggy.initLoggy(
+        logPrinter: kDebugMode
+            ? const PrettyDeveloperPrinter()
+            : CrashlyticsPrinter(crashlytics: FirebaseCrashlytics.instance),
+        logOptions:
+            const LogOptions(kDebugMode ? traceLevel : LogLevel.warning),
+      );
 
-  runApp(
-    EasyLocalization(
-      supportedLocales: const [Locale("tr", "TR")],
-      path: "assets/translations",
-      assetLoader: YamlAssetLoader(),
-      child: App(),
-    ),
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+
+      runApp(
+        EasyLocalization(
+          supportedLocales: const [Locale("tr", "TR")],
+          path: "assets/translations",
+          assetLoader: YamlAssetLoader(),
+          child: App(),
+        ),
+      );
+    },
+    (error, stack) {},
   );
 }
 
