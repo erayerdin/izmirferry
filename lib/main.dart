@@ -4,6 +4,8 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+// ignore: unused_import
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
@@ -23,9 +25,11 @@ Future<void> main() async {
       // Dependency Injection
       initLocator();
 
+      // Firebase
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
       // Logging
       Loggy.initLoggy(
@@ -35,8 +39,6 @@ Future<void> main() async {
         logOptions:
             const LogOptions(kDebugMode ? traceLevel : LogLevel.warning),
       );
-
-      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
 
       runApp(
         EasyLocalization(
