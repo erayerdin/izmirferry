@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "306884072641",
+    "project_id": "izmirferry",
+    "storage_bucket": "izmirferry.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:306884072641:android:1964d221630d384c1f3040",
+        "android_client_info": {
+          "package_name": "com.erayerdin.izmirferry"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "306884072641-1ab5m505c36o49nfr3lvaajf4qbboo5j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzYiTDbH-uXGinZw9vwhNQ67pS0plV67w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "306884072641-1ab5m505c36o49nfr3lvaajf4qbboo5j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
