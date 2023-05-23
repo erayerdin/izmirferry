@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 // ignore: unused_import
@@ -30,6 +31,7 @@ Future<void> main() async {
         options: DefaultFirebaseOptions.currentPlatform,
       );
       FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+      FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
 
       // Logging
       Loggy.initLoggy(
