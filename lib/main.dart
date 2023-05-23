@@ -1,31 +1,57 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+// ignore: unused_import
+import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
+import 'package:izmirferry/firebase_options.dart';
 import 'package:izmirferry/shared/locator.dart';
+import 'package:izmirferry/shared/logger.dart';
 import 'package:izmirferry/shared/router.dart';
 import 'package:loggy/loggy.dart';
 
 Future<void> main() async {
-  // Localization
-  WidgetsFlutterBinding.ensureInitialized();
-  await EasyLocalization.ensureInitialized();
+  await runZonedGuarded<Future<void>>(
+    () async {
+      // Localization
+      WidgetsFlutterBinding.ensureInitialized();
+      await EasyLocalization.ensureInitialized();
 
-  // Dependency Injection
-  initLocator();
+      // Dependency Injection
+      initLocator();
 
-  // Logging
-  Loggy.initLoggy(
-    logPrinter: const PrettyDeveloperPrinter(),
-  );
+      // Firebase
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
+      FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+      FirebaseAnalytics.instance.setAnalyticsCollectionEnabled(true);
 
-  runApp(
-    EasyLocalization(
-      supportedLocales: const [Locale("tr", "TR")],
-      path: "assets/translations",
-      assetLoader: YamlAssetLoader(),
-      child: App(),
-    ),
+      // Logging
+      Loggy.initLoggy(
+        logPrinter: kDebugMode
+            ? const PrettyDeveloperPrinter()
+            : CrashlyticsPrinter(crashlytics: FirebaseCrashlytics.instance),
+        logOptions:
+            const LogOptions(kDebugMode ? traceLevel : LogLevel.warning),
+      );
+
+      runApp(
+        EasyLocalization(
+          supportedLocales: const [Locale("tr", "TR")],
+          path: "assets/translations",
+          assetLoader: YamlAssetLoader(),
+          child: App(),
+        ),
+      );
+    },
+    (error, stack) {},
   );
 }
 

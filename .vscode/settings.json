@@ -20,6 +20,7 @@
         ".flutter-plugins": true,
         ".flutter-plugins-dependencies": true,
         "**/*.freezed.dart": true,
+        "lib/firebase_options.dart": true,
     },
     "licenser.license": "MPLv2",
     "explorerExclude.backup": {}
