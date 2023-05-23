@@ -40,12 +40,24 @@ class HomePage extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const _Header(),
-            const _Body().paddingOnly(left: 16, right: 16).expanded(),
-          ],
+        body: OrientationBuilder(
+          builder: (context, orientation) {
+            return orientation == Orientation.portrait
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _Header(orientation: orientation),
+                      const _Body().paddingOnly(left: 16, right: 16).expanded(),
+                    ],
+                  )
+                : Row(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      _Header(orientation: orientation),
+                      const _Body().paddingOnly(left: 16, right: 16).expanded(),
+                    ],
+                  );
+          },
         ),
       ),
     );
@@ -53,7 +65,12 @@ class HomePage extends StatelessWidget {
 }
 
 class _Header extends StatelessWidget {
-  const _Header();
+  final Orientation orientation;
+
+  const _Header({
+    Key? key,
+    required this.orientation,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +89,7 @@ class _Header extends StatelessWidget {
 
     return BlocBuilder<StationBloc, StationState>(
       builder: (context, state) => AppBarComponent(
+        orientation: orientation,
         imagePath: state.map(
           loading: (state) => 'assets/locations/izmir.jpg',
           loaded: (state) {
@@ -127,7 +145,7 @@ class _Header extends StatelessWidget {
             ),
           ),
         ],
-      ),
+      ).expanded(),
     );
   }
 

@@ -10,11 +10,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AppBarComponent extends StatelessWidget {
+  final Orientation orientation;
   final List<Widget> children;
   final String imagePath;
 
   const AppBarComponent({
     Key? key,
+    required this.orientation,
     required this.children,
     required this.imagePath,
   }) : super(key: key);
@@ -45,9 +47,12 @@ class AppBarComponent extends StatelessWidget {
           fit: BoxFit.cover,
           opacity: 0.2,
         ),
-        borderRadius: BorderRadius.vertical(
-          bottom: Radius.elliptical(MediaQuery.of(context).size.width, 50.0),
-        ),
+        borderRadius: orientation == Orientation.portrait
+            ? BorderRadius.vertical(
+                bottom:
+                    Radius.elliptical(MediaQuery.of(context).size.width, 50.0),
+              )
+            : null,
       ),
       child: Column(
         children: [
