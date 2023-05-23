@@ -23,7 +23,10 @@ class SchedulesListComponent extends StatelessWidget {
     }
 
     return ListView.separated(
-      itemBuilder: (context, index) => Text(schedules[index]),
+      itemBuilder: (context, index) => Text(
+        schedules[index],
+        style: context.textTheme.displayLarge,
+      ).toCenter(),
       separatorBuilder: (context, index) => 8.heightBox,
       itemCount: schedules.length,
     );

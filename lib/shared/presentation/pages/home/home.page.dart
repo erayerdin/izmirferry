@@ -6,13 +6,14 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:awesome_extensions/awesome_extensions.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:izmirferry/ferry/constants.dart';
+import 'package:izmirferry/ferry/data/models/station/station.model.dart';
 import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
 import 'package:izmirferry/shared/constants.dart';
+import 'package:izmirferry/shared/presentation/pages/home/app_bar.component.dart';
 import 'package:izmirferry/shared/presentation/pages/home/days_menu.component.dart';
 import 'package:izmirferry/shared/presentation/pages/home/schedules_list.component.dart';
 import 'package:izmirferry/shared/presentation/pages/home/stations_menu.component.dart';
@@ -23,9 +24,18 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final progressIndicator =
-        const LinearProgressIndicator().paddingOnly(top: 16, bottom: 16);
     final stationBloc = StationBloc(scheduleRepository: GetIt.I.get());
+    final shimmer = Shimmer.fromColors(
+      baseColor: Colors.blue[300]!,
+      highlightColor: Colors.blue[100]!,
+      child: Container(
+        height: 50,
+        decoration: BoxDecoration(
+          color: Colors.blue[200],
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ).paddingAll(2),
+    );
 
     return MultiBlocProvider(
       providers: [
@@ -41,47 +51,88 @@ class HomePage extends StatelessWidget {
         ),
       ],
       child: Scaffold(
-        appBar: AppBar(title: const Text("izmir_ferry").tr()),
+        // appBar: AppBar(title: const Text("izmir_ferry").tr()),
         body: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             BlocBuilder<StationBloc, StationState>(
-              builder: (context, state) => state.map(
-                loading: (state) => progressIndicator,
-                loaded: (state) => StationsMenuComponent(
-                  stations: allStation,
-                  selectedStation: stationBloc.currentParams['startStation'],
-                  onChanged: (station) {
-                    stationBloc.add(
-                      StationEvent.changeStartStation(station),
-                    );
+              builder: (context, state) => AppBarComponent(
+                imagePath: state.map(
+                  loading: (state) => 'assets/locations/izmir.jpg',
+                  loaded: (state) {
+                    final StationBloc bloc = context.read();
+                    final Station endStation = bloc.currentParams['endStation'];
+
+                    switch (endStation.name) {
+                      case 'Alsancak':
+                        return 'assets/locations/alsancak.jpg';
+                      case 'Bostanlı':
+                        return 'assets/locations/bostanli.jpg';
+                      case 'Göztepe':
+                        return 'assets/locations/goztepe.jpg';
+                      case 'Karantina':
+                        return 'assets/locations/karantina.jpg';
+                      case 'Karşıyaka':
+                        return 'assets/locations/karsiyaka.jpg';
+                      case 'Konak':
+                        return 'assets/locations/konak.jpg';
+                      case 'Pasaport':
+                        return 'assets/locations/pasaport.jpg';
+                      case 'Üçkuyular':
+                        return 'assets/locations/uckuyular.jpg';
+                      default:
+                        return 'assets/locations/izmir.jpg';
+                    }
                   },
                 ),
-              ),
-            ),
-            BlocBuilder<StationBloc, StationState>(
-              builder: (context, state) => state.map(
-                loading: (state) => progressIndicator,
-                loaded: (state) => StationsMenuComponent(
-                  stations: state.endStations.toList(),
-                  selectedStation: stationBloc.currentParams['endStation'],
-                  onChanged: (station) {
-                    stationBloc.add(
-                      StationEvent.changeEndStation(station),
-                    );
-                  },
-                ),
-              ),
-            ),
-            BlocBuilder<StationBloc, StationState>(
-              builder: (context, state) => state.map(
-                loading: (state) => progressIndicator,
-                loaded: (state) => DaysMenuComponent(
-                  selectedDay: stationBloc.currentParams['day'],
-                  onChanged: (day) {
-                    stationBloc.add(StationEvent.changeDay(day));
-                  },
-                ),
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      state
+                          .map(
+                            loading: (state) => shimmer,
+                            loaded: (state) => StationsMenuComponent(
+                              stations: allStation,
+                              selectedStation:
+                                  stationBloc.currentParams['startStation'],
+                              onChanged: (station) {
+                                stationBloc.add(
+                                  StationEvent.changeStartStation(station),
+                                );
+                              },
+                            ),
+                          )
+                          .expanded(),
+                      const Icon(Icons.arrow_right_alt, color: Colors.white)
+                          .paddingOnly(left: 16, right: 16),
+                      state
+                          .map(
+                            loading: (state) => shimmer,
+                            loaded: (state) => StationsMenuComponent(
+                              stations: state.endStations.toList(),
+                              selectedStation:
+                                  stationBloc.currentParams['endStation'],
+                              onChanged: (station) {
+                                stationBloc.add(
+                                  StationEvent.changeEndStation(station),
+                                );
+                              },
+                            ),
+                          )
+                          .flexible(),
+                    ],
+                  ),
+                  state.map(
+                    loading: (state) => shimmer,
+                    loaded: (state) => DaysMenuComponent(
+                      selectedDay: stationBloc.currentParams['day'],
+                      onChanged: (day) {
+                        stationBloc.add(StationEvent.changeDay(day));
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
             BlocBuilder<StationBloc, StationState>(
@@ -92,9 +143,9 @@ class HomePage extends StatelessWidget {
                   schedules: state.schedules.toList(),
                 ),
               ),
-            ).expanded(),
+            ).paddingOnly(left: 16, right: 16).expanded(),
           ],
-        ).paddingAll(16),
+        ),
       ),
     );
   }
