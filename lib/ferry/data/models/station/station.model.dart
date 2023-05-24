@@ -37,4 +37,26 @@ class Station with _$Station {
     }
     return null;
   }
+
+  String? get locationUrl {
+    switch (id) {
+      case 1:
+        return 'https://goo.gl/maps/mdiAdiEkNoT33Zx46';
+      case 2:
+        return 'https://goo.gl/maps/Z24JfQgws3YvwQ4T7';
+      case 3:
+        return 'https://goo.gl/maps/PRN8xW7JxWcASFX9A';
+      case 4:
+        return 'https://goo.gl/maps/9sf3fs5gzH4JRu5V9';
+      case 5:
+        return 'https://goo.gl/maps/vCGu1vJJT4j3pkxHA';
+      case 6:
+        return 'https://goo.gl/maps/iBCM5TQBs6MQ65UT6';
+      case 7:
+        return 'https://goo.gl/maps/onzkRid8vTFGR4h76';
+      case 1019:
+        return 'https://goo.gl/maps/itfWaWUAhU1FXEY79';
+    }
+    return null;
+  }
 }
