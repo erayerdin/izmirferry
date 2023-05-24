@@ -4,4 +4,13 @@
 
 A ferry information Android application for İzmir/Turkey.
 
-![home screen](assets/brand/home_screen.png)
+## Screenshots
+
+<img src="assets/brand/Screenshot_1684967483.png" width="256" />
+<img src="assets/brand/Screenshot_1684967494.png" width="256" />
+<img src="assets/brand/Screenshot_1684967508.png" width="256" />
+<img src="assets/brand/Screenshot_1684967522.png" width="256" />
+<img src="assets/brand/Screenshot_1684967588.png" width="512" />
+<img src="assets/brand/Screenshot_1684967597.png" width="512" />
+<img src="assets/brand/Screenshot_1684967604.png" width="512" />
+<img src="assets/brand/Screenshot_1684967612.png" width="512" />
