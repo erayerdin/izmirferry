@@ -13,11 +13,16 @@ and this project adheres to [Semantic Versioning].
 
  - Location button around station dropdowns
 
+#### Changed
+
+ - Better dropdown
+
 ### For Developers
 
 #### Changed
 
- - Added `Station.backgroundAssetPath` and refactor references
+ - Refactor to `Station.backgroundAssetPath`
+ - Use better `DropdownButton2`
 
 ## [0.2.0] - 24.05.2023
 
