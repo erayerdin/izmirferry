@@ -95,7 +95,8 @@ class _Header extends StatelessWidget {
           loaded: (state) {
             final StationBloc bloc = context.read();
             final Station endStation = bloc.currentParams['endStation'];
-            return _getBackgroundImage(endStation);
+            return endStation.backgroundAssetPath ??
+                'assets/locations/izmir.png';
           },
         ),
         children: [
@@ -147,29 +148,6 @@ class _Header extends StatelessWidget {
         ],
       ).expanded(),
     );
-  }
-
-  String _getBackgroundImage(Station station) {
-    switch (station.name) {
-      case 'Alsancak':
-        return 'assets/locations/alsancak.jpg';
-      case 'Bostanlı':
-        return 'assets/locations/bostanli.jpg';
-      case 'Göztepe':
-        return 'assets/locations/goztepe.jpg';
-      case 'Karantina':
-        return 'assets/locations/karantina.jpg';
-      case 'Karşıyaka':
-        return 'assets/locations/karsiyaka.jpg';
-      case 'Konak':
-        return 'assets/locations/konak.jpg';
-      case 'Pasaport':
-        return 'assets/locations/pasaport.jpg';
-      case 'Üçkuyular':
-        return 'assets/locations/uckuyular.jpg';
-      default:
-        return 'assets/locations/izmir.jpg';
-    }
   }
 }
 
