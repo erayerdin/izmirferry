@@ -61,7 +61,6 @@ class AppBarComponent extends StatelessWidget {
               .textStyle(
                 context.textTheme.titleLarge?.copyWith(color: Colors.white),
               )
-              .alignAtTopCenter()
               .paddingOnly(top: 32 * 3, left: 16, right: 16, bottom: 32 * 3),
           ...children,
         ],
