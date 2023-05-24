@@ -5,6 +5,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import 'package:awesome_extensions/awesome_extensions.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:izmirferry/shared/constants.dart';
 
@@ -20,23 +21,34 @@ class DaysMenuComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
-      isExpanded: true,
-      items: Days.values
-          .map(
-            (d) => DropdownMenuItem(
-              value: d.id,
-              child: Text(d.localizedName).textStyle(
-                context.textTheme.bodyMedium?.copyWith(color: Colors.blue[900]),
+    return DropdownButtonHideUnderline(
+      child: DropdownButton2(
+        isExpanded: false,
+        iconStyleData: const IconStyleData(
+          iconEnabledColor: Colors.white,
+          iconDisabledColor: Colors.white,
+        ),
+        dropdownStyleData: const DropdownStyleData(
+          decoration: BoxDecoration(
+            color: Colors.blue,
+          ),
+        ),
+        items: Days.values
+            .map(
+              (d) => DropdownMenuItem(
+                value: d.id,
+                child: Text(d.localizedName).textStyle(
+                  context.textTheme.bodyMedium?.copyWith(color: Colors.white),
+                ),
               ),
-            ),
-          )
-          .toList(),
-      value: selectedDay?.id,
-      onChanged: (value) {
-        final day = Days.values.firstWhere((d) => d.id == value);
-        onChanged(day);
-      },
+            )
+            .toList(),
+        value: selectedDay?.id,
+        onChanged: (value) {
+          final day = Days.values.firstWhere((d) => d.id == value);
+          onChanged(day);
+        },
+      ),
     );
   }
 }

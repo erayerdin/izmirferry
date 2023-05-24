@@ -120,7 +120,7 @@ class _Header extends StatelessWidget {
                   )
                   .expanded(),
               const Icon(Icons.arrow_right_alt, color: Colors.white)
-                  .paddingOnly(left: 16, right: 16),
+                  .paddingOnly(left: 8, right: 8),
               state
                   .map(
                     loading: (state) => shimmer,

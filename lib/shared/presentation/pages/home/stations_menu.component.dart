@@ -7,6 +7,7 @@
 
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:collection/collection.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:izmirferry/ferry/constants.dart';
@@ -48,27 +49,38 @@ class StationsMenuComponent extends StatelessWidget {
     return Row(
       children: [
         if (!isLocationButtonOnRight) locationButton,
-        DropdownButton<int>(
-          isExpanded: true,
-          items: stations
-              .map(
-                (s) => DropdownMenuItem(
-                  value: s.id,
-                  child: Text(s.name).textStyle(
-                    context.textTheme.bodyMedium
-                        ?.copyWith(color: Colors.blue[900]),
+        DropdownButtonHideUnderline(
+          child: DropdownButton2<int>(
+            isExpanded: true,
+            iconStyleData: const IconStyleData(
+              iconEnabledColor: Colors.white,
+              iconDisabledColor: Colors.white,
+            ),
+            dropdownStyleData: const DropdownStyleData(
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              ),
+            ),
+            items: stations
+                .map(
+                  (s) => DropdownMenuItem(
+                    value: s.id,
+                    child: Text(s.name).textStyle(
+                      context.textTheme.bodyMedium
+                          ?.copyWith(color: Colors.white),
+                    ),
                   ),
-                ),
-              )
-              .toList(),
-          value: stations
-                  .firstWhereOrNull((s) => s.id == selectedStation?.id)
-                  ?.id ??
-              stations.first.id,
-          onChanged: (value) {
-            final station = allStation.firstWhere((s) => s.id == value);
-            onChanged(station);
-          },
+                )
+                .toList(),
+            value: stations
+                    .firstWhereOrNull((s) => s.id == selectedStation?.id)
+                    ?.id ??
+                stations.first.id,
+            onChanged: (value) {
+              final station = allStation.firstWhere((s) => s.id == value);
+              onChanged(station);
+            },
+          ),
         ).expanded(),
         if (isLocationButtonOnRight) locationButton,
       ],
