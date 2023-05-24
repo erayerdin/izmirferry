@@ -110,6 +110,7 @@ class _Header extends StatelessWidget {
                       stations: allStation,
                       selectedStation:
                           stationBloc.currentParams['startStation'],
+                      isLocationButtonOnRight: false,
                       onChanged: (station) {
                         stationBloc.add(
                           StationEvent.changeStartStation(station),
@@ -126,6 +127,7 @@ class _Header extends StatelessWidget {
                     loaded: (state) => StationsMenuComponent(
                       stations: state.endStations.toList(),
                       selectedStation: stationBloc.currentParams['endStation'],
+                      isLocationButtonOnRight: true,
                       onChanged: (station) {
                         stationBloc.add(
                           StationEvent.changeEndStation(station),

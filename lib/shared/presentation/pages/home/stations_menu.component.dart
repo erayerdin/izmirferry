@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 // Copyright (c) 2023 Eray Erdin
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -10,17 +11,20 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class StationsMenuComponent extends StatelessWidget {
   final List<Station> stations;
   final Station? selectedStation;
+  final bool isLocationButtonOnRight;
   final void Function(Station station) onChanged;
 
   const StationsMenuComponent({
     Key? key,
     required this.stations,
-    required this.onChanged,
     this.selectedStation,
+    required this.isLocationButtonOnRight,
+    required this.onChanged,
   }) : super(key: key);
 
   @override
@@ -31,24 +35,43 @@ class StationsMenuComponent extends StatelessWidget {
           );
     }
 
-    return DropdownButton<int>(
-      isExpanded: true,
-      items: stations
-          .map((s) => DropdownMenuItem(
-                value: s.id,
-                child: Text(s.name).textStyle(
-                  context.textTheme.bodyMedium
-                      ?.copyWith(color: Colors.blue[900]),
+    final locationUrl = selectedStation?.locationUrl;
+    final locationButton = locationUrl == null
+        ? const SizedBox()
+        : IconButton(
+            onPressed: () async {
+              await launchUrlString(locationUrl);
+            },
+            icon: const Icon(Icons.map, color: Colors.white),
+          );
+
+    return Row(
+      children: [
+        if (!isLocationButtonOnRight) locationButton,
+        DropdownButton<int>(
+          isExpanded: true,
+          items: stations
+              .map(
+                (s) => DropdownMenuItem(
+                  value: s.id,
+                  child: Text(s.name).textStyle(
+                    context.textTheme.bodyMedium
+                        ?.copyWith(color: Colors.blue[900]),
+                  ),
                 ),
-              ))
-          .toList(),
-      value:
-          stations.firstWhereOrNull((s) => s.id == selectedStation?.id)?.id ??
+              )
+              .toList(),
+          value: stations
+                  .firstWhereOrNull((s) => s.id == selectedStation?.id)
+                  ?.id ??
               stations.first.id,
-      onChanged: (value) {
-        final station = allStation.firstWhere((s) => s.id == value);
-        onChanged(station);
-      },
+          onChanged: (value) {
+            final station = allStation.firstWhere((s) => s.id == value);
+            onChanged(station);
+          },
+        ).expanded(),
+        if (isLocationButtonOnRight) locationButton,
+      ],
     );
   }
 }
