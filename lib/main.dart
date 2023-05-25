@@ -69,6 +69,7 @@ class App extends StatelessWidget {
         colorSchemeSeed: Colors.blue,
         appBarTheme: Theme.of(context).appBarTheme.copyWith(elevation: 8),
       ),
+      debugShowCheckedModeBanner: false,
       // Localization
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
