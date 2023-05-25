@@ -6,7 +6,6 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import 'package:awesome_extensions/awesome_extensions.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class AppBarComponent extends StatelessWidget {
@@ -56,12 +55,11 @@ class AppBarComponent extends StatelessWidget {
       ),
       child: Column(
         children: [
-          const Text('izmir_ferry')
-              .tr()
-              .textStyle(
-                context.textTheme.titleLarge?.copyWith(color: Colors.white),
-              )
-              .paddingOnly(top: 64, left: 16, right: 16, bottom: 64),
+          Image.asset(
+            'assets/icon/icon.png',
+            color: Colors.white,
+            height: 64,
+          ).paddingOnly(top: 16 * 3, left: 16, right: 16, bottom: 16 * 3),
           ...children,
         ],
       ).paddingOnly(left: 16, right: 16, bottom: 16 * 3),
