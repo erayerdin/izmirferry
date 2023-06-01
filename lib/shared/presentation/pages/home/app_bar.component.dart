@@ -6,7 +6,9 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import 'package:awesome_extensions/awesome_extensions.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class AppBarComponent extends StatelessWidget {
   final Orientation orientation;
@@ -62,7 +64,20 @@ class AppBarComponent extends StatelessWidget {
               children: [
                 0.widthBox,
                 IconButton(
-                  onPressed: () {},
+                  onPressed: () async {
+                    final packageInfo = await PackageInfo.fromPlatform();
+
+                    // ignore: use_build_context_synchronously
+                    showLicensePage(
+                      context: context,
+                      applicationIcon: Image.asset(
+                        'assets/icon/icon.png',
+                        width: 32,
+                      ),
+                      applicationName: 'izmir_ferry'.tr(),
+                      applicationVersion: packageInfo.version,
+                    );
+                  },
                   icon: const Icon(
                     Icons.info,
                     color: Colors.white,
