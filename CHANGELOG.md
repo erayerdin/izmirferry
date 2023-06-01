@@ -13,6 +13,12 @@ and this project adheres to [Semantic Versioning].
 
  - Home page now shows icon instead of title
 
+### For Devs
+
+#### Added
+
+ - Added license page
+
 ## [0.1.3] - 25.05.2023
 
 ### For Users

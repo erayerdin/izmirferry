@@ -6,7 +6,9 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import 'package:awesome_extensions/awesome_extensions.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class AppBarComponent extends StatelessWidget {
   final Orientation orientation;
@@ -53,16 +55,45 @@ class AppBarComponent extends StatelessWidget {
               )
             : null,
       ),
-      child: Column(
-        children: [
-          Image.asset(
-            'assets/icon/icon.png',
-            color: Colors.white,
-            height: 64,
-          ).paddingOnly(top: 16 * 3, left: 16, right: 16, bottom: 16 * 3),
-          ...children,
-        ],
-      ).paddingOnly(left: 16, right: 16, bottom: 16 * 3),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                0.widthBox,
+                IconButton(
+                  onPressed: () async {
+                    final packageInfo = await PackageInfo.fromPlatform();
+
+                    // ignore: use_build_context_synchronously
+                    showLicensePage(
+                      context: context,
+                      applicationIcon: Image.asset(
+                        'assets/icon/icon.png',
+                        width: 32,
+                      ),
+                      applicationName: 'izmir_ferry'.tr(),
+                      applicationVersion: packageInfo.version,
+                    );
+                  },
+                  icon: const Icon(
+                    Icons.info,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            Image.asset(
+              'assets/icon/icon.png',
+              color: Colors.white,
+              height: 64,
+            ).paddingAll(16),
+            ...children,
+          ],
+        ).paddingOnly(left: 16, right: 16, bottom: 16 * 3),
+      ),
     );
   }
 }

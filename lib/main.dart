@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:izmirferry/firebase_options.dart';
+import 'package:izmirferry/shared/licenses.dart';
 import 'package:izmirferry/shared/locator.dart';
 import 'package:izmirferry/shared/logger.dart';
 import 'package:izmirferry/shared/router.dart';
@@ -22,6 +23,9 @@ Future<void> main() async {
       // Localization
       WidgetsFlutterBinding.ensureInitialized();
       await EasyLocalization.ensureInitialized();
+
+      // Licenses
+      initExtraLicenses();
 
       // Dependency Injection
       initLocator();
