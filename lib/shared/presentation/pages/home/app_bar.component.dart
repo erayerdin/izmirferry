@@ -53,16 +53,32 @@ class AppBarComponent extends StatelessWidget {
               )
             : null,
       ),
-      child: Column(
-        children: [
-          Image.asset(
-            'assets/icon/icon.png',
-            color: Colors.white,
-            height: 64,
-          ).paddingOnly(top: 16 * 3, left: 16, right: 16, bottom: 16 * 3),
-          ...children,
-        ],
-      ).paddingOnly(left: 16, right: 16, bottom: 16 * 3),
+      child: SafeArea(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                0.widthBox,
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.info,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+            Image.asset(
+              'assets/icon/icon.png',
+              color: Colors.white,
+              height: 64,
+            ).paddingAll(16),
+            ...children,
+          ],
+        ).paddingOnly(left: 16, right: 16, bottom: 16 * 3),
+      ),
     );
   }
 }
