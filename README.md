@@ -6,6 +6,12 @@ A ferry information Android application for İzmir/Turkey.
 
 ![feature_graphic](assets/brand/feature_graphic.png)
 
+## Download
+
+The app is available on Google Play to internal testers for now. To become an internal tester, [contact me on Telegram](htts://t.me/erayerdin).
+
+[![Google Play'den alın](https://play.google.com/intl/en_us/badges/static/images/badges/tr_badge_web_generic.png | width=256)](https://play.google.com/store/apps/details?id=com.erayerdin.izmirferry&pcampaignid=pcampaignidMKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1)
+
 ## Screenshots
 
 <img src="assets/brand/ph-1.png" width="256" />
