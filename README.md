@@ -1,6 +1,7 @@
 # İzmir Ferry
 
 [![license](https://img.shields.io/badge/license-MPLv2-blue?style=flat-square)](https://www.tldrlegal.com/license/mozilla-public-license-2-0-mpl-2)
+![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/erayerdin/izmirferry?label=version&style=flat-square)
 
 A ferry information Android application for İzmir/Turkey.
 
