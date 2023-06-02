@@ -47,51 +47,49 @@ class StationsMenuComponent extends StatelessWidget {
       children: [
         locationButton,
         ElevatedButton(
-          onPressed: () {},
+          onPressed: () async {
+            final station = await _showStationsList(context);
+
+            if (station != null) {
+              onChanged(station);
+            }
+          },
           child: selectedStation == null
               ? const Text('choose_a_station').tr()
               : Text(selectedStation!.name),
         ).expanded(),
       ],
     );
+  }
 
-    // return Row(
-    //   children: [
-    //     locationButton,
-    //     DropdownButtonHideUnderline(
-    //       child: DropdownButton2<int>(
-    //         isExpanded: true,
-    //         iconStyleData: const IconStyleData(
-    //           iconEnabledColor: Colors.white,
-    //           iconDisabledColor: Colors.white,
-    //         ),
-    //         dropdownStyleData: const DropdownStyleData(
-    //           decoration: BoxDecoration(
-    //             color: Colors.blue,
-    //           ),
-    //         ),
-    //         items: stations
-    //             .map(
-    //               (s) => DropdownMenuItem(
-    //                 value: s.id,
-    //                 child: Text(s.name).textStyle(
-    //                   context.textTheme.bodyMedium
-    //                       ?.copyWith(color: Colors.white),
-    //                 ),
-    //               ),
-    //             )
-    //             .toList(),
-    //         value: stations
-    //                 .firstWhereOrNull((s) => s.id == selectedStation?.id)
-    //                 ?.id ??
-    //             stations.first.id,
-    //         onChanged: (value) {
-    //           final station = allStation.firstWhere((s) => s.id == value);
-    //           onChanged(station);
-    //         },
-    //       ),
-    //     ).expanded(),
-    //   ],
-    // );
+  Future<Station?> _showStationsList(BuildContext context) async {
+    return showModalBottomSheet<Station?>(
+      context: context,
+      constraints: BoxConstraints(maxHeight: context.height / 3),
+      builder: (context) => stations.isEmpty
+          ? const Text('no_stations_found').tr().paddingAll(8)
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'choose_a_station',
+                  style: context.titleLarge,
+                ).tr(),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: stations.length,
+                  itemBuilder: (context, index) {
+                    final station = stations[index];
+                    return ListTile(
+                      title: Text(station.name).toCenter(),
+                      onTap: () {
+                        context.pop(result: station);
+                      },
+                    );
+                  },
+                ).flexible()
+              ],
+            ).paddingAll(8),
+    );
   }
 }
