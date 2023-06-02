@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 class CircularIconButton extends StatelessWidget {
   final void Function() onPressed;
   final double elevation;
-  final Icon child;
+  final Widget child;
   final Color fillColor;
   final double size;
 
