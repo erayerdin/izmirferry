@@ -102,8 +102,11 @@ class AppBarComponent extends StatelessWidget {
       applicationName: 'izmir_ferry'.tr(),
       applicationVersion: packageInfo.version,
       children: [
-        const Text('izmir_ferry_short_description').tr(),
-        8.heightBox,
+        const Text(
+          'izmir_ferry_short_description',
+          textAlign: TextAlign.center,
+        ).tr(),
+        16.heightBox,
         Wrap(
           alignment: WrapAlignment.center,
           runSpacing: 8.0,
