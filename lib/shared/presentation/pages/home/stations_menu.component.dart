@@ -6,25 +6,21 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import 'package:awesome_extensions/awesome_extensions.dart';
-import 'package:collection/collection.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
+import 'package:izmirferry/shared/presentation/components/circular_icon_button/circular_icon_button.component.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class StationsMenuComponent extends StatelessWidget {
   final List<Station> stations;
   final Station? selectedStation;
-  final bool isLocationButtonOnRight;
   final void Function(Station station) onChanged;
 
   const StationsMenuComponent({
     Key? key,
     required this.stations,
     this.selectedStation,
-    required this.isLocationButtonOnRight,
     required this.onChanged,
   }) : super(key: key);
 
@@ -39,51 +35,61 @@ class StationsMenuComponent extends StatelessWidget {
     final locationUrl = selectedStation?.locationUrl;
     final locationButton = locationUrl == null
         ? const SizedBox()
-        : IconButton(
+        : CircularIconButton(
             onPressed: () async {
               await launchUrlString(locationUrl);
             },
-            icon: const Icon(Icons.map, color: Colors.white),
+            size: 32,
+            child: const Icon(Icons.location_on, size: 16, color: Colors.blue),
           );
 
     return Row(
       children: [
-        if (!isLocationButtonOnRight) locationButton,
-        DropdownButtonHideUnderline(
-          child: DropdownButton2<int>(
-            isExpanded: true,
-            iconStyleData: const IconStyleData(
-              iconEnabledColor: Colors.white,
-              iconDisabledColor: Colors.white,
-            ),
-            dropdownStyleData: const DropdownStyleData(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-            ),
-            items: stations
-                .map(
-                  (s) => DropdownMenuItem(
-                    value: s.id,
-                    child: Text(s.name).textStyle(
-                      context.textTheme.bodyMedium
-                          ?.copyWith(color: Colors.white),
-                    ),
-                  ),
-                )
-                .toList(),
-            value: stations
-                    .firstWhereOrNull((s) => s.id == selectedStation?.id)
-                    ?.id ??
-                stations.first.id,
-            onChanged: (value) {
-              final station = allStation.firstWhere((s) => s.id == value);
+        locationButton,
+        ElevatedButton(
+          onPressed: () async {
+            final station = await _showStationsList(context);
+
+            if (station != null) {
               onChanged(station);
-            },
-          ),
+            }
+          },
+          child: selectedStation == null
+              ? const Text('choose_a_station').tr()
+              : Text(selectedStation!.name),
         ).expanded(),
-        if (isLocationButtonOnRight) locationButton,
       ],
+    );
+  }
+
+  Future<Station?> _showStationsList(BuildContext context) async {
+    return showModalBottomSheet<Station?>(
+      context: context,
+      constraints: BoxConstraints(maxHeight: context.height / 3),
+      builder: (context) => stations.isEmpty
+          ? const Text('no_stations_found').tr().paddingAll(8)
+          : Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'choose_a_station',
+                  style: context.titleLarge,
+                ).tr(),
+                ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: stations.length,
+                  itemBuilder: (context, index) {
+                    final station = stations[index];
+                    return ListTile(
+                      title: Text(station.name).toCenter(),
+                      onTap: () {
+                        context.pop(result: station);
+                      },
+                    );
+                  },
+                ).flexible()
+              ],
+            ).paddingAll(8),
     );
   }
 }

@@ -81,10 +81,10 @@ class AppBarComponent extends StatelessWidget {
               'assets/icon/icon.png',
               color: Colors.white,
               height: 64,
-            ).paddingAll(16),
+            ),
             ...children,
           ],
-        ).paddingOnly(left: 16, right: 16, bottom: 16 * 3),
+        ).paddingOnly(left: 16, right: 16),
       ),
     );
   }
@@ -102,8 +102,11 @@ class AppBarComponent extends StatelessWidget {
       applicationName: 'izmir_ferry'.tr(),
       applicationVersion: packageInfo.version,
       children: [
-        const Text('izmir_ferry_short_description').tr(),
-        8.heightBox,
+        const Text(
+          'izmir_ferry_short_description',
+          textAlign: TextAlign.center,
+        ).tr(),
+        16.heightBox,
         Wrap(
           alignment: WrapAlignment.center,
           runSpacing: 8.0,

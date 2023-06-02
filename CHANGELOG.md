@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning].
 #### Changed
 
  - Home page now shows icon instead of title
+ - Station menus seem and behave better now
 
 ### For Devs
 
