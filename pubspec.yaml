@@ -62,6 +62,7 @@ dependencies:
   chips_choice: ^3.0.0
   flexi_chip: ^1.0.8
   package_info_plus: ^4.0.2
+  font_awesome_flutter: ^10.4.0
 
 dev_dependencies:
   flutter_test:

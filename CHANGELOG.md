@@ -17,7 +17,7 @@ and this project adheres to [Semantic Versioning].
 
 #### Added
 
- - Added license page
+ - Added about page
 
 ## [0.1.3] - 25.05.2023
 

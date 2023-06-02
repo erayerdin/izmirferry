@@ -8,7 +8,10 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:izmirferry/shared/presentation/components/circular_icon_button/circular_icon_button.component.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class AppBarComponent extends StatelessWidget {
   final Orientation orientation;
@@ -65,18 +68,7 @@ class AppBarComponent extends StatelessWidget {
                 0.widthBox,
                 IconButton(
                   onPressed: () async {
-                    final packageInfo = await PackageInfo.fromPlatform();
-
-                    // ignore: use_build_context_synchronously
-                    showLicensePage(
-                      context: context,
-                      applicationIcon: Image.asset(
-                        'assets/icon/icon.png',
-                        width: 32,
-                      ),
-                      applicationName: 'izmir_ferry'.tr(),
-                      applicationVersion: packageInfo.version,
-                    );
+                    await _showAboutDialog(context);
                   },
                   icon: const Icon(
                     Icons.info,
@@ -94,6 +86,126 @@ class AppBarComponent extends StatelessWidget {
           ],
         ).paddingOnly(left: 16, right: 16, bottom: 16 * 3),
       ),
+    );
+  }
+
+  Future<void> _showAboutDialog(BuildContext context) async {
+    final packageInfo = await PackageInfo.fromPlatform();
+
+    // ignore: use_build_context_synchronously
+    showAboutDialog(
+      context: context,
+      applicationIcon: Image.asset(
+        'assets/icon/icon.png',
+        width: 32,
+      ),
+      applicationName: 'izmir_ferry'.tr(),
+      applicationVersion: packageInfo.version,
+      children: [
+        const Text('izmir_ferry_short_description').tr(),
+        8.heightBox,
+        Wrap(
+          alignment: WrapAlignment.center,
+          runSpacing: 8.0,
+          spacing: 8.0,
+          children: [
+            CircularIconButton(
+              onPressed: () async {
+                await launchUrlString(
+                  'https://github.com/erayerdin/izmirferry/',
+                );
+              },
+              fillColor: Colors.black,
+              child: const Icon(
+                Icons.developer_mode,
+                color: Colors.white,
+              ),
+            ),
+            CircularIconButton(
+              onPressed: () async {
+                await launchUrlString('https://t.me/erayerdin');
+              },
+              fillColor: const Color(0xff0088cc),
+              child: const FaIcon(
+                FontAwesomeIcons.telegram,
+                color: Colors.white,
+              ),
+            ),
+            CircularIconButton(
+              onPressed: () async {
+                await launchUrlString('https://twitter.com/_erayerdin');
+              },
+              fillColor: const Color(0xff1da1f2),
+              child: const FaIcon(
+                FontAwesomeIcons.twitter,
+                color: Colors.white,
+              ),
+            ),
+            CircularIconButton(
+              onPressed: () async {
+                await launchUrlString('https://www.linkedin.com/in/erayerdin/');
+              },
+              fillColor: const Color(0xff0a66c2),
+              child: const FaIcon(
+                FontAwesomeIcons.linkedinIn,
+                color: Colors.white,
+              ),
+            ),
+            CircularIconButton(
+              onPressed: () async {
+                await launchUrlString('https://www.youtube.com/@_schwm');
+              },
+              fillColor: const Color(0xffff0000),
+              child: const FaIcon(
+                FontAwesomeIcons.youtube,
+                color: Colors.white,
+              ),
+            ),
+            CircularIconButton(
+              onPressed: () async {
+                await launchUrlString('https://www.instagram.com/_erayerdin/');
+              },
+              fillColor: const Color(0xffc13584),
+              child: const FaIcon(
+                FontAwesomeIcons.instagram,
+                color: Colors.white,
+              ),
+            ),
+            CircularIconButton(
+              onPressed: () async {
+                await launchUrlString(
+                  'https://stackoverflow.com/users/2926992/eray-erdin',
+                );
+              },
+              fillColor: const Color(0xfff48024),
+              child: const FaIcon(
+                FontAwesomeIcons.stackOverflow,
+                color: Colors.white,
+              ),
+            ),
+            CircularIconButton(
+              onPressed: () async {
+                await launchUrlString('https://github.com/erayerdin/');
+              },
+              fillColor: Colors.black,
+              child: const FaIcon(
+                FontAwesomeIcons.github,
+                color: Colors.white,
+              ),
+            ),
+            CircularIconButton(
+              onPressed: () async {
+                await launchUrlString('mailto:eraygezer.94@gmail.com');
+              },
+              fillColor: Colors.white,
+              child: const Icon(
+                Icons.mail,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        )
+      ],
     );
   }
 }
