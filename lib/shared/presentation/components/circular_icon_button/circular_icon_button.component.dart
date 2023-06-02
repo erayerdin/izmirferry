@@ -25,7 +25,7 @@ class CircularIconButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      onPressed: () {},
+      onPressed: onPressed,
       elevation: 2.0,
       fillColor: fillColor,
       shape: const CircleBorder(),
