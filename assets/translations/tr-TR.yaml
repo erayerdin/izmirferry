@@ -9,6 +9,7 @@ izmir_ferry: "İzmir Vapur"
 izmir_ferry_short_description: "Sorunsuz bir yolculuk için feribot ve vapur bilgileri"
 no_station_found: "İstasyon bulunamadı."
 no_schedules_found: "Kalkış verisi bulunamadı."
+choose_a_station: "Bir istasyon seç"
 
 # Days
 monday: "Pazartesi"
