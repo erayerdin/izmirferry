@@ -100,44 +100,36 @@ class _Header extends StatelessWidget {
           },
         ),
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              state
-                  .map(
-                    loading: (state) => shimmer,
-                    loaded: (state) => StationsMenuComponent(
-                      stations: allStation,
-                      selectedStation:
-                          stationBloc.currentParams['startStation'],
-                      isLocationButtonOnRight: false,
-                      onChanged: (station) {
-                        stationBloc.add(
-                          StationEvent.changeStartStation(station),
-                        );
-                      },
-                    ),
-                  )
-                  .expanded(),
-              const Icon(Icons.arrow_right_alt, color: Colors.white)
-                  .paddingOnly(left: 8, right: 8),
-              state
-                  .map(
-                    loading: (state) => shimmer,
-                    loaded: (state) => StationsMenuComponent(
-                      stations: state.endStations.toList(),
-                      selectedStation: stationBloc.currentParams['endStation'],
-                      isLocationButtonOnRight: true,
-                      onChanged: (station) {
-                        stationBloc.add(
-                          StationEvent.changeEndStation(station),
-                        );
-                      },
-                    ),
-                  )
-                  .flexible(),
-            ],
-          ),
+          state
+              .map(
+                loading: (state) => shimmer,
+                loaded: (state) => StationsMenuComponent(
+                  stations: allStation,
+                  selectedStation: stationBloc.currentParams['startStation'],
+                  onChanged: (station) {
+                    stationBloc.add(
+                      StationEvent.changeStartStation(station),
+                    );
+                  },
+                ),
+              )
+              .expanded(),
+          const Icon(Icons.arrow_downward, color: Colors.white)
+              .paddingOnly(left: 8, right: 8),
+          state
+              .map(
+                loading: (state) => shimmer,
+                loaded: (state) => StationsMenuComponent(
+                  stations: state.endStations.toList(),
+                  selectedStation: stationBloc.currentParams['endStation'],
+                  onChanged: (station) {
+                    stationBloc.add(
+                      StationEvent.changeEndStation(station),
+                    );
+                  },
+                ),
+              )
+              .flexible(),
           state.map(
             loading: (state) => shimmer,
             loaded: (state) => DaysMenuComponent(

@@ -17,14 +17,12 @@ import 'package:url_launcher/url_launcher_string.dart';
 class StationsMenuComponent extends StatelessWidget {
   final List<Station> stations;
   final Station? selectedStation;
-  final bool isLocationButtonOnRight;
   final void Function(Station station) onChanged;
 
   const StationsMenuComponent({
     Key? key,
     required this.stations,
     this.selectedStation,
-    required this.isLocationButtonOnRight,
     required this.onChanged,
   }) : super(key: key);
 
@@ -48,7 +46,7 @@ class StationsMenuComponent extends StatelessWidget {
 
     return Row(
       children: [
-        if (!isLocationButtonOnRight) locationButton,
+        locationButton,
         DropdownButtonHideUnderline(
           child: DropdownButton2<int>(
             isExpanded: true,
@@ -82,7 +80,6 @@ class StationsMenuComponent extends StatelessWidget {
             },
           ),
         ).expanded(),
-        if (isLocationButtonOnRight) locationButton,
       ],
     );
   }
