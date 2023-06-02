@@ -81,10 +81,10 @@ class AppBarComponent extends StatelessWidget {
               'assets/icon/icon.png',
               color: Colors.white,
               height: 64,
-            ).paddingAll(16),
+            ),
             ...children,
           ],
-        ).paddingOnly(left: 16, right: 16, bottom: 16 * 3),
+        ).paddingOnly(left: 16, right: 16),
       ),
     );
   }

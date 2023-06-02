@@ -100,36 +100,38 @@ class _Header extends StatelessWidget {
           },
         ),
         children: [
-          state
-              .map(
-                loading: (state) => shimmer,
-                loaded: (state) => StationsMenuComponent(
-                  stations: allStation,
-                  selectedStation: stationBloc.currentParams['startStation'],
-                  onChanged: (station) {
-                    stationBloc.add(
-                      StationEvent.changeStartStation(station),
-                    );
-                  },
-                ),
-              )
-              .expanded(),
-          const Icon(Icons.arrow_downward, color: Colors.white)
-              .paddingOnly(left: 8, right: 8),
-          state
-              .map(
-                loading: (state) => shimmer,
-                loaded: (state) => StationsMenuComponent(
-                  stations: state.endStations.toList(),
-                  selectedStation: stationBloc.currentParams['endStation'],
-                  onChanged: (station) {
-                    stationBloc.add(
-                      StationEvent.changeEndStation(station),
-                    );
-                  },
-                ),
-              )
-              .flexible(),
+          state.map(
+            loading: (state) => shimmer,
+            loaded: (state) => StationsMenuComponent(
+              stations: allStation,
+              selectedStation: stationBloc.currentParams['startStation'],
+              onChanged: (station) {
+                stationBloc.add(
+                  StationEvent.changeStartStation(station),
+                );
+              },
+            ),
+          ),
+          Row(
+            children: [
+              32.widthBox,
+              const Icon(Icons.arrow_downward, color: Colors.white)
+                  .paddingOnly(top: 8, bottom: 8)
+                  .expanded(),
+            ],
+          ),
+          state.map(
+            loading: (state) => shimmer,
+            loaded: (state) => StationsMenuComponent(
+              stations: state.endStations.toList(),
+              selectedStation: stationBloc.currentParams['endStation'],
+              onChanged: (station) {
+                stationBloc.add(
+                  StationEvent.changeEndStation(station),
+                );
+              },
+            ),
+          ),
           state.map(
             loading: (state) => shimmer,
             loaded: (state) => DaysMenuComponent(

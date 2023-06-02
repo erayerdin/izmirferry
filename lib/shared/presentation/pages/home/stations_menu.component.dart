@@ -6,12 +6,10 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import 'package:awesome_extensions/awesome_extensions.dart';
-import 'package:collection/collection.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
+import 'package:izmirferry/shared/presentation/components/circular_icon_button/circular_icon_button.component.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class StationsMenuComponent extends StatelessWidget {
@@ -37,50 +35,63 @@ class StationsMenuComponent extends StatelessWidget {
     final locationUrl = selectedStation?.locationUrl;
     final locationButton = locationUrl == null
         ? const SizedBox()
-        : IconButton(
+        : CircularIconButton(
             onPressed: () async {
               await launchUrlString(locationUrl);
             },
-            icon: const Icon(Icons.map, color: Colors.white),
+            size: 32,
+            child: const Icon(Icons.location_on, size: 16, color: Colors.blue),
           );
 
     return Row(
       children: [
         locationButton,
-        DropdownButtonHideUnderline(
-          child: DropdownButton2<int>(
-            isExpanded: true,
-            iconStyleData: const IconStyleData(
-              iconEnabledColor: Colors.white,
-              iconDisabledColor: Colors.white,
-            ),
-            dropdownStyleData: const DropdownStyleData(
-              decoration: BoxDecoration(
-                color: Colors.blue,
-              ),
-            ),
-            items: stations
-                .map(
-                  (s) => DropdownMenuItem(
-                    value: s.id,
-                    child: Text(s.name).textStyle(
-                      context.textTheme.bodyMedium
-                          ?.copyWith(color: Colors.white),
-                    ),
-                  ),
-                )
-                .toList(),
-            value: stations
-                    .firstWhereOrNull((s) => s.id == selectedStation?.id)
-                    ?.id ??
-                stations.first.id,
-            onChanged: (value) {
-              final station = allStation.firstWhere((s) => s.id == value);
-              onChanged(station);
-            },
-          ),
+        ElevatedButton(
+          onPressed: () {},
+          child: selectedStation == null
+              ? const Text('choose_a_station').tr()
+              : Text(selectedStation!.name),
         ).expanded(),
       ],
     );
+
+    // return Row(
+    //   children: [
+    //     locationButton,
+    //     DropdownButtonHideUnderline(
+    //       child: DropdownButton2<int>(
+    //         isExpanded: true,
+    //         iconStyleData: const IconStyleData(
+    //           iconEnabledColor: Colors.white,
+    //           iconDisabledColor: Colors.white,
+    //         ),
+    //         dropdownStyleData: const DropdownStyleData(
+    //           decoration: BoxDecoration(
+    //             color: Colors.blue,
+    //           ),
+    //         ),
+    //         items: stations
+    //             .map(
+    //               (s) => DropdownMenuItem(
+    //                 value: s.id,
+    //                 child: Text(s.name).textStyle(
+    //                   context.textTheme.bodyMedium
+    //                       ?.copyWith(color: Colors.white),
+    //                 ),
+    //               ),
+    //             )
+    //             .toList(),
+    //         value: stations
+    //                 .firstWhereOrNull((s) => s.id == selectedStation?.id)
+    //                 ?.id ??
+    //             stations.first.id,
+    //         onChanged: (value) {
+    //           final station = allStation.firstWhere((s) => s.id == value);
+    //           onChanged(station);
+    //         },
+    //       ),
+    //     ).expanded(),
+    //   ],
+    // );
   }
 }
