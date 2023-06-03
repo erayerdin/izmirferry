@@ -16,7 +16,7 @@ enum Day {
   sunday;
 }
 
-extension DaysExtension on Day {
+extension DayExtension on Day {
   int get id {
     switch (this) {
       case Day.monday:
