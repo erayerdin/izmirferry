@@ -7,12 +7,23 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
-### For Devs
+### For Users
 
 #### Changed
 
- - Separate `getEndStations` to `StationProvider` and `StationRepository`
- - Rename and refactor `Days` enum to `Day`
+ - Now the default day automatically switches to current day.
+
+### For Devs
+
+#### Added
+
+ - Added `Day DateTime.dayValue` with `DateTimeDayExtension`
+
+#### Changed
+
+ - Separated `getEndStations` to `StationProvider` and `StationRepository`
+ - Renamed and refactored `Days` enum to `Day`
+ - Renamed `DaysExtension` to `DayExtension`
 
 ## [0.1.4] - 02.06.2023
 
