@@ -24,7 +24,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stationBloc = StationBloc(scheduleRepository: GetIt.I.get());
+    final stationBloc = StationBloc(
+      scheduleRepository: GetIt.I.get(),
+      stationRepository: GetIt.I.get(),
+    );
 
     return MultiBlocProvider(
       providers: [
