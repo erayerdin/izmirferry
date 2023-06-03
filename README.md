@@ -15,6 +15,12 @@ The app is available on Google Play to internal testers for now. To become an in
 <img src="https://play.google.com/intl/en_us/badges/static/images/badges/tr_badge_web_generic.png" width="250" alt="Google Play'den alın" />
 </a>
 
+## Features
+
+ - Dynamic changing background depending on destination station
+ - You can check locations of stations if you don't know where they are.
+ - Current day is automatically selected.
+
 ## Screenshots
 
 <img src="assets/brand/ph-1.png" width="256" />
