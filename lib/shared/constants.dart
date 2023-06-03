@@ -16,7 +16,7 @@ enum Day {
   sunday;
 }
 
-extension DaysExtension on Day {
+extension DayExtension on Day {
   int get id {
     switch (this) {
       case Day.monday:
@@ -52,6 +52,30 @@ extension DaysExtension on Day {
         return 'saturday'.tr();
       case Day.sunday:
         return 'sunday'.tr();
+    }
+  }
+}
+
+extension DateTimeDayExtension on DateTime {
+  // because `day` already exists on `DateTime`
+  Day get dayValue {
+    switch (weekday) {
+      case 1:
+        return Day.monday;
+      case 2:
+        return Day.tuesday;
+      case 3:
+        return Day.wednesday;
+      case 4:
+        return Day.thursday;
+      case 5:
+        return Day.friday;
+      case 6:
+        return Day.saturday;
+      case 7:
+        return Day.sunday;
+      default:
+        return Day.monday;
     }
   }
 }
