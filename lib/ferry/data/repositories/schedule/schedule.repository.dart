@@ -13,7 +13,7 @@ abstract class ScheduleRepository with DataLoggy {
   Future<Iterable<String>> getSchedules({
     required Station startStation,
     required Station endStation,
-    required Days day,
+    required Day day,
   });
 }
 
@@ -28,7 +28,7 @@ class IzdenizScheduleRepository extends ScheduleRepository {
   Future<Iterable<String>> getSchedules({
     required Station startStation,
     required Station endStation,
-    required Days day,
+    required Day day,
   }) async {
     loggy.debug('Getting schedules...');
     loggy.trace('start station: $startStation');

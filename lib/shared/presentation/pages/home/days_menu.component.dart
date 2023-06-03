@@ -10,8 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:izmirferry/shared/constants.dart';
 
 class DaysMenuComponent extends StatelessWidget {
-  final Days? selectedDay;
-  final void Function(Days day) onChanged;
+  final Day? selectedDay;
+  final void Function(Day day) onChanged;
 
   const DaysMenuComponent({
     Key? key,
@@ -21,14 +21,14 @@ class DaysMenuComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChipsChoice<Days>.single(
+    return ChipsChoice<Day>.single(
       value: selectedDay,
       onChanged: (value) {
-        final day = Days.values.firstWhere((d) => d == value);
+        final day = Day.values.firstWhere((d) => d == value);
         onChanged(day);
       },
       choiceItems: C2Choice.listFrom(
-          source: Days.values,
+          source: Day.values,
           value: (i, v) => v,
           label: (i, v) => v.localizedName,
           style: (i, v) {

@@ -37,7 +37,7 @@ class HomePage extends StatelessWidget {
               StationEvent.load(
                 startStation: allStation.firstWhere((s) => s.id == 1),
                 endStation: allStation.firstWhere((s) => s.id == 2),
-                day: Days.monday,
+                day: Day.monday,
               ),
             ),
         ),

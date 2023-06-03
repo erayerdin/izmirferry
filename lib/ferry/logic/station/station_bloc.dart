@@ -24,7 +24,7 @@ class StationBloc extends Bloc<StationEvent, StationState> {
     currentParams = {
       'startStation': allStation.firstWhere((s) => s.id == 1),
       'endStation': null,
-      'day': Days.monday,
+      'day': Day.monday,
     };
 
     on<StationEvent>((event, emit) async {

@@ -14,7 +14,7 @@ import 'package:izmirferry/shared/logger.dart';
 abstract class StationRepository with DataLoggy {
   Future<Iterable<Station>> getEndStations({
     required Station startStation,
-    required Days day,
+    required Day day,
   });
 }
 
@@ -33,7 +33,7 @@ class IzdenizStationRepository extends StationRepository {
   @override
   Future<Iterable<Station>> getEndStations({
     required Station startStation,
-    required Days day,
+    required Day day,
   }) async {
     loggy.debug('Getting end stations...');
     loggy.trace('start station: $startStation');

@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning].
 #### Changed
 
  - Separate `getEndStations` to `StationProvider` and `StationRepository`
+ - Rename and refactor `Days` enum to `Day`
 
 ## [0.1.4] - 02.06.2023
 
