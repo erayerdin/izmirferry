@@ -24,7 +24,10 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stationBloc = StationBloc(scheduleRepository: GetIt.I.get());
+    final stationBloc = StationBloc(
+      scheduleRepository: GetIt.I.get(),
+      stationRepository: GetIt.I.get(),
+    );
 
     return MultiBlocProvider(
       providers: [
@@ -34,7 +37,7 @@ class HomePage extends StatelessWidget {
               StationEvent.load(
                 startStation: allStation.firstWhere((s) => s.id == 1),
                 endStation: allStation.firstWhere((s) => s.id == 2),
-                day: Days.monday,
+                day: Day.monday,
               ),
             ),
         ),

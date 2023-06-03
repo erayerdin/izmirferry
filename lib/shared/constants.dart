@@ -6,7 +6,7 @@
 
 import 'package:easy_localization/easy_localization.dart';
 
-enum Days {
+enum Day {
   monday,
   tuesday,
   wednesday,
@@ -16,41 +16,41 @@ enum Days {
   sunday;
 }
 
-extension DaysExtension on Days {
+extension DaysExtension on Day {
   int get id {
     switch (this) {
-      case Days.monday:
+      case Day.monday:
         return 1;
-      case Days.tuesday:
+      case Day.tuesday:
         return 2;
-      case Days.wednesday:
+      case Day.wednesday:
         return 3;
-      case Days.thursday:
+      case Day.thursday:
         return 4;
-      case Days.friday:
+      case Day.friday:
         return 5;
-      case Days.saturday:
+      case Day.saturday:
         return 6;
-      case Days.sunday:
+      case Day.sunday:
         return 7;
     }
   }
 
   String get localizedName {
     switch (this) {
-      case Days.monday:
+      case Day.monday:
         return 'monday'.tr();
-      case Days.tuesday:
+      case Day.tuesday:
         return 'tuesday'.tr();
-      case Days.wednesday:
+      case Day.wednesday:
         return 'wednesday'.tr();
-      case Days.thursday:
+      case Day.thursday:
         return 'thursday'.tr();
-      case Days.friday:
+      case Day.friday:
         return 'friday'.tr();
-      case Days.saturday:
+      case Day.saturday:
         return 'saturday'.tr();
-      case Days.sunday:
+      case Day.sunday:
         return 'sunday'.tr();
     }
   }

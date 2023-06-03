@@ -6,7 +6,7 @@ class StationState with _$StationState {
   const factory StationState.loaded({
     required Station startStation,
     required Iterable<Station> endStations,
-    required Days day,
+    required Day day,
     required Iterable<String> schedules,
   }) = _LoadedState;
 }

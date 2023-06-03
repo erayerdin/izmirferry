@@ -3,6 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
 import 'package:izmirferry/ferry/data/repositories/schedule/schedule.repository.dart';
+import 'package:izmirferry/ferry/data/repositories/station/station.repository.dart';
 import 'package:izmirferry/shared/constants.dart';
 
 part 'station_bloc.freezed.dart';
@@ -11,15 +12,19 @@ part 'station_state.dart';
 
 class StationBloc extends Bloc<StationEvent, StationState> {
   late ScheduleRepository _scheduleRepository;
+  late StationRepository _stationRepository;
   late Map<String, dynamic> currentParams;
 
-  StationBloc({required ScheduleRepository scheduleRepository})
+  StationBloc(
+      {required ScheduleRepository scheduleRepository,
+      required StationRepository stationRepository})
       : super(const StationState.loading()) {
     _scheduleRepository = scheduleRepository;
+    _stationRepository = stationRepository;
     currentParams = {
       'startStation': allStation.firstWhere((s) => s.id == 1),
       'endStation': null,
-      'day': Days.monday,
+      'day': Day.monday,
     };
 
     on<StationEvent>((event, emit) async {
@@ -58,7 +63,7 @@ class StationBloc extends Bloc<StationEvent, StationState> {
           );
         },
         load: (event) async {
-          final endStationsTask = _scheduleRepository.getEndStations(
+          final endStationsTask = _stationRepository.getEndStations(
             startStation: event.startStation,
             day: event.day,
           );
