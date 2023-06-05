@@ -10,10 +10,12 @@ import 'package:flutter/material.dart';
 
 class SchedulesListComponent extends StatelessWidget {
   final List<String> schedules;
+  final String? nextSchedule;
 
   const SchedulesListComponent({
     Key? key,
     required this.schedules,
+    this.nextSchedule,
   }) : super(key: key);
 
   @override
@@ -23,10 +25,15 @@ class SchedulesListComponent extends StatelessWidget {
     }
 
     return ListView.separated(
-      itemBuilder: (context, index) => Text(
-        schedules[index],
-        style: context.textTheme.displayLarge,
-      ).toCenter(),
+      itemBuilder: (context, index) {
+        final schedule = schedules[index];
+        return Text(
+          schedule,
+          style: schedule == nextSchedule
+              ? context.textTheme.displayLarge?.copyWith(color: Colors.blue)
+              : context.textTheme.displayLarge,
+        ).toCenter();
+      },
       separatorBuilder: (context, index) => 8.heightBox,
       itemCount: schedules.length,
     );

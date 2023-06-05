@@ -6,6 +6,7 @@
 
 import 'package:auto_route/auto_route.dart';
 import 'package:awesome_extensions/awesome_extensions.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
@@ -13,6 +14,7 @@ import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
 import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
 import 'package:izmirferry/shared/constants.dart';
+import 'package:izmirferry/shared/extensions/time.dart';
 import 'package:izmirferry/shared/presentation/pages/home/app_bar.component.dart';
 import 'package:izmirferry/shared/presentation/pages/home/days_menu.component.dart';
 import 'package:izmirferry/shared/presentation/pages/home/schedules_list.component.dart';
@@ -158,9 +160,17 @@ class _Body extends StatelessWidget {
     return BlocBuilder<StationBloc, StationState>(
       builder: (context, state) => state.map(
         loading: (state) => const CircularProgressIndicator().toCenter(),
-        loaded: (state) => SchedulesListComponent(
-          schedules: state.schedules.toList(),
-        ),
+        loaded: (state) {
+          final schedules = state.schedules.toList(growable: false);
+          final nowTimeVal = DateTime.now().timeRepr.timeValue;
+          final nextSchedule = schedules.firstWhereOrNull(
+            (e) => e.timeValue > nowTimeVal,
+          );
+          return SchedulesListComponent(
+            schedules: schedules,
+            nextSchedule: nextSchedule,
+          );
+        },
       ),
     );
   }
