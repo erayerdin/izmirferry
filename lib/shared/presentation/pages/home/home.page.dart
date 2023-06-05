@@ -161,14 +161,20 @@ class _Body extends StatelessWidget {
       builder: (context, state) => state.map(
         loading: (state) => const CircularProgressIndicator().toCenter(),
         loaded: (state) {
+          final now = DateTime.now();
+
           final schedules = state.schedules.toList(growable: false);
-          final nowTimeVal = DateTime.now().timeRepr.timeValue;
+          final nowTimeVal = now.timeRepr.timeValue;
           final nextSchedule = schedules.firstWhereOrNull(
             (e) => e.timeValue > nowTimeVal,
           );
+
+          final Day stateDay = context.read<StationBloc>().currentParams['day'];
+          final today = now.dayValue;
+
           return SchedulesListComponent(
             schedules: schedules,
-            nextSchedule: nextSchedule,
+            nextSchedule: stateDay == today ? nextSchedule : null,
           );
         },
       ),
