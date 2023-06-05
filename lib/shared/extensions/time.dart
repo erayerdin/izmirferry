@@ -14,3 +14,11 @@ extension StringTimeExtension on String {
     return int.parse(normalized);
   }
 }
+
+extension DateTimeTimeExtension on DateTime {
+  String get timeRepr {
+    final normalizedHour = hour.toString().padLeft(2, '0');
+    final normalizedMinute = minute.toString().padLeft(2, '0');
+    return '$normalizedHour:$normalizedMinute';
+  }
+}
