@@ -40,6 +40,7 @@ dependencies:
   flexi_chip: ^1.0.8
   package_info_plus: ^4.0.2
   font_awesome_flutter: ^10.4.0
+  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:

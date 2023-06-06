@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning].
 #### Changed
 
  - Now the default day automatically switches to current day.
+ - Now the list of hours scrolls to the next hour automatically on the current day.
 
 ### For Devs
 
@@ -24,6 +25,7 @@ and this project adheres to [Semantic Versioning].
  - Separated `getEndStations` to `StationProvider` and `StationRepository`
  - Renamed and refactored `Days` enum to `Day`
  - Renamed `DaysExtension` to `DayExtension`
+ - Changed `ListView` to `ScrollablePositionedList` in `SchedulesListComponent`
 
 ## [0.1.4] - 02.06.2023
 
