@@ -37,7 +37,10 @@ class StationsMenuComponent extends StatelessWidget {
         ? const SizedBox()
         : CircularIconButton(
             onPressed: () async {
-              await launchUrlString(locationUrl);
+              await launchUrlString(
+                locationUrl,
+                mode: LaunchMode.externalApplication,
+              );
             },
             size: 32,
             child: const Icon(Icons.location_on, size: 16, color: Colors.blue),

@@ -116,6 +116,7 @@ class AppBarComponent extends StatelessWidget {
               onPressed: () async {
                 await launchUrlString(
                   'https://github.com/erayerdin/izmirferry/',
+                  mode: LaunchMode.externalApplication,
                 );
               },
               fillColor: Colors.black,
@@ -126,7 +127,10 @@ class AppBarComponent extends StatelessWidget {
             ),
             CircularIconButton(
               onPressed: () async {
-                await launchUrlString('https://t.me/erayerdin');
+                await launchUrlString(
+                  'https://t.me/erayerdin',
+                  mode: LaunchMode.externalApplication,
+                );
               },
               fillColor: const Color(0xff0088cc),
               child: const FaIcon(
@@ -136,7 +140,10 @@ class AppBarComponent extends StatelessWidget {
             ),
             CircularIconButton(
               onPressed: () async {
-                await launchUrlString('https://twitter.com/_erayerdin');
+                await launchUrlString(
+                  'https://twitter.com/_erayerdin',
+                  mode: LaunchMode.externalApplication,
+                );
               },
               fillColor: const Color(0xff1da1f2),
               child: const FaIcon(
@@ -146,7 +153,10 @@ class AppBarComponent extends StatelessWidget {
             ),
             CircularIconButton(
               onPressed: () async {
-                await launchUrlString('https://www.linkedin.com/in/erayerdin/');
+                await launchUrlString(
+                  'https://www.linkedin.com/in/erayerdin/',
+                  mode: LaunchMode.externalApplication,
+                );
               },
               fillColor: const Color(0xff0a66c2),
               child: const FaIcon(
@@ -156,7 +166,10 @@ class AppBarComponent extends StatelessWidget {
             ),
             CircularIconButton(
               onPressed: () async {
-                await launchUrlString('https://www.youtube.com/@_schwm');
+                await launchUrlString(
+                  'https://www.youtube.com/@_schwm',
+                  mode: LaunchMode.externalApplication,
+                );
               },
               fillColor: const Color(0xffff0000),
               child: const FaIcon(
@@ -166,7 +179,10 @@ class AppBarComponent extends StatelessWidget {
             ),
             CircularIconButton(
               onPressed: () async {
-                await launchUrlString('https://www.instagram.com/_erayerdin/');
+                await launchUrlString(
+                  'https://www.instagram.com/_erayerdin/',
+                  mode: LaunchMode.externalApplication,
+                );
               },
               fillColor: const Color(0xffc13584),
               child: const FaIcon(
@@ -188,7 +204,10 @@ class AppBarComponent extends StatelessWidget {
             ),
             CircularIconButton(
               onPressed: () async {
-                await launchUrlString('https://github.com/erayerdin/');
+                await launchUrlString(
+                  'https://github.com/erayerdin/',
+                  mode: LaunchMode.externalApplication,
+                );
               },
               fillColor: Colors.black,
               child: const FaIcon(
@@ -198,7 +217,10 @@ class AppBarComponent extends StatelessWidget {
             ),
             CircularIconButton(
               onPressed: () async {
-                await launchUrlString('mailto:eraygezer.94@gmail.com');
+                await launchUrlString(
+                  'mailto:eraygezer.94@gmail.com',
+                  mode: LaunchMode.externalApplication,
+                );
               },
               fillColor: Colors.white,
               child: const Icon(
