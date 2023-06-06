@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+## [Unreleased]
+
+### For Users
+
+#### Changed
+
+ - Fixed bugs for links.
+
+### For Developers
+
+#### Changed
+
+ - Station location links now use Google Maps.
+ - About page links now use external apps.
+
 ## [0.1.5] - 06.06.2023
 
 ### For Users
