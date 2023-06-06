@@ -9,6 +9,7 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:izmirferry/firebase_options.dart';
 import 'package:izmirferry/shared/licenses.dart';
@@ -20,8 +21,14 @@ import 'package:loggy/loggy.dart';
 Future<void> main() async {
   await runZonedGuarded<Future<void>>(
     () async {
-      // Localization
       WidgetsFlutterBinding.ensureInitialized();
+
+      // Orientation Lock
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
+
+      // Localization
       await EasyLocalization.ensureInitialized();
 
       // Licenses
