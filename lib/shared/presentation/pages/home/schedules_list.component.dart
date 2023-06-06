@@ -7,12 +7,17 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
+import 'package:izmirferry/shared/constants.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 class SchedulesListComponent extends StatelessWidget {
   final List<String> schedules;
   final String? nextSchedule;
+  final _itemScrollController = ItemScrollController();
 
-  const SchedulesListComponent({
+  SchedulesListComponent({
     Key? key,
     required this.schedules,
     this.nextSchedule,
@@ -24,7 +29,18 @@ class SchedulesListComponent extends StatelessWidget {
       return const Text('no_schedules_found').tr().toCenter();
     }
 
-    return ListView.separated(
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final today = DateTime.now().dayValue;
+      final Day stateDay = context.read<StationBloc>().currentParams['day'];
+
+      if (today == stateDay && nextSchedule != null) {
+        final scrollIndex = schedules.indexOf(nextSchedule!);
+        _itemScrollController.scrollTo(index: scrollIndex, duration: 2.seconds);
+      }
+    });
+
+    return ScrollablePositionedList.separated(
+      itemScrollController: _itemScrollController,
       itemBuilder: (context, index) {
         final schedule = schedules[index];
         return Text(
