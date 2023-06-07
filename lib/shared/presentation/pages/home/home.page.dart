@@ -47,114 +47,12 @@ class HomePage extends StatelessWidget {
           preferredSize: Size(context.width, 64),
           child: const AppBarComponent(),
         ),
-        // body: OrientationBuilder(
-        //   builder: (context, orientation) {
-        //     return orientation == Orientation.portrait
-        //         ? Column(
-        //             crossAxisAlignment: CrossAxisAlignment.stretch,
-        //             children: [
-        //               _Header(orientation: orientation),
-        //               const _Body().paddingOnly(left: 16, right: 16).expanded(),
-        //             ],
-        //           )
-        //         : Row(
-        //             crossAxisAlignment: CrossAxisAlignment.stretch,
-        //             children: [
-        //               _Header(orientation: orientation),
-        //               const _Body().paddingOnly(left: 16, right: 16).expanded(),
-        //             ],
-        //           );
-        //   },
-        // ),
         body: const _Body().paddingOnly(left: 16, right: 16),
         bottomNavigationBar: const BottomBarComponent(),
       ),
     );
   }
 }
-
-// class _Header extends StatelessWidget {
-//   final Orientation orientation;
-
-//   const _Header({
-//     Key? key,
-//     required this.orientation,
-//   }) : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final StationBloc stationBloc = context.read();
-//     final shimmer = Shimmer.fromColors(
-//       baseColor: Colors.blue[300]!,
-//       highlightColor: Colors.blue[100]!,
-//       child: Container(
-//         height: 50,
-//         decoration: BoxDecoration(
-//           color: Colors.blue[200],
-//           borderRadius: BorderRadius.circular(8),
-//         ),
-//       ).paddingAll(2),
-//     );
-
-//     return BlocBuilder<StationBloc, StationState>(
-//       builder: (context, state) => AppBarComponent(
-//         orientation: orientation,
-//         imagePath: state.map(
-//           loading: (state) => 'assets/locations/izmir.jpg',
-//           loaded: (state) {
-//             final StationBloc bloc = context.read();
-//             final Station endStation = bloc.currentParams['endStation'];
-//             return endStation.backgroundAssetPath ??
-//                 'assets/locations/izmir.png';
-//           },
-//         ),
-//         children: [
-//           state.map(
-//             loading: (state) => shimmer,
-//             loaded: (state) => StationsMenuComponent(
-//               stations: allStation,
-//               selectedStation: stationBloc.currentParams['startStation'],
-//               onChanged: (station) {
-//                 stationBloc.add(
-//                   StationEvent.changeStartStation(station),
-//                 );
-//               },
-//             ),
-//           ),
-//           Row(
-//             children: [
-//               32.widthBox,
-//               const Icon(Icons.arrow_downward, color: Colors.white)
-//                   .paddingOnly(top: 8, bottom: 8)
-//                   .expanded(),
-//             ],
-//           ),
-//           state.map(
-//             loading: (state) => shimmer,
-//             loaded: (state) => StationsMenuComponent(
-//               stations: state.endStations.toList(),
-//               selectedStation: stationBloc.currentParams['endStation'],
-//               onChanged: (station) {
-//                 stationBloc.add(
-//                   StationEvent.changeEndStation(station),
-//                 );
-//               },
-//             ),
-//           ),
-//           state.map(
-//             loading: (state) => shimmer,
-//             loaded: (state) => DaysMenuComponent(
-//               selectedDay: stationBloc.currentParams['day'],
-//               onChanged: (day) {
-//                 stationBloc.add(StationEvent.changeDay(day));
-//               },
-//             ),
-//           ),
-//         ],
-//       ).expanded(),
-//     );
-//   }
-// }
 
 class _Body extends StatelessWidget {
   const _Body();
