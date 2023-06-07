@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 // Copyright (c) 2023 Eray Erdin
 //
 // This Source Code Form is subject to the terms of the Mozilla Public
@@ -8,83 +7,76 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:izmirferry/ferry/data/models/station/station.model.dart';
+import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
 import 'package:izmirferry/shared/presentation/components/circular_icon_button/circular_icon_button.component.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class AppBarComponent extends StatelessWidget {
-  final Orientation orientation;
-  final List<Widget> children;
-  final String imagePath;
-
-  const AppBarComponent({
-    Key? key,
-    required this.orientation,
-    required this.children,
-    required this.imagePath,
-  }) : super(key: key);
+  const AppBarComponent({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: Colors.blue,
-      decoration: BoxDecoration(
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.blue[300]!,
-            Colors.blue[700]!,
-          ],
-        ),
-        image: DecorationImage(
-          image: AssetImage(imagePath),
-          fit: BoxFit.cover,
-          opacity: 0.2,
-        ),
-        borderRadius: orientation == Orientation.portrait
-            ? BorderRadius.vertical(
-                bottom:
-                    Radius.elliptical(MediaQuery.of(context).size.width, 50.0),
-              )
-            : null,
-      ),
-      child: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                0.widthBox,
-                IconButton(
-                  onPressed: () async {
-                    await _showAboutDialog(context);
-                  },
-                  icon: const Icon(
-                    Icons.info,
-                    color: Colors.white,
-                  ),
-                ),
+    return BlocBuilder<StationBloc, StationState>(
+      builder: (context, state) => AppBar(
+        leading: Image.asset(
+          'assets/icon/icon.png',
+          color: Colors.white,
+          height: 16 * 3,
+        ).paddingOnly(left: 16),
+        title: Text(
+          'izmir_ferry',
+          style: context.bodyLarge?.copyWith(color: Colors.white, fontSize: 24),
+        ).tr(),
+        centerTitle: true,
+        flexibleSpace: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 5,
+                blurRadius: 7,
+                offset: const Offset(0, 3), // changes position of shadow
+              ),
+            ],
+            gradient: LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Colors.blue[300]!,
+                Colors.blue[700]!,
               ],
             ),
-            Image.asset(
-              'assets/icon/icon.png',
-              color: Colors.white,
-              height: 64,
+            image: DecorationImage(
+              image: AssetImage(
+                state.map(
+                  loading: (state) => 'assets/locations/izmir.jpg',
+                  loaded: (state) =>
+                      (context.read<StationBloc>().currentParams['endStation']
+                              as Station?)
+                          ?.backgroundAssetPath ??
+                      'assets/locations/izmir.png',
+                ),
+              ),
+              fit: BoxFit.cover,
+              opacity: 0.2,
             ),
-            ...children,
-          ],
-        ).paddingOnly(left: 16, right: 16),
+          ),
+        ),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await _showAboutDialog(context);
+            },
+            icon: const Icon(
+              Icons.info,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ),
     );
   }
