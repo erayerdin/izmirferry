@@ -345,6 +345,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.2"
+  dio_cache_interceptor_hive_store:
+    dependency: "direct main"
+    description:
+      name: dio_cache_interceptor_hive_store
+      sha256: "7a376b1db0a153e16ad51ce0cf1d2549ca14a2ddf462523c362fac9e077c5f14"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.2.1"
   dropdown_button2:
     dependency: "direct main"
     description:
@@ -613,6 +621,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  hive:
+    dependency: transitive
+    description:
+      name: hive
+      sha256: "8dcf6db979d7933da8217edcec84e9df1bdb4e4edc7fc77dbd5aa74356d6d941"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.3"
   html:
     dependency: "direct main"
     description:
@@ -806,7 +822,7 @@ packages:
     source: hosted
     version: "1.8.3"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "3087813781ab814e4157b172f1a11c46be20179fcc9bea043e0fba36bc0acaa2"
