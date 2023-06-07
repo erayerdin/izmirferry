@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning].
 #### Changed
 
  - Fixed bugs for links.
+ - Changed UI from zero
 
 ### For Developers
 
