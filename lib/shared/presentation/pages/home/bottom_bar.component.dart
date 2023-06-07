@@ -36,6 +36,10 @@ class BottomBarComponent extends StatelessWidget {
                 Colors.blue[700]!,
               ],
             ),
+            borderRadius: const BorderRadius.only(
+              topLeft: Radius.circular(16),
+              topRight: Radius.circular(16),
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
