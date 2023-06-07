@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:izmirferry/ferry/data/models/station/station.model.dart';
 import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
 import 'package:izmirferry/shared/presentation/components/circular_icon_button/circular_icon_button.component.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -49,8 +50,17 @@ class AppBarComponent extends StatelessWidget {
                 Colors.blue[700]!,
               ],
             ),
-            image: const DecorationImage(
-              image: AssetImage('assets/locations/izmir.jpg'),
+            image: DecorationImage(
+              image: AssetImage(
+                state.map(
+                  loading: (state) => 'assets/locations/izmir.jpg',
+                  loaded: (state) =>
+                      (context.read<StationBloc>().currentParams['endStation']
+                              as Station?)
+                          ?.backgroundAssetPath ??
+                      'assets/locations/izmir.png',
+                ),
+              ),
               fit: BoxFit.cover,
               opacity: 0.2,
             ),
