@@ -45,6 +45,7 @@ dependencies:
   path_provider: ^2.0.15
   get_it_future_builder: ^0.2.0
   google_mobile_ads: ^3.0.0
+  sqflite: ^2.2.8+4
 
 dev_dependencies:
   flutter_test:
