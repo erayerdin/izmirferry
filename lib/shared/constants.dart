@@ -113,3 +113,5 @@ extension AdmodTestAppIdExtension on AdmodTestAppId {
     }
   }
 }
+
+const adModAppId = 'ca-app-pub-6866424804119649~1271700863';
