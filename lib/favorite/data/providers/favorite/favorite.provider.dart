@@ -80,9 +80,11 @@ class SqliteFavoriteProvider extends FavoriteProvider with DataLoggy {
   }
 
   @override
-  Future<void> delete(int id) {
-    // TODO: implement delete
-    throw UnimplementedError();
+  Future<void> delete(int id) async {
+    loggy.debug('Deleting favorite...');
+    loggy.trace('id: $id');
+
+    await _database.delete('favorites', where: 'id = ?', whereArgs: [id]);
   }
 
   @override
