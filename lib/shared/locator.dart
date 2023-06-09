@@ -112,7 +112,7 @@ Future<void> _runDatabaseMigrations(Database database) async {
     startStationId INTEGER NOT NULL,
     endStationId INTEGER NOT NULL,
     dayId INTEGER CHECK(dayId <= 7),
-    lastUpdate DATETIME NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', 'utc'))
+    lastUpdate DATETIME NOT NULL DEFAULT (strftime('%Y-%m-%dT%H:%M:%SZ', 'now', 'utc'))
   );
   ''');
 }
