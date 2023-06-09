@@ -9,8 +9,10 @@ import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it/get_it.dart';
+import 'package:get_it_future_builder/get_it_future_builder.dart';
 import 'package:izmirferry/ferry/constants.dart';
+import 'package:izmirferry/ferry/data/repositories/schedule/schedule.repository.dart';
+import 'package:izmirferry/ferry/data/repositories/station/station.repository.dart';
 import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
 import 'package:izmirferry/shared/constants.dart';
 import 'package:izmirferry/shared/extensions/time.dart';
@@ -24,31 +26,33 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final stationBloc = StationBloc(
-      scheduleRepository: GetIt.I.get(),
-      stationRepository: GetIt.I.get(),
-    );
-
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => stationBloc
-            ..add(
-              StationEvent.load(
-                startStation: allStation.firstWhere((s) => s.id == 1),
-                endStation: allStation.firstWhere((s) => s.id == 2),
-                day: DateTime.now().dayValue,
+    return GetItFutureBuilder2<ScheduleRepository, StationRepository>(
+      loading: (context) => Scaffold(
+        body: const CircularProgressIndicator().toCenter(),
+      ),
+      ready: (context, scheduleRepo, stationRepo) => MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (context) => StationBloc(
+              scheduleRepository: scheduleRepo,
+              stationRepository: stationRepo,
+            )..add(
+                StationEvent.load(
+                  startStation: allStation.firstWhere((s) => s.id == 1),
+                  endStation: allStation.firstWhere((s) => s.id == 2),
+                  day: DateTime.now().dayValue,
+                ),
               ),
-            ),
+          ),
+        ],
+        child: Scaffold(
+          appBar: PreferredSize(
+            preferredSize: Size(context.width, 64),
+            child: const AppBarComponent(),
+          ),
+          body: const _Body().paddingOnly(left: 16, right: 16),
+          bottomNavigationBar: const BottomBarComponent(),
         ),
-      ],
-      child: Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size(context.width, 64),
-          child: const AppBarComponent(),
-        ),
-        body: const _Body().paddingOnly(left: 16, right: 16),
-        bottomNavigationBar: const BottomBarComponent(),
       ),
     );
   }
