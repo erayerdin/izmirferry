@@ -19,8 +19,17 @@ import 'package:izmirferry/ferry/data/providers/station/station.provider.dart';
 import 'package:izmirferry/ferry/data/repositories/schedule/schedule.repository.dart';
 import 'package:izmirferry/ferry/data/repositories/station/station.repository.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:sqflite/sqflite.dart';
 
 void initLocator() {
+  GetIt.I.registerLazySingletonAsync<Database>(
+    () async {
+      final appSupportDir = await getApplicationSupportDirectory();
+      final dbPath = '${appSupportDir.path}/data.db';
+      return await openDatabase(dbPath);
+    },
+  );
+
   //-----//
   // Dio //
   //-----//
