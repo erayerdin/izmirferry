@@ -59,9 +59,24 @@ class SqliteFavoriteProvider extends FavoriteProvider with DataLoggy {
     required int startStationId,
     required int endStationId,
     required int? dayId,
-  }) {
-    // TODO: implement check
-    throw UnimplementedError();
+  }) async {
+    loggy.debug('Checking favorite...');
+    loggy.trace('start station id: $startStationId');
+    loggy.trace('end station id: $endStationId');
+    loggy.trace('day id: $dayId');
+
+    final rows = await _database.query(
+      'favorites',
+      where: 'startSessionId = ?, endStationId = ?, dayId = ?',
+      whereArgs: [startStationId, endStationId, dayId],
+    );
+
+    if (rows.length > 1) {
+      loggy.warning('Favorite check has returned more than two items.');
+    }
+
+    final row = rows.firstOrNull;
+    return row?['id'] as int?;
   }
 
   @override
