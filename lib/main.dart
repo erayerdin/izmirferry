@@ -11,6 +11,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:izmirferry/firebase_options.dart';
 import 'package:izmirferry/shared/licenses.dart';
 import 'package:izmirferry/shared/locator.dart';
@@ -22,6 +23,9 @@ Future<void> main() async {
   await runZonedGuarded<Future<void>>(
     () async {
       WidgetsFlutterBinding.ensureInitialized();
+
+      // Ads
+      MobileAds.instance.initialize();
 
       // Orientation Lock
       SystemChrome.setPreferredOrientations([
