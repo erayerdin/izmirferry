@@ -9,7 +9,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:tuple/tuple.dart';
 
 abstract class FavoriteProvider {
-  Future<void> add({
+  Future<int> add({
     required int startStationId,
     required int endStationId,
     int? dayId,
@@ -36,13 +36,22 @@ class SqliteFavoriteProvider extends FavoriteProvider with DataLoggy {
   late Database _database;
 
   @override
-  Future<void> add({
+  Future<int> add({
     required int startStationId,
     required int endStationId,
     int? dayId,
   }) async {
-    // TODO: implement add
-    throw UnimplementedError();
+    loggy.debug('Adding to favorite...');
+    loggy.trace('start station id: $startStationId');
+    loggy.trace('end station id: $endStationId');
+    loggy.trace('day id: $dayId');
+
+    return await _database.insert('favorites', {
+      'startStationId': startStationId,
+      'endStationId': endStationId,
+      'dayId': dayId,
+      'lastUpdate': DateTime.now().toIso8601String(),
+    });
   }
 
   @override
