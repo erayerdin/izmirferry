@@ -79,3 +79,39 @@ extension DateTimeDayExtension on DateTime {
     }
   }
 }
+
+enum AdmodTestAppId {
+  appOpen,
+  banner,
+  interstitial,
+  interstitialVideo,
+  rewarded,
+  rewardedInterstitial,
+  nativeAdvanced,
+  nativeAdvancedVideo,
+}
+
+extension AdmodTestAppIdExtension on AdmodTestAppId {
+  String get id {
+    switch (this) {
+      case AdmodTestAppId.appOpen:
+        return 'ca-app-pub-3940256099942544/3419835294';
+      case AdmodTestAppId.banner:
+        return 'ca-app-pub-3940256099942544/6300978111';
+      case AdmodTestAppId.interstitial:
+        return 'ca-app-pub-3940256099942544/1033173712';
+      case AdmodTestAppId.interstitialVideo:
+        return 'ca-app-pub-3940256099942544/8691691433';
+      case AdmodTestAppId.rewarded:
+        return 'ca-app-pub-3940256099942544/5224354917';
+      case AdmodTestAppId.rewardedInterstitial:
+        return 'ca-app-pub-3940256099942544/5354046379';
+      case AdmodTestAppId.nativeAdvanced:
+        return 'ca-app-pub-3940256099942544/2247696110';
+      case AdmodTestAppId.nativeAdvancedVideo:
+        return 'ca-app-pub-3940256099942544/1044960115';
+    }
+  }
+}
+
+const adModAppId = 'ca-app-pub-6866424804119649~1271700863';

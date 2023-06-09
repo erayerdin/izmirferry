@@ -5,7 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
-## [0.3.0] - 09.06.2023
+## [Unreleased]
+
+### For Users
+
+#### Added
+
+ - Banner ads to bottom
+
+## [0.2.1] - 09.06.2023
 
 ### For Users
 

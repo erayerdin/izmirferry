@@ -6,12 +6,15 @@
 
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
 import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
 import 'package:izmirferry/shared/constants.dart';
+import 'package:loggy/loggy.dart';
 
 class BottomBarComponent extends StatelessWidget {
   const BottomBarComponent({super.key});
@@ -41,49 +44,55 @@ class BottomBarComponent extends StatelessWidget {
               topRight: Radius.circular(16),
             ),
           ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
-              state.map(
-                loading: (state) => _buildStationSelectorWidget(
-                  context,
-                  stations: allStation,
-                  selectedStation: startStation,
-                  isStart: true,
-                ).applyShimmer(),
-                loaded: (state) => _buildStationSelectorWidget(
-                  context,
-                  stations: allStation,
-                  selectedStation: startStation,
-                  isStart: true,
-                ),
-              ),
-              const Icon(Icons.arrow_forward, color: Colors.white),
-              state.map(
-                loading: (state) => _buildStationSelectorWidget(
-                  context,
-                  stations: [],
-                  selectedStation: stationBloc.currentParams['endStation'],
-                  isStart: false,
-                ).applyShimmer(),
-                loaded: (state) => _buildStationSelectorWidget(
-                  context,
-                  stations: state.endStations.toList(),
-                  selectedStation: endStation,
-                  isStart: false,
-                ),
-              ),
-              Text(
-                '@',
-                style: context.bodyMedium?.copyWith(color: Colors.white),
-              ),
-              state.map(
-                loading: (state) =>
-                    _buildDaySelectorWidget(context, day).applyShimmer(),
-                loaded: (state) => _buildDaySelectorWidget(context, day),
-              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  state.map(
+                    loading: (state) => _buildStationSelectorWidget(
+                      context,
+                      stations: allStation,
+                      selectedStation: startStation,
+                      isStart: true,
+                    ).applyShimmer(),
+                    loaded: (state) => _buildStationSelectorWidget(
+                      context,
+                      stations: allStation,
+                      selectedStation: startStation,
+                      isStart: true,
+                    ),
+                  ),
+                  const Icon(Icons.arrow_forward, color: Colors.white),
+                  state.map(
+                    loading: (state) => _buildStationSelectorWidget(
+                      context,
+                      stations: [],
+                      selectedStation: stationBloc.currentParams['endStation'],
+                      isStart: false,
+                    ).applyShimmer(),
+                    loaded: (state) => _buildStationSelectorWidget(
+                      context,
+                      stations: state.endStations.toList(),
+                      selectedStation: endStation,
+                      isStart: false,
+                    ),
+                  ),
+                  Text(
+                    '@',
+                    style: context.bodyMedium?.copyWith(color: Colors.white),
+                  ),
+                  state.map(
+                    loading: (state) =>
+                        _buildDaySelectorWidget(context, day).applyShimmer(),
+                    loaded: (state) => _buildDaySelectorWidget(context, day),
+                  ),
+                ],
+              ).paddingAll(16),
+              const _AdBanner(),
             ],
-          ).paddingAll(16),
+          ),
         );
       },
     );
@@ -200,5 +209,61 @@ class BottomBarComponent extends StatelessWidget {
         ).expanded(),
       ],
     ).paddingAll(16);
+  }
+}
+
+class _AdBanner extends StatefulWidget {
+  const _AdBanner();
+
+  @override
+  State<_AdBanner> createState() => __AdBannerState();
+}
+
+class __AdBannerState extends State<_AdBanner> with UiLoggy {
+  BannerAd? _bannerAd;
+  bool _isLoaded = false;
+
+  final _adUnitId = kDebugMode ? AdmodTestAppId.banner.id : adModAppId;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAd();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _bannerAd == null && !_isLoaded
+        ? Container()
+        : Align(
+            alignment: Alignment.bottomCenter,
+            child: SafeArea(
+              child: SizedBox(
+                width: _bannerAd!.size.width.toDouble(),
+                height: _bannerAd!.size.height.toDouble(),
+                child: AdWidget(ad: _bannerAd!),
+              ),
+            ),
+          );
+  }
+
+  void _loadAd() {
+    _bannerAd = BannerAd(
+      adUnitId: _adUnitId,
+      request: const AdRequest(),
+      size: AdSize.banner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          loggy.debug('Loaded ad: $ad');
+          setState(() {
+            _isLoaded = true;
+          });
+        },
+        onAdFailedToLoad: (ad, err) {
+          loggy.error('Failed to load ad: $ad | $err');
+          ad.dispose();
+        },
+      ),
+    )..load();
   }
 }
