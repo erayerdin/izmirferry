@@ -25,7 +25,7 @@ Future<void> main() async {
       WidgetsFlutterBinding.ensureInitialized();
 
       // Ads
-      MobileAds.instance.initialize();
+      await MobileAds.instance.initialize();
 
       // Orientation Lock
       SystemChrome.setPreferredOrientations([
