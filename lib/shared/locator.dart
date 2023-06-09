@@ -18,6 +18,7 @@ import 'package:izmirferry/ferry/data/providers/schedule/schedule.provider.dart'
 import 'package:izmirferry/ferry/data/providers/station/station.provider.dart';
 import 'package:izmirferry/ferry/data/repositories/schedule/schedule.repository.dart';
 import 'package:izmirferry/ferry/data/repositories/station/station.repository.dart';
+import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -26,7 +27,7 @@ void initLocator() {
     () async {
       final appSupportDir = await getApplicationSupportDirectory();
       final dbPath = '${appSupportDir.path}/data.db';
-      return await openDatabase(dbPath);
+      return await openDatabase(dbPath, onOpen: _runDatabaseMigrations);
     },
   );
 
@@ -98,4 +99,20 @@ void initLocatorForTests() {
 
   GetIt.I.unregister<Dio>();
   GetIt.I.registerLazySingleton<Dio>(() => Dio());
+}
+
+Future<void> _runDatabaseMigrations(Database database) async {
+  final loggy = Loggy('DatabaseMigrator');
+  loggy.debug('Running migrations...');
+
+  loggy.debug('Migration: Creating favorites table...');
+  await database.execute('''
+  CREATE TABLE IF NOT EXISTS favorites (
+    id INTEGER PRIMARY KEY,
+    startStationId INTEGER NOT NULL,
+    endStationId INTEGER NOT NULL,
+    dayId INTEGER CHECK(dayId <= 7),
+    lastUpdate DATETIME NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', 'utc'))
+  );
+  ''');
 }

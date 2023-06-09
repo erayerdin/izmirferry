@@ -5,7 +5,6 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import 'package:izmirferry/shared/logger.dart';
-import 'package:loggy/loggy.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tuple/tuple.dart';
 
@@ -30,39 +29,18 @@ abstract class FavoriteProvider {
 }
 
 class SqliteFavoriteProvider extends FavoriteProvider with DataLoggy {
-  SqliteFavoriteProvider._create({required Database database}) {
+  SqliteFavoriteProvider({required Database database}) {
     _database = database;
   }
 
   late Database _database;
-
-  static Future<SqliteFavoriteProvider> init(
-      {required Database database}) async {
-    final loggy = Loggy('SqliteFavoriteProvider.init');
-    loggy.debug('Initializing SqliteFavoriteProvider...');
-
-    loggy.debug('Running migrations...');
-
-    loggy.debug('Migration: Creating favorites table...');
-    database.execute('''
-    CREATE TABLE IF NOT EXISTS favorites (
-      id INTEGER PRIMARY KEY,
-      startStationId INTEGER NOT NULL,
-      endStationId INTEGER NOT NULL,
-      dayId INTEGER CHECK(dayId <= 7),
-      lastUpdate DATETIME NOT NULL DEFAULT (strftime('%Y-%m-%d %H:%M:%S', 'now', 'utc'))
-    );
-    ''');
-
-    return SqliteFavoriteProvider._create(database: database);
-  }
 
   @override
   Future<void> add({
     required int startStationId,
     required int endStationId,
     int? dayId,
-  }) {
+  }) async {
     // TODO: implement add
     throw UnimplementedError();
   }
