@@ -15,6 +15,7 @@ import 'package:get_it/get_it.dart';
 import 'package:izmirferry/favorite/data/converters/favorite.converters.dart';
 import 'package:izmirferry/favorite/data/models/favorite/favorite.model.dart';
 import 'package:izmirferry/favorite/data/providers/favorite/favorite.provider.dart';
+import 'package:izmirferry/favorite/data/repository/favorite/favorite.repository.dart';
 import 'package:izmirferry/ferry/data/converters/station/station.converter.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
 import 'package:izmirferry/ferry/data/providers/schedule/schedule.provider.dart';
@@ -106,6 +107,12 @@ void initLocator() {
     () async => IzdenizStationRepository(
       stationProvider: await GetIt.I.getAsync(),
       rawToStationConverter: GetIt.I.get(),
+    ),
+  );
+  GetIt.I.registerLazySingletonAsync<FavoriteRepository>(
+    () async => SqliteFavoriteRepository(
+      sqliteFavoriteProvider: await GetIt.I.getAsync(),
+      entryToInstanceConverter: GetIt.I.get(),
     ),
   );
 }
