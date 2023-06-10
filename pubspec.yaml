@@ -47,6 +47,7 @@ dependencies:
   google_mobile_ads: ^3.0.0
   sqflite: ^2.2.8+4
   tuple: ^2.0.1
+  firebase_messaging: ^14.6.2
 
 dev_dependencies:
   flutter_test:
