@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 // ignore: unused_import
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -56,6 +57,11 @@ Future<void> main() async {
         logOptions:
             const LogOptions(kDebugMode ? traceLevel : LogLevel.warning),
       );
+
+      // Firebase Messaging
+      await FirebaseInAppMessaging.instance.triggerEvent("");
+      final messagingToken = await FirebaseMessaging.instance.getToken();
+      logDebug("Firebase Messaging Token: $messagingToken");
 
       runApp(
         EasyLocalization(
