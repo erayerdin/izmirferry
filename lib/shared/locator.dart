@@ -12,6 +12,7 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
 import 'package:flutter_loggy_dio/flutter_loggy_dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:izmirferry/favorite/data/converters/favorite.converters.dart';
 import 'package:izmirferry/favorite/data/providers/favorite/favorite.provider.dart';
 import 'package:izmirferry/ferry/data/converters/station/station.converter.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
@@ -19,6 +20,7 @@ import 'package:izmirferry/ferry/data/providers/schedule/schedule.provider.dart'
 import 'package:izmirferry/ferry/data/providers/station/station.provider.dart';
 import 'package:izmirferry/ferry/data/repositories/schedule/schedule.repository.dart';
 import 'package:izmirferry/ferry/data/repositories/station/station.repository.dart';
+import 'package:izmirferry/shared/constants.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -81,6 +83,9 @@ void initLocator() {
   //------------//
   GetIt.I.registerLazySingleton<Converter<Map<String, dynamic>, Station>>(
     () => IzdenizStationConverter(),
+  );
+  GetIt.I.registerLazySingleton<Converter<SqliteRow, FavoriteEntry>>(
+    () => FavoriteRowToTupleConverter(),
   );
 
   //--------------//
