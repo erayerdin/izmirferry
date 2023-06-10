@@ -10,7 +10,7 @@ import 'package:tuple/tuple.dart';
 
 typedef _Entries = Iterable<Tuple5<int, int, int, int?, DateTime>>;
 
-abstract class FavoriteProvider {
+abstract class FavoriteProvider with DataLoggy {
   Future<int> add({
     required int startStationId,
     required int endStationId,
@@ -30,7 +30,7 @@ abstract class FavoriteProvider {
   Future<void> delete(int id);
 }
 
-class SqliteFavoriteProvider extends FavoriteProvider with DataLoggy {
+class SqliteFavoriteProvider extends FavoriteProvider {
   SqliteFavoriteProvider({required Database database}) {
     _database = database;
   }
