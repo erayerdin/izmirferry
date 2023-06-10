@@ -7,5 +7,4 @@ class FavoriteState with _$FavoriteState {
       _ListedState;
   const factory FavoriteState.added() = _AddedState;
   const factory FavoriteState.deleted() = _DeletedState;
-  const factory FavoriteState.alreadyExists() = _AlreadyExistsState;
 }
