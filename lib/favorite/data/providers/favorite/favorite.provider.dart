@@ -8,6 +8,8 @@ import 'package:izmirferry/shared/logger.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tuple/tuple.dart';
 
+typedef _Entries = Iterable<Tuple5<int, int, int, int?, DateTime>>;
+
 abstract class FavoriteProvider {
   Future<int> add({
     required int startStationId,
@@ -23,7 +25,7 @@ abstract class FavoriteProvider {
   });
 
   /// Args in order: id, start station id, end station id, day id (nullable), last updated
-  Future<Tuple5<int, int, int, int?, DateTime>> list();
+  Future<_Entries> list();
 
   Future<void> delete(int id);
 }
@@ -88,8 +90,18 @@ class SqliteFavoriteProvider extends FavoriteProvider with DataLoggy {
   }
 
   @override
-  Future<Tuple5<int, int, int, int?, DateTime>> list() {
-    // TODO: implement list
-    throw UnimplementedError();
+  Future<_Entries> list() async {
+    loggy.debug('Listing all favorites...');
+
+    final data = await _database.query('favorites');
+    return data.map(
+      (e) => Tuple5(
+        e['id'] as int,
+        e['startStationId'] as int,
+        e['endStationId'] as int,
+        e['dayId'] as int?,
+        e['lastUpdated'] as DateTime,
+      ),
+    );
   }
 }
