@@ -13,6 +13,7 @@ import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_stor
 import 'package:flutter_loggy_dio/flutter_loggy_dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:izmirferry/favorite/data/converters/favorite.converters.dart';
+import 'package:izmirferry/favorite/data/models/favorite/favorite.model.dart';
 import 'package:izmirferry/favorite/data/providers/favorite/favorite.provider.dart';
 import 'package:izmirferry/ferry/data/converters/station/station.converter.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
@@ -89,6 +90,9 @@ void initLocator() {
   );
   GetIt.I.registerLazySingleton<Converter<SqliteRow, FavoriteEntry>>(
     () => FavoriteRowToTupleConverter(),
+  );
+  GetIt.I.registerLazySingleton<Converter<FavoriteEntry, Favorite>>(
+    () => FavoriteEntryToInstanceConverter(),
   );
 
   //--------------//
