@@ -14,8 +14,10 @@ part 'favorite.model.freezed.dart';
 class Favorite with _$Favorite {
   const Favorite._();
   const factory Favorite({
+    required int id,
     required Station startStation,
     required Station endStation,
     required Day? day,
+    required DateTime lastUpdate,
   }) = _Favorite;
 }
