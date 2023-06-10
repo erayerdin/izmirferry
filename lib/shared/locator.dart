@@ -75,7 +75,10 @@ void initLocator() {
     ),
   );
   GetIt.I.registerLazySingletonAsync<FavoriteProvider>(
-    () async => SqliteFavoriteProvider(database: await GetIt.I.getAsync()),
+    () async => SqliteFavoriteProvider(
+      database: await GetIt.I.getAsync(),
+      rowToTupleConverter: GetIt.I.get(),
+    ),
   );
 
   //------------//

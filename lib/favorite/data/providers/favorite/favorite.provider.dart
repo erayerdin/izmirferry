@@ -4,6 +4,10 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import 'dart:convert';
+
+import 'package:izmirferry/favorite/data/converters/favorite.converters.dart';
+import 'package:izmirferry/shared/constants.dart';
 import 'package:izmirferry/shared/logger.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:tuple/tuple.dart';
@@ -31,11 +35,16 @@ abstract class FavoriteProvider with DataLoggy {
 }
 
 class SqliteFavoriteProvider extends FavoriteProvider {
-  SqliteFavoriteProvider({required Database database}) {
+  SqliteFavoriteProvider({
+    required Database database,
+    required Converter<SqliteRow, FavoriteEntry> rowToTupleConverter,
+  }) {
     _database = database;
+    _rowToTupleConverter = rowToTupleConverter;
   }
 
   late Database _database;
+  late Converter<SqliteRow, FavoriteEntry> _rowToTupleConverter;
 
   @override
   Future<int> add({
@@ -94,14 +103,6 @@ class SqliteFavoriteProvider extends FavoriteProvider {
     loggy.debug('Listing all favorites...');
 
     final data = await _database.query('favorites');
-    return data.map(
-      (e) => Tuple5(
-        e['id'] as int,
-        e['startStationId'] as int,
-        e['endStationId'] as int,
-        e['dayId'] as int?,
-        e['lastUpdated'] as DateTime,
-      ),
-    );
+    return data.map(_rowToTupleConverter.convert);
   }
 }
