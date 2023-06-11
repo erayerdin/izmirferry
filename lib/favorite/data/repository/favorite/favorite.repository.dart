@@ -6,7 +6,6 @@
 
 import 'dart:convert';
 
-import 'package:izmirferry/favorite/data/converters/favorite.converters.dart';
 import 'package:izmirferry/favorite/data/models/favorite/favorite.model.dart';
 import 'package:izmirferry/favorite/data/providers/favorite/favorite.provider.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
@@ -35,14 +34,14 @@ abstract class FavoriteRepository with DataLoggy {
 class SqliteFavoriteRepository extends FavoriteRepository {
   SqliteFavoriteRepository({
     required SqliteFavoriteProvider sqliteFavoriteProvider,
-    required Converter<FavoriteEntry, Favorite> entryToInstanceConverter,
+    required Converter<Map<String, dynamic>, Favorite> rowToInstanceConverter,
   }) {
     _sqliteFavoriteProvider = sqliteFavoriteProvider;
-    _entryToInstanceConverter = entryToInstanceConverter;
+    _rowToInstanceConverter = rowToInstanceConverter;
   }
 
-  late SqliteFavoriteProvider _sqliteFavoriteProvider;
-  late Converter<FavoriteEntry, Favorite> _entryToInstanceConverter;
+  late FavoriteProvider _sqliteFavoriteProvider;
+  late Converter<Map<String, dynamic>, Favorite> _rowToInstanceConverter;
 
   @override
   Future<int> add({
@@ -93,6 +92,6 @@ class SqliteFavoriteRepository extends FavoriteRepository {
     loggy.debug('Listing all favorites...');
 
     final entries = await _sqliteFavoriteProvider.list();
-    return entries.map(_entryToInstanceConverter.convert);
+    return entries.map(_rowToInstanceConverter.convert);
   }
 }

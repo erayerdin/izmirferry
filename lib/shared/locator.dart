@@ -22,7 +22,6 @@ import 'package:izmirferry/ferry/data/providers/schedule/schedule.provider.dart'
 import 'package:izmirferry/ferry/data/providers/station/station.provider.dart';
 import 'package:izmirferry/ferry/data/repositories/schedule/schedule.repository.dart';
 import 'package:izmirferry/ferry/data/repositories/station/station.repository.dart';
-import 'package:izmirferry/shared/constants.dart';
 import 'package:loggy/loggy.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:sqflite/sqflite.dart';
@@ -77,10 +76,7 @@ void initLocator() {
     ),
   );
   GetIt.I.registerLazySingletonAsync<FavoriteProvider>(
-    () async => SqliteFavoriteProvider(
-      database: await GetIt.I.getAsync(),
-      rowToTupleConverter: GetIt.I.get(),
-    ),
+    () async => SqliteFavoriteProvider(database: await GetIt.I.getAsync()),
   );
 
   //------------//
@@ -88,12 +84,6 @@ void initLocator() {
   //------------//
   GetIt.I.registerLazySingleton<Converter<Map<String, dynamic>, Station>>(
     () => IzdenizStationConverter(),
-  );
-  GetIt.I.registerLazySingleton<Converter<SqliteRow, FavoriteEntry>>(
-    () => FavoriteRowToTupleConverter(),
-  );
-  GetIt.I.registerLazySingleton<Converter<FavoriteEntry, Favorite>>(
-    () => FavoriteEntryToInstanceConverter(),
   );
   GetIt.I.registerLazySingleton<Converter<Map<String, dynamic>, Favorite>>(
     () => FavoriteRowToInstanceConverter(),
@@ -115,7 +105,7 @@ void initLocator() {
   GetIt.I.registerLazySingletonAsync<FavoriteRepository>(
     () async => SqliteFavoriteRepository(
       sqliteFavoriteProvider: await GetIt.I.getAsync(),
-      entryToInstanceConverter: GetIt.I.get(),
+      rowToInstanceConverter: GetIt.I.get(),
     ),
   );
 }

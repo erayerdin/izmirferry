@@ -4,15 +4,8 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-import 'dart:convert';
-
-import 'package:izmirferry/favorite/data/converters/favorite.converters.dart';
-import 'package:izmirferry/shared/constants.dart';
 import 'package:izmirferry/shared/logger.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:tuple/tuple.dart';
-
-typedef _Entries = Iterable<Tuple5<int, int, int, int?, DateTime>>;
 
 abstract class FavoriteProvider with DataLoggy {
   Future<int> add({
@@ -29,22 +22,17 @@ abstract class FavoriteProvider with DataLoggy {
   });
 
   /// Args in order: id, start station id, end station id, day id (nullable), last updated
-  Future<_Entries> list();
+  Future<Iterable<Map<String, dynamic>>> list();
 
   Future<void> delete(int id);
 }
 
 class SqliteFavoriteProvider extends FavoriteProvider {
-  SqliteFavoriteProvider({
-    required Database database,
-    required Converter<SqliteRow, FavoriteEntry> rowToTupleConverter,
-  }) {
+  SqliteFavoriteProvider({required Database database}) {
     _database = database;
-    _rowToTupleConverter = rowToTupleConverter;
   }
 
   late Database _database;
-  late Converter<SqliteRow, FavoriteEntry> _rowToTupleConverter;
 
   @override
   Future<int> add({
@@ -99,10 +87,9 @@ class SqliteFavoriteProvider extends FavoriteProvider {
   }
 
   @override
-  Future<_Entries> list() async {
+  Future<Iterable<Map<String, dynamic>>> list() async {
     loggy.debug('Listing all favorites...');
 
-    final data = await _database.query('favorites');
-    return data.map(_rowToTupleConverter.convert);
+    return await _database.query('favorites');
   }
 }
