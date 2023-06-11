@@ -47,3 +47,20 @@ class FavoriteEntryToInstanceConverter
     );
   }
 }
+
+class FavoriteRowToInstanceConverter
+    extends Converter<Map<String, dynamic>, Favorite> with DataLoggy {
+  @override
+  Favorite convert(Map<String, dynamic> input) {
+    loggy.debug('Converting favorite row to instance...');
+    loggy.trace('row: $input');
+
+    return Favorite(
+      id: input['id'],
+      startStation: input['startStation'],
+      endStation: input['endStation'],
+      day: input['day'],
+      lastUpdate: input['lastUpdate'],
+    );
+  }
+}

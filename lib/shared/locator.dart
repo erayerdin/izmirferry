@@ -95,6 +95,9 @@ void initLocator() {
   GetIt.I.registerLazySingleton<Converter<FavoriteEntry, Favorite>>(
     () => FavoriteEntryToInstanceConverter(),
   );
+  GetIt.I.registerLazySingleton<Converter<Map<String, dynamic>, Favorite>>(
+    () => FavoriteRowToInstanceConverter(),
+  );
 
   //--------------//
   // Repositories //
