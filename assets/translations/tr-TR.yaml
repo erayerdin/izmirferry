@@ -15,7 +15,7 @@ from_to_day: "{on} günü {from} istasyonundan {to} istasyonuna"
 about: "Hakkında"
 favorites: "Favoriler"
 your_favorites: "Favorileriniz"
-no_favorites_found: "Favoriniz bulunmuyor."
+no_favorites_found: "Favoriniz rotanız bulunmuyor."
 
 # Days
 monday: "Pazartesi"
