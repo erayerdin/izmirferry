@@ -20,6 +20,7 @@ import 'package:izmirferry/shared/constants.dart';
 import 'package:izmirferry/shared/extensions/time.dart';
 import 'package:izmirferry/shared/presentation/pages/home/app_bar.component.dart';
 import 'package:izmirferry/shared/presentation/pages/home/bottom_bar.component.dart';
+import 'package:izmirferry/shared/presentation/pages/home/drawer.component.dart';
 import 'package:izmirferry/shared/presentation/pages/home/schedules_list.component.dart';
 
 @RoutePage()
@@ -57,8 +58,9 @@ class HomePage extends StatelessWidget {
             preferredSize: Size(context.width, 64),
             child: const AppBarComponent(),
           ),
-          body: const _Body().paddingOnly(left: 16, right: 16),
           bottomNavigationBar: const BottomBarComponent(),
+          drawer: const Drawer(child: DrawerComponent()),
+          body: const _Body().paddingOnly(left: 16, right: 16),
         ),
       ),
     );

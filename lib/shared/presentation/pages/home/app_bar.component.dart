@@ -23,15 +23,27 @@ class AppBarComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<StationBloc, StationState>(
       builder: (context, state) => AppBar(
-        leading: Image.asset(
-          'assets/icon/icon.png',
-          color: Colors.white,
-          height: 16 * 3,
-        ).paddingOnly(left: 16),
-        title: Text(
-          'izmir_ferry',
-          style: context.bodyLarge?.copyWith(color: Colors.white, fontSize: 24),
-        ).tr(),
+        leading: IconButton(
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+          icon: const Icon(Icons.menu, color: Colors.white),
+        ),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/icon/icon.png',
+              color: Colors.white,
+              height: 16 * 3,
+            ).paddingOnly(right: 16),
+            Text(
+              'izmir_ferry',
+              style: context.bodyLarge
+                  ?.copyWith(color: Colors.white, fontSize: 24),
+            ).tr(),
+          ],
+        ),
         centerTitle: true,
         flexibleSpace: Container(
           decoration: BoxDecoration(
