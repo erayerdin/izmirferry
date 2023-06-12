@@ -10,6 +10,8 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it_future_builder/get_it_future_builder.dart';
+import 'package:izmirferry/favorite/data/repository/favorite/favorite.repository.dart';
+import 'package:izmirferry/favorite/logic/favorite/favorite_bloc.dart';
 import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/ferry/data/repositories/schedule/schedule.repository.dart';
 import 'package:izmirferry/ferry/data/repositories/station/station.repository.dart';
@@ -26,11 +28,13 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetItFutureBuilder2<ScheduleRepository, StationRepository>(
+    return GetItFutureBuilder3<ScheduleRepository, StationRepository,
+        FavoriteRepository>(
       loading: (context) => Scaffold(
         body: const CircularProgressIndicator().toCenter(),
       ),
-      ready: (context, scheduleRepo, stationRepo) => MultiBlocProvider(
+      ready: (context, scheduleRepo, stationRepo, favoriteRepo) =>
+          MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) => StationBloc(
@@ -43,6 +47,9 @@ class HomePage extends StatelessWidget {
                   day: DateTime.now().dayValue,
                 ),
               ),
+          ),
+          BlocProvider(
+            create: (context) => FavoriteBloc(favoriteRepository: favoriteRepo),
           ),
         ],
         child: Scaffold(
