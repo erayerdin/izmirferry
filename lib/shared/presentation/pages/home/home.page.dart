@@ -59,7 +59,10 @@ class HomePage extends StatelessWidget {
             child: const AppBarComponent(),
           ),
           bottomNavigationBar: const BottomBarComponent(),
-          drawer: const Drawer(child: DrawerComponent()),
+          drawer: const Drawer(
+            elevation: 4,
+            child: DrawerComponent(),
+          ),
           body: const _Body().paddingOnly(left: 16, right: 16),
         ),
       ),
