@@ -33,14 +33,14 @@ abstract class FavoriteRepository with DataLoggy {
 
 class SqliteFavoriteRepository extends FavoriteRepository {
   SqliteFavoriteRepository({
-    required SqliteFavoriteProvider sqliteFavoriteProvider,
+    required FavoriteProvider favoriteProvider,
     required Converter<Map<String, dynamic>, Favorite> rowToInstanceConverter,
   }) {
-    _sqliteFavoriteProvider = sqliteFavoriteProvider;
+    _favoriteProvider = favoriteProvider;
     _rowToInstanceConverter = rowToInstanceConverter;
   }
 
-  late FavoriteProvider _sqliteFavoriteProvider;
+  late FavoriteProvider _favoriteProvider;
   late Converter<Map<String, dynamic>, Favorite> _rowToInstanceConverter;
 
   @override
@@ -54,7 +54,7 @@ class SqliteFavoriteRepository extends FavoriteRepository {
     loggy.trace('end station: $endStation');
     loggy.trace('day: $day');
 
-    return await _sqliteFavoriteProvider.add(
+    return await _favoriteProvider.add(
       startStationId: startStation.id,
       endStationId: endStation.id,
       dayId: day?.id,
@@ -72,7 +72,7 @@ class SqliteFavoriteRepository extends FavoriteRepository {
     loggy.trace('end station: $endStation');
     loggy.trace('day: $day');
 
-    return await _sqliteFavoriteProvider.check(
+    return await _favoriteProvider.check(
       startStationId: startStation.id,
       endStationId: endStation.id,
       dayId: day?.id,
@@ -84,14 +84,14 @@ class SqliteFavoriteRepository extends FavoriteRepository {
     loggy.debug('Deleting station...');
     loggy.trace('station: $station');
 
-    await _sqliteFavoriteProvider.delete(station.id);
+    await _favoriteProvider.delete(station.id);
   }
 
   @override
   Future<Iterable<Favorite>> list() async {
     loggy.debug('Listing all favorites...');
 
-    final entries = await _sqliteFavoriteProvider.list();
+    final entries = await _favoriteProvider.list();
     return entries.map(_rowToInstanceConverter.convert);
   }
 }

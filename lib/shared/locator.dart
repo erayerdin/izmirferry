@@ -104,7 +104,7 @@ void initLocator() {
   );
   GetIt.I.registerLazySingletonAsync<FavoriteRepository>(
     () async => SqliteFavoriteRepository(
-      sqliteFavoriteProvider: await GetIt.I.getAsync(),
+      favoriteProvider: await GetIt.I.getAsync(),
       rowToInstanceConverter: GetIt.I.get(),
     ),
   );
