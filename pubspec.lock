@@ -633,10 +633,10 @@ packages:
     dependency: "direct main"
     description:
       name: get_it_future_builder
-      sha256: "5c7ab6632e1cab2a3601db43c0086331b77330ebb1a4d264e880efa4719fb3a0"
+      sha256: "725b7884d28260810b546d9f7378da0a48edefbf3a93206ccdee10083c57ac39"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.3.1"
   glob:
     dependency: transitive
     description:
