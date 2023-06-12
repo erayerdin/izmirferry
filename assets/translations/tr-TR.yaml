@@ -12,6 +12,7 @@ no_schedules_found: "Kalkış verisi bulunamadı."
 choose_a_station: "Bir istasyon seç"
 choose_a_day: "Bir gün seç"
 from_to_day: "{on} günü {from} istasyonundan {to} istasyonuna"
+about: "Hakkında"
 
 # Days
 monday: "Pazartesi"
