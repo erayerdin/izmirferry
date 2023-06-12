@@ -9,6 +9,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:izmirferry/favorite/presentation/components/favorite_list_dialog/favorite_list_dialog.component.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
 import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
 import 'package:izmirferry/shared/presentation/components/circular_icon_button/circular_icon_button.component.dart';
@@ -71,6 +72,10 @@ class AppBarComponent extends StatelessWidget {
             color: Colors.white,
             itemBuilder: (context) => [
               PopupMenuItem(
+                value: 'favorites',
+                child: const Text('favorites').tr(),
+              ),
+              PopupMenuItem(
                 value: 'about',
                 child: const Text('about').tr(),
               ),
@@ -79,6 +84,13 @@ class AppBarComponent extends StatelessWidget {
               switch (val) {
                 case 'about':
                   await _showAboutDialog(context);
+                case 'favorites':
+                  await showDialog(
+                    context: context,
+                    builder: (context) => const Dialog(
+                      child: FavoriteListDialogComponent(),
+                    ),
+                  );
               }
             },
           ),
