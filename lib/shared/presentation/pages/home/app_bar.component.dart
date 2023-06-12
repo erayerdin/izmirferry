@@ -67,14 +67,20 @@ class AppBarComponent extends StatelessWidget {
           ),
         ),
         actions: [
-          IconButton(
-            onPressed: () async {
-              await _showAboutDialog(context);
+          PopupMenuButton(
+            color: Colors.white,
+            itemBuilder: (context) => [
+              PopupMenuItem(
+                value: 'about',
+                child: const Text('about').tr(),
+              ),
+            ],
+            onSelected: (val) async {
+              switch (val) {
+                case 'about':
+                  await _showAboutDialog(context);
+              }
             },
-            icon: const Icon(
-              Icons.info,
-              color: Colors.white,
-            ),
           ),
         ],
       ),
