@@ -46,6 +46,14 @@ class DrawerComponent extends StatelessWidget {
                 .tr()
                 .paddingOnly(bottom: 16),
             ListTile(
+              leading: const Icon(Icons.favorite),
+              title: const Text('favorites').tr(),
+              onTap: () {
+                // TODO tbi
+                throw UnimplementedError();
+              },
+            ),
+            ListTile(
               leading: const Icon(Icons.info),
               title: const Text('about').tr(),
               onTap: () async {
