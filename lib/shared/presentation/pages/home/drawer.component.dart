@@ -4,6 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import 'package:auto_route/auto_route.dart';
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
 import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
 import 'package:izmirferry/shared/presentation/components/circular_icon_button/circular_icon_button.component.dart';
+import 'package:izmirferry/shared/router.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
@@ -49,8 +51,7 @@ class DrawerComponent extends StatelessWidget {
               leading: const Icon(Icons.favorite),
               title: const Text('favorites').tr(),
               onTap: () {
-                // TODO tbi
-                throw UnimplementedError();
+                context.router.push(const FavoriteListRoute());
               },
             ),
             ListTile(
