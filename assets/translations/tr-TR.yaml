@@ -16,6 +16,13 @@ about: "Hakkında"
 favorites: "Favoriler"
 your_favorites: "Favorileriniz"
 no_favorites_found: "Favoriniz rotanız bulunmuyor."
+add_favorite: "Favori Ekle"
+departure_station: "Kalkış İstasyonu"
+destination_station: "Varış İstasyonu"
+add: "Ekle"
+cancel: "İptal"
+day: "Gün"
+always_today: "Her Zaman Bugün"
 
 # Days
 monday: "Pazartesi"
