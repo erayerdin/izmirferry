@@ -5,6 +5,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:loggy/loggy.dart';
 
 const LogLevel traceLevel = LogLevel('trace', 1);
@@ -17,6 +18,12 @@ extension LogLevelExtension on Loggy {
 mixin DataLoggy implements LoggyType {
   @override
   Loggy<DataLoggy> get loggy => Loggy<DataLoggy>('Data Loggy - $runtimeType');
+}
+
+mixin LogicLoggy implements LoggyType {
+  @override
+  Loggy<LogicLoggy> get loggy =>
+      Loggy<LogicLoggy>('Logic Loggy - $runtimeType');
 }
 
 class CrashlyticsPrinter extends LoggyPrinter {
@@ -57,5 +64,53 @@ class CrashlyticsPrinter extends LoggyPrinter {
   /// Get prefix for level
   String? levelPrefix(LogLevel level) {
     return _levelPrefixes[level];
+  }
+}
+
+class LoggyBlocObserver extends BlocObserver with LogicLoggy {
+  @override
+  void onCreate(BlocBase<dynamic> bloc) {
+    loggy.debug('Creating bloc: $bloc');
+    super.onCreate(bloc);
+  }
+
+  @override
+  void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
+    loggy.debug('Bloc is on event: $bloc');
+    loggy.trace('Event: $event');
+    super.onEvent(bloc, event);
+  }
+
+  @override
+  void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
+    loggy.debug('Bloc is on change: $bloc');
+    loggy.trace('Change: $change');
+    super.onChange(bloc, change);
+  }
+
+  @override
+  void onTransition(
+    Bloc<dynamic, dynamic> bloc,
+    Transition<dynamic, dynamic> transition,
+  ) {
+    loggy.debug('Bloc is on transition: $bloc');
+    loggy.trace('Transition: $transition');
+    super.onTransition(bloc, transition);
+  }
+
+  @override
+  void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
+    loggy.debug('Bloc is on error: $bloc');
+    loggy.trace('Error: $error');
+    loggy.trace('Stacktrace: $stackTrace');
+    loggy.error('Error: $error');
+    loggy.error('Stacktrace: $stackTrace');
+    super.onError(bloc, error, stackTrace);
+  }
+
+  @override
+  void onClose(BlocBase<dynamic> bloc) {
+    loggy.debug('Bloc is on close: $bloc');
+    super.onClose(bloc);
   }
 }

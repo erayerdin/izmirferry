@@ -11,6 +11,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:izmirferry/firebase_options.dart';
@@ -62,6 +63,8 @@ Future<void> main() async {
       await FirebaseInAppMessaging.instance.triggerEvent("");
       final messagingToken = await FirebaseMessaging.instance.getToken();
       logDebug("Firebase Messaging Token: $messagingToken");
+
+      Bloc.observer = LoggyBlocObserver();
 
       runApp(
         EasyLocalization(
