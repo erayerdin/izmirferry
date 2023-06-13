@@ -6,7 +6,10 @@
 
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:izmirferry/favorite/data/models/favorite/favorite.model.dart';
+import 'package:izmirferry/ferry/constants.dart';
+import 'package:izmirferry/shared/constants.dart';
 import 'package:izmirferry/shared/logger.dart';
 
 class FavoriteRowToInstanceConverter
@@ -18,10 +21,11 @@ class FavoriteRowToInstanceConverter
 
     return Favorite(
       id: input['id'],
-      startStation: input['startStation'],
-      endStation: input['endStation'],
-      day: input['day'],
-      lastUpdate: input['lastUpdate'],
+      startStation:
+          allStation.firstWhere((s) => s.id == input['startStationId']),
+      endStation: allStation.firstWhere((s) => s.id == input['endStationId']),
+      day: Day.values.firstWhereOrNull((d) => d.id == input['dayId']),
+      lastUpdate: DateTime.parse(input['lastUpdate']),
     );
   }
 }
