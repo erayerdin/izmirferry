@@ -14,6 +14,7 @@ import 'package:izmirferry/favorite/data/models/favorite/favorite.model.dart';
 import 'package:izmirferry/favorite/data/repository/favorite/favorite.repository.dart';
 import 'package:izmirferry/favorite/logic/favorite/favorite_bloc.dart';
 import 'package:izmirferry/favorite/presentation/pages/favorite_list/add_favorite_dialog.component.dart';
+import 'package:izmirferry/favorite/presentation/pages/favorite_list/favorite_card.component.dart';
 
 @RoutePage()
 class FavoriteListPage extends StatelessWidget {
@@ -37,6 +38,7 @@ class FavoriteListPage extends StatelessWidget {
           child: Scaffold(
             appBar: AppBar(
               title: const Text('favorites').tr(),
+              backgroundColor: Colors.blue,
             ),
             body: BlocBuilder<FavoriteBloc, FavoriteState>(
               builder: (context, state) {
@@ -50,7 +52,14 @@ class FavoriteListPage extends StatelessWidget {
                       return const Text('no_favorites_found').tr().toCenter();
                     }
 
-                    return const Text('tbi'); // TODO tbi
+                    return ListView.builder(
+                      padding: const EdgeInsets.all(16),
+                      itemBuilder: (context, index) {
+                        final favorite = favorites[index];
+                        return FavoriteCardComponent(favorite: favorite);
+                      },
+                      itemCount: favorites.length,
+                    );
                   },
                   added: (state) =>
                       const CircularProgressIndicator().toCenter(),
