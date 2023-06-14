@@ -14,13 +14,6 @@ abstract class FavoriteProvider with DataLoggy {
     int? dayId,
   });
 
-  /// returns id if present
-  Future<int?> check({
-    required int startStationId,
-    required int endStationId,
-    required int? dayId,
-  });
-
   /// Args in order: id, start station id, end station id, day id (nullable), last updated
   Future<Iterable<Map<String, dynamic>>> list();
 
@@ -51,31 +44,6 @@ class SqliteFavoriteProvider extends FavoriteProvider {
       'dayId': dayId,
       'lastUpdate': DateTime.now().toIso8601String(),
     });
-  }
-
-  @override
-  Future<int?> check({
-    required int startStationId,
-    required int endStationId,
-    required int? dayId,
-  }) async {
-    loggy.debug('Checking favorite...');
-    loggy.trace('start station id: $startStationId');
-    loggy.trace('end station id: $endStationId');
-    loggy.trace('day id: $dayId');
-
-    final rows = await _database.query(
-      'favorites',
-      where: 'startSessionId = ?, endStationId = ?, dayId = ?',
-      whereArgs: [startStationId, endStationId, dayId],
-    );
-
-    if (rows.length > 1) {
-      loggy.warning('Favorite check has returned more than two items.');
-    }
-
-    final row = rows.firstOrNull;
-    return row?['id'] as int?;
   }
 
   @override
