@@ -2,7 +2,7 @@ name: izmirferry
 description: Show ferry schedules in İzmir.
 publish_to: 'none'
 
-version: 0.3.3+12
+version: 0.3.4+13
 
 environment:
   sdk: '>=3.0.0 <4.0.0'
