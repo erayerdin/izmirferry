@@ -7,11 +7,16 @@ and this project adheres to [Semantic Versioning].
 
 ## [Unreleased]
 
-### For Users
+From this release and onwards, the CHANGELOG will only contain the changes for users, not the developers. Potentional contributors can check the commit history in order to get some ideas about the history of the project.
 
-#### Added
+### Added
 
  - Banner ads to bottom
+ - **Favorite system**: Now, users can add their favorite stations to favorites so that they can pick them easily from home page.
+
+### Changed
+
+ - Overall UI has changed to incorporate with new features.
 
 ## [0.2.1] - 09.06.2023
 

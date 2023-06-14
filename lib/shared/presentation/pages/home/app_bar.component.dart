@@ -8,12 +8,8 @@ import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:izmirferry/ferry/data/models/station/station.model.dart';
 import 'package:izmirferry/ferry/logic/station/station_bloc.dart';
-import 'package:izmirferry/shared/presentation/components/circular_icon_button/circular_icon_button.component.dart';
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class AppBarComponent extends StatelessWidget {
   const AppBarComponent({super.key});
@@ -22,15 +18,27 @@ class AppBarComponent extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<StationBloc, StationState>(
       builder: (context, state) => AppBar(
-        leading: Image.asset(
-          'assets/icon/icon.png',
-          color: Colors.white,
-          height: 16 * 3,
-        ).paddingOnly(left: 16),
-        title: Text(
-          'izmir_ferry',
-          style: context.bodyLarge?.copyWith(color: Colors.white, fontSize: 24),
-        ).tr(),
+        leading: IconButton(
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+          icon: const Icon(Icons.menu, color: Colors.white),
+        ),
+        title: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Image.asset(
+              'assets/icon/icon.png',
+              color: Colors.white,
+              height: 16 * 3,
+            ).paddingOnly(right: 16),
+            Text(
+              'izmir_ferry',
+              style: context.bodyLarge
+                  ?.copyWith(color: Colors.white, fontSize: 24),
+            ).tr(),
+          ],
+        ),
         centerTitle: true,
         flexibleSpace: Container(
           decoration: BoxDecoration(
@@ -66,163 +74,7 @@ class AppBarComponent extends StatelessWidget {
             ),
           ),
         ),
-        actions: [
-          IconButton(
-            onPressed: () async {
-              await _showAboutDialog(context);
-            },
-            icon: const Icon(
-              Icons.info,
-              color: Colors.white,
-            ),
-          ),
-        ],
       ),
-    );
-  }
-
-  Future<void> _showAboutDialog(BuildContext context) async {
-    final packageInfo = await PackageInfo.fromPlatform();
-
-    // ignore: use_build_context_synchronously
-    showAboutDialog(
-      context: context,
-      applicationIcon: Image.asset(
-        'assets/icon/icon.png',
-        width: 32,
-      ),
-      applicationName: 'izmir_ferry'.tr(),
-      applicationVersion: packageInfo.version,
-      children: [
-        const Text(
-          'izmir_ferry_short_description',
-          textAlign: TextAlign.center,
-        ).tr(),
-        16.heightBox,
-        Wrap(
-          alignment: WrapAlignment.center,
-          runSpacing: 8.0,
-          spacing: 8.0,
-          children: [
-            CircularIconButton(
-              onPressed: () async {
-                await launchUrlString(
-                  'https://github.com/erayerdin/izmirferry/',
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              fillColor: Colors.black,
-              child: const Icon(
-                Icons.developer_mode,
-                color: Colors.white,
-              ),
-            ),
-            CircularIconButton(
-              onPressed: () async {
-                await launchUrlString(
-                  'https://t.me/erayerdin',
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              fillColor: const Color(0xff0088cc),
-              child: const FaIcon(
-                FontAwesomeIcons.telegram,
-                color: Colors.white,
-              ),
-            ),
-            CircularIconButton(
-              onPressed: () async {
-                await launchUrlString(
-                  'https://twitter.com/_erayerdin',
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              fillColor: const Color(0xff1da1f2),
-              child: const FaIcon(
-                FontAwesomeIcons.twitter,
-                color: Colors.white,
-              ),
-            ),
-            CircularIconButton(
-              onPressed: () async {
-                await launchUrlString(
-                  'https://www.linkedin.com/in/erayerdin/',
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              fillColor: const Color(0xff0a66c2),
-              child: const FaIcon(
-                FontAwesomeIcons.linkedinIn,
-                color: Colors.white,
-              ),
-            ),
-            CircularIconButton(
-              onPressed: () async {
-                await launchUrlString(
-                  'https://www.youtube.com/@_schwm',
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              fillColor: const Color(0xffff0000),
-              child: const FaIcon(
-                FontAwesomeIcons.youtube,
-                color: Colors.white,
-              ),
-            ),
-            CircularIconButton(
-              onPressed: () async {
-                await launchUrlString(
-                  'https://www.instagram.com/_erayerdin/',
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              fillColor: const Color(0xffc13584),
-              child: const FaIcon(
-                FontAwesomeIcons.instagram,
-                color: Colors.white,
-              ),
-            ),
-            CircularIconButton(
-              onPressed: () async {
-                await launchUrlString(
-                  'https://stackoverflow.com/users/2926992/eray-erdin',
-                );
-              },
-              fillColor: const Color(0xfff48024),
-              child: const FaIcon(
-                FontAwesomeIcons.stackOverflow,
-                color: Colors.white,
-              ),
-            ),
-            CircularIconButton(
-              onPressed: () async {
-                await launchUrlString(
-                  'https://github.com/erayerdin/',
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              fillColor: Colors.black,
-              child: const FaIcon(
-                FontAwesomeIcons.github,
-                color: Colors.white,
-              ),
-            ),
-            CircularIconButton(
-              onPressed: () async {
-                await launchUrlString(
-                  'mailto:eraygezer.94@gmail.com',
-                  mode: LaunchMode.externalApplication,
-                );
-              },
-              fillColor: Colors.white,
-              child: const Icon(
-                Icons.mail,
-                color: Colors.black,
-              ),
-            ),
-          ],
-        )
-      ],
     );
   }
 }

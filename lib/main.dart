@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:easy_localization_loader/easy_localization_loader.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
@@ -7,11 +8,16 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 // ignore: unused_import
 import 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_loggy/flutter_loggy.dart';
+import 'package:get_it_future_builder/get_it_future_builder.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
+import 'package:izmirferry/favorite/data/repository/favorite/favorite.repository.dart';
+import 'package:izmirferry/favorite/logic/favorite/favorite_bloc.dart';
 import 'package:izmirferry/firebase_options.dart';
 import 'package:izmirferry/shared/licenses.dart';
 import 'package:izmirferry/shared/locator.dart';
@@ -57,6 +63,13 @@ Future<void> main() async {
             const LogOptions(kDebugMode ? traceLevel : LogLevel.warning),
       );
 
+      // Firebase Messaging
+      await FirebaseInAppMessaging.instance.triggerEvent("");
+      final messagingToken = await FirebaseMessaging.instance.getToken();
+      logDebug("Firebase Messaging Token: $messagingToken");
+
+      Bloc.observer = LoggyBlocObserver();
+
       runApp(
         EasyLocalization(
           supportedLocales: const [Locale("tr", "TR")],
@@ -77,20 +90,39 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      title: 'İzmir Ferry',
-      theme: ThemeData(
-        useMaterial3: true,
-        colorSchemeSeed: Colors.blue,
-        appBarTheme: Theme.of(context).appBarTheme.copyWith(elevation: 8),
-      ),
-      debugShowCheckedModeBanner: false,
-      // Localization
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      // Router
-      routerConfig: _router.config(),
-    );
+    return GetItFutureBuilder<FavoriteRepository>(
+        loading: (context) => MaterialApp(
+              home: Scaffold(
+                body: const CircularProgressIndicator().toCenter(),
+              ),
+            ),
+        ready: (context, favoriteRepo) {
+          return MultiBlocProvider(
+            providers: [
+              // TODO find a way to inject the same FavoriteBloc instance to home and favorite list page
+              BlocProvider(
+                create: (context) =>
+                    FavoriteBloc(favoriteRepository: favoriteRepo)
+                      ..add(const FavoriteEvent.list()),
+              ),
+            ],
+            child: MaterialApp.router(
+              title: 'İzmir Ferry',
+              theme: ThemeData(
+                useMaterial3: true,
+                colorSchemeSeed: Colors.blue,
+                appBarTheme:
+                    Theme.of(context).appBarTheme.copyWith(elevation: 8),
+              ),
+              debugShowCheckedModeBanner: false,
+              // Localization
+              localizationsDelegates: context.localizationDelegates,
+              supportedLocales: context.supportedLocales,
+              locale: context.locale,
+              // Router
+              routerConfig: _router.config(),
+            ),
+          );
+        });
   }
 }
