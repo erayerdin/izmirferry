@@ -7,9 +7,11 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:collection/collection.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it_future_builder/get_it_future_builder.dart';
+import 'package:izmirferry/favorite/data/models/favorite/favorite.model.dart';
 import 'package:izmirferry/favorite/logic/favorite/favorite_bloc.dart';
 import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/ferry/data/repositories/schedule/schedule.repository.dart';
@@ -65,7 +67,12 @@ class HomePage extends StatelessWidget {
                 listed: (state) => state.favorites.isEmpty
                     ? const SizedBox()
                     : FloatingActionButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          await _pickFavorite(
+                            context,
+                            favorites: state.favorites.toList(growable: false),
+                          );
+                        },
                         child: const Icon(Icons.favorite),
                       ),
                 added: (state) => const SizedBox(),
@@ -76,6 +83,54 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Future<void> _pickFavorite(
+    BuildContext context, {
+    required List<Favorite> favorites,
+  }) async {
+    final Favorite? favorite = await showModalBottomSheet(
+      context: context,
+      builder: (context) => ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: favorites.length,
+        itemBuilder: (context, index) {
+          final favorite = favorites[index];
+          final startStationName = favorite.startStation.name;
+          final endStationName = favorite.endStation.name;
+          final dayName = favorite.day?.name.tr() ?? 'always_today'.tr();
+
+          return ListTile(
+            title: Row(
+              children: [
+                Text(startStationName),
+                const Icon(Icons.arrow_forward).paddingOnly(left: 8, right: 8),
+                Text(endStationName),
+              ],
+            ),
+            subtitle: Text(dayName),
+            onTap: () {
+              context.pop(result: favorite);
+            },
+          );
+        },
+      ),
+    );
+
+    if (favorite != null) {
+      final startStation = favorite.startStation;
+      final endStation = favorite.endStation;
+      final day = favorite.day ?? DateTime.now().dayValue;
+      final StationBloc stationBloc = context.read();
+
+      stationBloc.add(
+        StationEvent.load(
+          startStation: startStation,
+          endStation: endStation,
+          day: day,
+        ),
+      );
+    }
   }
 }
 
