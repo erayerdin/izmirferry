@@ -9,15 +9,77 @@ import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:izmirferry/favorite/data/models/favorite/favorite.model.dart';
 import 'package:izmirferry/favorite/logic/favorite/favorite_bloc.dart';
 import 'package:izmirferry/favorite/presentation/pages/favorite_list/add_favorite_dialog.component.dart';
 import 'package:izmirferry/favorite/presentation/pages/favorite_list/favorite_card.component.dart';
+import 'package:izmirferry/shared/constants.dart';
+import 'package:loggy/loggy.dart';
 import 'package:lottie/lottie.dart';
 
 @RoutePage()
-class FavoriteListPage extends StatelessWidget {
+class FavoriteListPage extends StatefulWidget {
   const FavoriteListPage({super.key});
+
+  @override
+  State<FavoriteListPage> createState() => _FavoriteListPageState();
+}
+
+class _FavoriteListPageState extends State<FavoriteListPage> with UiLoggy {
+  InterstitialAd? _interstitialAd;
+
+  void loadAd() {
+    InterstitialAd.load(
+      adUnitId: AdmobAd.favoriteInterstitional.id,
+      request: const AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        // Called when an ad is successfully received.
+        onAdLoaded: (ad) {
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdShowedFullScreenContent: (ad) {
+              loggy.debug('Showing full screen ad: $ad');
+            },
+            onAdImpression: (ad) {
+              loggy.debug('On ad impression: $ad');
+            },
+            onAdFailedToShowFullScreenContent: (ad, err) {
+              loggy.debug('Full screen ad error: $ad | $err');
+              loggy.error('Full screen ad error: $err');
+              ad.dispose();
+            },
+            onAdDismissedFullScreenContent: (ad) {
+              loggy.debug('Dismissing full screen ad: $ad');
+              ad.dispose();
+            },
+            onAdClicked: (ad) {
+              loggy.debug('Ad clicked: $ad');
+            },
+          );
+
+          loggy.debug('$ad loaded.');
+          _interstitialAd = ad;
+          _interstitialAd?.show();
+        },
+        // Called when an ad request failed.
+        onAdFailedToLoad: (LoadAdError error) {
+          loggy.error('InterstitialAd failed to load: $error');
+        },
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadAd();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _interstitialAd?.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
