@@ -67,7 +67,8 @@ class FavoriteListPage extends StatelessWidget {
                       );
                     }
 
-                    return ListView.builder(
+                    return ListView.separated(
+                      separatorBuilder: (context, index) => 8.heightBox,
                       padding: const EdgeInsets.all(16),
                       itemBuilder: (context, index) {
                         final favorite = favorites[index];
