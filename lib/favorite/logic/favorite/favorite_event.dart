@@ -8,5 +8,5 @@ class FavoriteEvent with _$FavoriteEvent {
     required Day? day,
   }) = _AddEvent;
   const factory FavoriteEvent.list() = _ListEvent;
-  const factory FavoriteEvent.delete(Station station) = _DeleteEvent;
+  const factory FavoriteEvent.delete(Favorite favorite) = _DeleteEvent;
 }

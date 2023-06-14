@@ -36,7 +36,7 @@ class FavoriteBloc extends Bloc<FavoriteEvent, FavoriteState> {
         delete: (event) async {
           // TODO impl does not exist
 
-          await _favoriteRepository.delete(event.station);
+          await _favoriteRepository.delete(event.favorite);
           emit(const FavoriteState.deleted());
           add(const FavoriteEvent.list());
         },
