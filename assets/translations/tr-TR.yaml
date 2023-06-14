@@ -23,6 +23,10 @@ add: "Ekle"
 cancel: "İptal"
 day: "Gün"
 always_today: "Her Zaman Bugün"
+are_you_sure: "Emin misiniz?"
+favorite_will_be_deleted: "Favoriniz tamamen kaldırılacak. Bu işlemi geri alamazsınız."
+yes_delete: "Evet, kaldır."
+no_keep_it: "Hayır, kalsın."
 
 # Days
 monday: "Pazartesi"

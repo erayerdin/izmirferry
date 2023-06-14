@@ -7,7 +7,9 @@
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:izmirferry/favorite/data/models/favorite/favorite.model.dart';
+import 'package:izmirferry/favorite/logic/favorite/favorite_bloc.dart';
 
 class FavoriteCardComponent extends StatelessWidget {
   FavoriteCardComponent({super.key, required Favorite favorite}) {
@@ -56,7 +58,9 @@ class FavoriteCardComponent extends StatelessWidget {
                 ],
               ),
               IconButton(
-                onPressed: () {}, // TODO tbi
+                onPressed: () async {
+                  await _deleteDialog(context);
+                },
                 icon: const Icon(Icons.delete, color: Colors.white),
               ),
             ],
@@ -67,5 +71,50 @@ class FavoriteCardComponent extends StatelessWidget {
         ],
       ).paddingAll(16),
     );
+  }
+
+  Future<void> _deleteDialog(BuildContext context) async {
+    final bool? isConfirmed = await showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('are_you_sure')
+                  .textAlignment(TextAlign.center)
+                  .textStyle(context.headlineMedium)
+                  .tr()
+                  .paddingOnly(bottom: 16),
+              const Text('favorite_will_be_deleted')
+                  .textAlignment(TextAlign.center)
+                  .tr(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      context.pop(result: true);
+                    },
+                    child: const Text('yes_delete').tr(),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      context.pop(result: false);
+                    },
+                    child: const Text('no_keep_it').tr(),
+                  ),
+                ],
+              ),
+            ],
+          ).paddingAll(16),
+        );
+      },
+    );
+
+    if (isConfirmed ?? false) {
+      final FavoriteBloc favoriteBloc = context.read();
+      favoriteBloc.add(FavoriteEvent.delete(_favorite));
+    }
   }
 }
