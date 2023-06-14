@@ -28,7 +28,7 @@ abstract class FavoriteRepository with DataLoggy {
 
   Future<Iterable<Favorite>> list();
 
-  Future<void> delete(Station station);
+  Future<void> delete(Favorite favorite);
 }
 
 class SqliteFavoriteRepository extends FavoriteRepository {
@@ -80,11 +80,11 @@ class SqliteFavoriteRepository extends FavoriteRepository {
   }
 
   @override
-  Future<void> delete(Station station) async {
-    loggy.debug('Deleting station...');
-    loggy.trace('station: $station');
+  Future<void> delete(Favorite favorite) async {
+    loggy.debug('Deleting favorite...');
+    loggy.trace('favorite: $favorite');
 
-    await _favoriteProvider.delete(station.id);
+    await _favoriteProvider.delete(favorite.id);
   }
 
   @override
