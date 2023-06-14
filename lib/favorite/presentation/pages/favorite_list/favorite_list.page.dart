@@ -15,6 +15,7 @@ import 'package:izmirferry/favorite/data/repository/favorite/favorite.repository
 import 'package:izmirferry/favorite/logic/favorite/favorite_bloc.dart';
 import 'package:izmirferry/favorite/presentation/pages/favorite_list/add_favorite_dialog.component.dart';
 import 'package:izmirferry/favorite/presentation/pages/favorite_list/favorite_card.component.dart';
+import 'package:lottie/lottie.dart';
 
 @RoutePage()
 class FavoriteListPage extends StatelessWidget {
@@ -49,7 +50,21 @@ class FavoriteListPage extends StatelessWidget {
                     final favorites = state.favorites.toList(growable: false);
 
                     if (favorites.isEmpty) {
-                      return const Text('no_favorites_found').tr().toCenter();
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          LottieBuilder.network(
+                            'https://assets3.lottiefiles.com/packages/lf20_VONtwhL250.json',
+                            width: 256,
+                            height: 256,
+                          ),
+                          const Text('no_favorites_found')
+                              .textStyle(context.headlineSmall)
+                              .textAlignment(TextAlign.center)
+                              .tr(),
+                        ],
+                      );
                     }
 
                     return ListView.builder(
