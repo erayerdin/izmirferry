@@ -44,11 +44,11 @@ class FavoriteCardComponent extends StatelessWidget {
           )
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -57,17 +57,20 @@ class FavoriteCardComponent extends StatelessWidget {
                   Text(_favorite.endStation.name).textColor(Colors.white),
                 ],
               ),
-              IconButton(
-                onPressed: () async {
-                  await _deleteDialog(context);
-                },
-                icon: const Icon(Icons.delete, color: Colors.white),
-              ),
+              Text(_favorite.day?.name ?? 'always_today')
+                  .textColor(Colors.white)
+                  .tr(),
             ],
           ),
-          Text(_favorite.day?.name ?? 'always_today')
-              .textColor(Colors.white)
-              .tr(),
+          IconButton(
+            onPressed: () async {
+              await _deleteDialog(context);
+            },
+            icon: const Icon(
+              Icons.delete,
+              color: Colors.white,
+            ),
+          ),
         ],
       ).paddingAll(16),
     );
