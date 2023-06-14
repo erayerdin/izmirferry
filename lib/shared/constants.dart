@@ -117,6 +117,7 @@ extension DateTimeDayExtension on DateTime {
 
 enum AdmobAd {
   homePageBanner,
+  favoriteInterstitional,
 }
 
 extension AdmobAdExtension on AdmobAd {
@@ -126,6 +127,10 @@ extension AdmobAdExtension on AdmobAd {
         return kDebugMode
             ? 'ca-app-pub-3940256099942544/6300978111'
             : 'ca-app-pub-6866424804119649/1140349679';
+      case AdmobAd.favoriteInterstitional:
+        return kDebugMode
+            ? 'ca-app-pub-3940256099942544/1033173712'
+            : 'ca-app-pub-6866424804119649/2971735277';
     }
   }
 }
