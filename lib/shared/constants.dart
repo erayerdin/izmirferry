@@ -5,6 +5,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/foundation.dart';
 
 enum Day {
   monday,
@@ -80,42 +81,53 @@ extension DateTimeDayExtension on DateTime {
   }
 }
 
-enum AdmodTestAd {
-  appOpen,
-  banner,
-  interstitial,
-  interstitialVideo,
-  rewarded,
-  rewardedInterstitial,
-  nativeAdvanced,
-  nativeAdvancedVideo,
-}
+// enum AdmodTestAd {
+//   appOpen,
+//   banner,
+//   interstitial,
+//   interstitialVideo,
+//   rewarded,
+//   rewardedInterstitial,
+//   nativeAdvanced,
+//   nativeAdvancedVideo,
+// }
 
-extension AdmobTestAdExtension on AdmodTestAd {
-  String get id {
-    switch (this) {
-      case AdmodTestAd.appOpen:
-        return 'ca-app-pub-3940256099942544/3419835294';
-      case AdmodTestAd.banner:
-        return 'ca-app-pub-3940256099942544/6300978111';
-      case AdmodTestAd.interstitial:
-        return 'ca-app-pub-3940256099942544/1033173712';
-      case AdmodTestAd.interstitialVideo:
-        return 'ca-app-pub-3940256099942544/8691691433';
-      case AdmodTestAd.rewarded:
-        return 'ca-app-pub-3940256099942544/5224354917';
-      case AdmodTestAd.rewardedInterstitial:
-        return 'ca-app-pub-3940256099942544/5354046379';
-      case AdmodTestAd.nativeAdvanced:
-        return 'ca-app-pub-3940256099942544/2247696110';
-      case AdmodTestAd.nativeAdvancedVideo:
-        return 'ca-app-pub-3940256099942544/1044960115';
-    }
-  }
-}
+// extension AdmobTestAdExtension on AdmodTestAd {
+//   String get id {
+//     switch (this) {
+//       case AdmodTestAd.appOpen:
+//         return 'ca-app-pub-3940256099942544/3419835294';
+//       case AdmodTestAd.banner:
+//         return 'ca-app-pub-3940256099942544/6300978111';
+//       case AdmodTestAd.interstitial:
+//         return 'ca-app-pub-3940256099942544/1033173712';
+//       case AdmodTestAd.interstitialVideo:
+//         return 'ca-app-pub-3940256099942544/8691691433';
+//       case AdmodTestAd.rewarded:
+//         return 'ca-app-pub-3940256099942544/5224354917';
+//       case AdmodTestAd.rewardedInterstitial:
+//         return 'ca-app-pub-3940256099942544/5354046379';
+//       case AdmodTestAd.nativeAdvanced:
+//         return 'ca-app-pub-3940256099942544/2247696110';
+//       case AdmodTestAd.nativeAdvancedVideo:
+//         return 'ca-app-pub-3940256099942544/1044960115';
+//     }
+//   }
+// }
 
 enum AdmobAd {
   homePageBanner,
+}
+
+extension AdmobAdExtension on AdmobAd {
+  String get id {
+    switch (this) {
+      case AdmobAd.homePageBanner:
+        return kDebugMode
+            ? 'ca-app-pub-3940256099942544/6300978111'
+            : 'ca-app-pub-6866424804119649/1140349679';
+    }
+  }
 }
 
 typedef SqliteRow = Map<String, Object?>;
