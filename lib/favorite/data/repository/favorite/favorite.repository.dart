@@ -13,11 +13,7 @@ import 'package:izmirferry/shared/constants.dart';
 import 'package:izmirferry/shared/logger.dart';
 
 abstract class FavoriteRepository with DataLoggy {
-  Future<int> add({
-    required Station startStation,
-    required Station endStation,
-    Day? day,
-  });
+  Future<int> add(Favorite favorite);
 
   /// returns id if present
   Future<int?> check({
@@ -44,20 +40,14 @@ class SqliteFavoriteRepository extends FavoriteRepository {
   late Converter<Map<String, dynamic>, Favorite> _rowToInstanceConverter;
 
   @override
-  Future<int> add({
-    required Station startStation,
-    required Station endStation,
-    Day? day,
-  }) async {
+  Future<int> add(Favorite favorite) async {
     loggy.debug('Adding favorite...');
-    loggy.trace('start station: $startStation');
-    loggy.trace('end station: $endStation');
-    loggy.trace('day: $day');
+    loggy.trace('favorite: $favorite');
 
     return await _favoriteProvider.add(
-      startStationId: startStation.id,
-      endStationId: endStation.id,
-      dayId: day?.id,
+      startStationId: favorite.startStation.id,
+      endStationId: favorite.endStation.id,
+      dayId: favorite.day?.id,
     );
   }
 

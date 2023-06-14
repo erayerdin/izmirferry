@@ -86,13 +86,7 @@ class FavoriteListPage extends StatelessWidget {
 
     if (favorite != null) {
       final FavoriteBloc favoriteBloc = context.read();
-      favoriteBloc.add(
-        FavoriteEvent.add(
-          startStation: favorite.startStation,
-          endStation: favorite.endStation,
-          day: favorite.day,
-        ),
-      );
+      favoriteBloc.add(FavoriteEvent.add(favorite));
     }
   }
 }
