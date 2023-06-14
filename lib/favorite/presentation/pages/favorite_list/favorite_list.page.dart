@@ -9,9 +9,7 @@ import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get_it_future_builder/get_it_future_builder.dart';
 import 'package:izmirferry/favorite/data/models/favorite/favorite.model.dart';
-import 'package:izmirferry/favorite/data/repository/favorite/favorite.repository.dart';
 import 'package:izmirferry/favorite/logic/favorite/favorite_bloc.dart';
 import 'package:izmirferry/favorite/presentation/pages/favorite_list/add_favorite_dialog.component.dart';
 import 'package:izmirferry/favorite/presentation/pages/favorite_list/favorite_card.component.dart';
@@ -23,79 +21,60 @@ class FavoriteListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetItFutureBuilder<FavoriteRepository>(
-      loading: (context) => Scaffold(
-        body: const CircularProgressIndicator().toCenter(),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('favorites').tr(),
+        backgroundColor: Colors.blue,
       ),
-      ready: (context, favoriteRepo) {
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(
-              create: (context) =>
-                  FavoriteBloc(favoriteRepository: favoriteRepo)
-                    ..add(const FavoriteEvent.list()),
-            ),
-          ],
-          child: Scaffold(
-            appBar: AppBar(
-              title: const Text('favorites').tr(),
-              backgroundColor: Colors.blue,
-            ),
-            body: BlocBuilder<FavoriteBloc, FavoriteState>(
-              builder: (context, state) {
-                return state.map(
-                  loading: (state) =>
-                      const CircularProgressIndicator().toCenter(),
-                  listed: (state) {
-                    final favorites = state.favorites.toList(growable: false);
+      body: BlocBuilder<FavoriteBloc, FavoriteState>(
+        builder: (context, state) {
+          return state.map(
+            loading: (state) => const CircularProgressIndicator().toCenter(),
+            listed: (state) {
+              final favorites = state.favorites.toList(growable: false);
 
-                    if (favorites.isEmpty) {
-                      return Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                        children: [
-                          LottieBuilder.network(
-                            'https://assets3.lottiefiles.com/packages/lf20_VONtwhL250.json',
-                            width: 256,
-                            height: 256,
-                          ),
-                          const Text('no_favorites_found')
-                              .textStyle(context.headlineSmall)
-                              .textAlignment(TextAlign.center)
-                              .tr(),
-                        ],
-                      );
-                    }
-
-                    return ListView.separated(
-                      separatorBuilder: (context, index) => 8.heightBox,
-                      padding: const EdgeInsets.all(16),
-                      itemBuilder: (context, index) {
-                        final favorite = favorites[index];
-                        return FavoriteCardComponent(favorite: favorite);
-                      },
-                      itemCount: favorites.length,
-                    );
-                  },
-                  added: (state) =>
-                      const CircularProgressIndicator().toCenter(),
-                  deleted: (state) =>
-                      const CircularProgressIndicator().toCenter(),
+              if (favorites.isEmpty) {
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    LottieBuilder.network(
+                      'https://assets3.lottiefiles.com/packages/lf20_VONtwhL250.json',
+                      width: 256,
+                      height: 256,
+                    ),
+                    const Text('no_favorites_found')
+                        .textStyle(context.headlineSmall)
+                        .textAlignment(TextAlign.center)
+                        .tr(),
+                  ],
                 );
-              },
-            ),
-            floatingActionButton: Builder(
-                // because _addFavoriteDialog accesses FavoriteBloc,
-                // which isn't injected on the top level context
-                builder: (context) => FloatingActionButton(
-                      onPressed: () async {
-                        await _addFavoriteDialog(context);
-                      },
-                      child: const Icon(Icons.add),
-                    )),
-          ),
-        );
-      },
+              }
+
+              return ListView.separated(
+                separatorBuilder: (context, index) => 8.heightBox,
+                padding: const EdgeInsets.all(16),
+                itemBuilder: (context, index) {
+                  final favorite = favorites[index];
+                  return FavoriteCardComponent(favorite: favorite);
+                },
+                itemCount: favorites.length,
+              );
+            },
+            added: (state) => const CircularProgressIndicator().toCenter(),
+            deleted: (state) => const CircularProgressIndicator().toCenter(),
+          );
+        },
+      ),
+      floatingActionButton: Builder(
+          // because _addFavoriteDialog accesses FavoriteBloc,
+          // which isn't injected on the top level context
+          builder: (context) => FloatingActionButton(
+                onPressed: () async {
+                  await _addFavoriteDialog(context);
+                },
+                child: const Icon(Icons.add),
+              )),
     );
   }
 

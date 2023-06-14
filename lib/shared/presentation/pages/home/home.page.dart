@@ -10,7 +10,6 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it_future_builder/get_it_future_builder.dart';
-import 'package:izmirferry/favorite/data/repository/favorite/favorite.repository.dart';
 import 'package:izmirferry/favorite/logic/favorite/favorite_bloc.dart';
 import 'package:izmirferry/ferry/constants.dart';
 import 'package:izmirferry/ferry/data/repositories/schedule/schedule.repository.dart';
@@ -29,13 +28,11 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetItFutureBuilder3<ScheduleRepository, StationRepository,
-        FavoriteRepository>(
+    return GetItFutureBuilder2<ScheduleRepository, StationRepository>(
       loading: (context) => Scaffold(
         body: const CircularProgressIndicator().toCenter(),
       ),
-      ready: (context, scheduleRepo, stationRepo, favoriteRepo) =>
-          MultiBlocProvider(
+      ready: (context, scheduleRepo, stationRepo) => MultiBlocProvider(
         providers: [
           BlocProvider(
             create: (context) => StationBloc(
@@ -49,9 +46,6 @@ class HomePage extends StatelessWidget {
                 ),
               ),
           ),
-          BlocProvider(
-            create: (context) => FavoriteBloc(favoriteRepository: favoriteRepo),
-          ),
         ],
         child: Scaffold(
           appBar: PreferredSize(
@@ -64,6 +58,21 @@ class HomePage extends StatelessWidget {
             child: DrawerComponent(),
           ),
           body: const _Body().paddingOnly(left: 16, right: 16),
+          floatingActionButton: BlocBuilder<FavoriteBloc, FavoriteState>(
+            builder: (context, state) {
+              return state.map(
+                loading: (state) => const SizedBox(),
+                listed: (state) => state.favorites.isEmpty
+                    ? const SizedBox()
+                    : FloatingActionButton(
+                        onPressed: () {},
+                        child: const Icon(Icons.favorite),
+                      ),
+                added: (state) => const SizedBox(),
+                deleted: (state) => const SizedBox(),
+              );
+            },
+          ),
         ),
       ),
     );
