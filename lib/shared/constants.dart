@@ -80,7 +80,7 @@ extension DateTimeDayExtension on DateTime {
   }
 }
 
-enum AdmodTestAppId {
+enum AdmodTestAd {
   appOpen,
   banner,
   interstitial,
@@ -91,29 +91,31 @@ enum AdmodTestAppId {
   nativeAdvancedVideo,
 }
 
-extension AdmobTestAppIdExtension on AdmodTestAppId {
+extension AdmobTestAdExtension on AdmodTestAd {
   String get id {
     switch (this) {
-      case AdmodTestAppId.appOpen:
+      case AdmodTestAd.appOpen:
         return 'ca-app-pub-3940256099942544/3419835294';
-      case AdmodTestAppId.banner:
+      case AdmodTestAd.banner:
         return 'ca-app-pub-3940256099942544/6300978111';
-      case AdmodTestAppId.interstitial:
+      case AdmodTestAd.interstitial:
         return 'ca-app-pub-3940256099942544/1033173712';
-      case AdmodTestAppId.interstitialVideo:
+      case AdmodTestAd.interstitialVideo:
         return 'ca-app-pub-3940256099942544/8691691433';
-      case AdmodTestAppId.rewarded:
+      case AdmodTestAd.rewarded:
         return 'ca-app-pub-3940256099942544/5224354917';
-      case AdmodTestAppId.rewardedInterstitial:
+      case AdmodTestAd.rewardedInterstitial:
         return 'ca-app-pub-3940256099942544/5354046379';
-      case AdmodTestAppId.nativeAdvanced:
+      case AdmodTestAd.nativeAdvanced:
         return 'ca-app-pub-3940256099942544/2247696110';
-      case AdmodTestAppId.nativeAdvancedVideo:
+      case AdmodTestAd.nativeAdvancedVideo:
         return 'ca-app-pub-3940256099942544/1044960115';
     }
   }
 }
 
-const adModAppId = 'ca-app-pub-6866424804119649~1271700863';
+enum AdmobAd {
+  homePageBanner,
+}
 
 typedef SqliteRow = Map<String, Object?>;
