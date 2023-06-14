@@ -91,7 +91,7 @@ enum AdmodTestAppId {
   nativeAdvancedVideo,
 }
 
-extension AdmodTestAppIdExtension on AdmodTestAppId {
+extension AdmobTestAppIdExtension on AdmodTestAppId {
   String get id {
     switch (this) {
       case AdmodTestAppId.appOpen:
