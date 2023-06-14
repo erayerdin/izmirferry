@@ -5,7 +5,7 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
-## [Unreleased]
+## [0.3.0] - 2023-06-14
 
 From this release and onwards, the CHANGELOG will only contain the changes for users, not the developers. Potentional contributors can check the commit history in order to get some ideas about the history of the project.
 
@@ -18,7 +18,7 @@ From this release and onwards, the CHANGELOG will only contain the changes for u
 
  - Overall UI has changed to incorporate with new features.
 
-## [0.2.1] - 09.06.2023
+## [0.2.1] - 2023-06-09
 
 ### For Users
 
@@ -32,7 +32,7 @@ From this release and onwards, the CHANGELOG will only contain the changes for u
 
  - Cache for HTTP requests
 
-## [0.2.0] - 07.06.2023
+## [0.2.0] - 2023-06-07
 
 ### For Users
 
@@ -48,7 +48,7 @@ From this release and onwards, the CHANGELOG will only contain the changes for u
  - Station location links now use Google Maps.
  - About page links now use external apps.
 
-## [0.1.5] - 06.06.2023
+## [0.1.5] - 2023-06-06
 
 ### For Users
 
@@ -70,7 +70,7 @@ From this release and onwards, the CHANGELOG will only contain the changes for u
  - Renamed `DaysExtension` to `DayExtension`
  - Changed `ListView` to `ScrollablePositionedList` in `SchedulesListComponent`
 
-## [0.1.4] - 02.06.2023
+## [0.1.4] - 2023-06-02
 
 ### For Users
 
@@ -85,7 +85,7 @@ From this release and onwards, the CHANGELOG will only contain the changes for u
 
  - Added about page
 
-## [0.1.3] - 25.05.2023
+## [0.1.3] - 2023-05-25
 
 ### For Users
 
@@ -99,7 +99,7 @@ From this release and onwards, the CHANGELOG will only contain the changes for u
 
  - Changed days menu from dropdown to chips
 
-## [0.1.2] - 25.05.2023
+## [0.1.2] - 2023-05-25
 
 ### For Users
 
@@ -118,7 +118,7 @@ From this release and onwards, the CHANGELOG will only contain the changes for u
  - Refactor to `Station.backgroundAssetPath`
  - Use better `DropdownButton2`
 
-## [0.1.1] - 24.05.2023
+## [0.1.1] - 2023-05-24
 
 ### Added
 
