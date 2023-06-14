@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog],
 and this project adheres to [Semantic Versioning].
 
+## [Unreleased]
+
+### Fixed
+
+ - Ad banner id
+
+## [0.3.2] - 2023-06-14
+
+### Fixed
+
+ - Fix Admob crash
+
+## [0.3.1] - 2023-06-14
+
+### Fixed
+
+ - Fix Admob crash
+
 ## [0.3.0] - 2023-06-14
 
 From this release and onwards, the CHANGELOG will only contain the changes for users, not the developers. Potentional contributors can check the commit history in order to get some ideas about the history of the project.

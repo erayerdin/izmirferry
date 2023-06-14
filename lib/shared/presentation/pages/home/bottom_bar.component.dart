@@ -6,7 +6,6 @@
 
 import 'package:awesome_extensions/awesome_extensions.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -223,7 +222,7 @@ class __AdBannerState extends State<_AdBanner> with UiLoggy {
   BannerAd? _bannerAd;
   bool _isLoaded = false;
 
-  final _adUnitId = kDebugMode ? AdmodTestAppId.banner.id : adModAppId;
+  final _adUnitId = AdmobAd.homePageBanner.id;
 
   @override
   void initState() {

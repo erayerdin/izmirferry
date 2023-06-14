@@ -4,6 +4,10 @@
         android:label="@string/appName"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+        <meta-data
+              android:name="com.google.android.gms.ads.APPLICATION_ID"
+              android:value="ca-app-pub-6866424804119649~1271700863"
+              />
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -20,9 +24,6 @@
               android:name="io.flutter.embedding.android.NormalTheme"
               android:resource="@style/NormalTheme"
               />
-            <meta-data
-            android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-6866424804119649~1271700863"/>
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
