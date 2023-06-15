@@ -2,6 +2,7 @@ name: Analyzing
 
 on:
   pull_request:
+    branches: [master]
   push:
 
 jobs:

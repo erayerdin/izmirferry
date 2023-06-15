@@ -2,6 +2,7 @@ name: Testing
 
 on:
   pull_request:
+    branches: [master]
   push:
 
 jobs:
