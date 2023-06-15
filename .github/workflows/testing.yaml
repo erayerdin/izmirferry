@@ -27,4 +27,5 @@ jobs:
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
         with:
-          verbose: true # optional (default = false)
+          files: coverage/lcov.info
+          verbose: true
