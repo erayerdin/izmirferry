@@ -16,35 +16,37 @@ import 'package:mockito/mockito.dart';
 import 'schedule_providers_test.mocks.dart';
 
 void main() {
-  late Dio mockClient;
-  late ScheduleProvider provider;
+  group('izdeniz', () {
+    late Dio mockClient;
+    late ScheduleProvider provider;
 
-  setUp(() {
-    mockClient = MockDio();
-    provider = IzdenizScheduleProvider(client: mockClient);
-  });
-
-  test('get schedules', () async {
-    when(
-      mockClient.get(
-        'https://www.izdeniz.com.tr/tr/HareketSaatleri/1/2/1',
-        options: anyNamed("options"),
-      ),
-    ).thenAnswer((realInvocation) async {
-      final responseBody =
-          await File('assets/test/schedule_page.html').readAsString();
-      return Response<String>(
-        requestOptions: RequestOptions(),
-        data: responseBody,
-      );
+    setUp(() {
+      mockClient = MockDio();
+      provider = IzdenizScheduleProvider(client: mockClient);
     });
 
-    final schedules = await provider.getSchedules(
-      startStationId: 1,
-      endStationId: 2,
-      dayId: 1,
-    );
+    test('-- get schedules', () async {
+      when(
+        mockClient.get(
+          'https://www.izdeniz.com.tr/tr/HareketSaatleri/1/2/1',
+          options: anyNamed("options"),
+        ),
+      ).thenAnswer((realInvocation) async {
+        final responseBody =
+            await File('assets/test/schedule_page.html').readAsString();
+        return Response<String>(
+          requestOptions: RequestOptions(),
+          data: responseBody,
+        );
+      });
 
-    expect(schedules.first, '07:20');
+      final schedules = await provider.getSchedules(
+        startStationId: 1,
+        endStationId: 2,
+        dayId: 1,
+      );
+
+      expect(schedules.first, '07:20');
+    });
   });
 }
