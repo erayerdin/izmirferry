@@ -4,6 +4,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
+import 'package:clock/clock.dart';
 import 'package:izmirferry/shared/logger.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -42,7 +43,7 @@ class SqliteFavoriteProvider extends FavoriteProvider {
       'startStationId': startStationId,
       'endStationId': endStationId,
       'dayId': dayId,
-      'lastUpdate': DateTime.now().toIso8601String(),
+      'lastUpdate': clock.now().toIso8601String(),
     });
   }
 

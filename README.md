@@ -2,6 +2,8 @@
 
 [![license](https://img.shields.io/badge/license-MPLv2-blue?style=flat-square)](https://www.tldrlegal.com/license/mozilla-public-license-2-0-mpl-2)
 ![GitHub tag (latest by date)](https://img.shields.io/github/v/tag/erayerdin/izmirferry?label=version&style=flat-square)
+![](https://img.shields.io/github/actions/workflow/status/erayerdin/izmirferry/testing.yaml?style=flat-square)
+[![codecov](https://codecov.io/gh/erayerdin/izmirferry/branch/master/graph/badge.svg?token=ovx7B8YDuf)](https://codecov.io/gh/erayerdin/izmirferry)
 ![Download Count](https://PlayBadges.pavi2410.me/badge/downloads?id=com.erayerdin.izmirferry)
 ![Rating](https://PlayBadges.pavi2410.me/badge/ratings?id=com.erayerdin.izmirferry&pretty)
 
