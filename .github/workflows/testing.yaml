@@ -9,9 +9,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2
+      - name: "Fetching repo"
+        uses: actions/checkout@v3
+      - name: "Setting up Flutter SDK"
+        uses: subosito/flutter-action@v2
 
-      - run: flutter pub get
-      - run: flutter pub run build_runner build
-      - run: flutter test
+      - name: "Getting dependencies"
+        run: flutter pub get
+      - name: "Generating code"
+        run: flutter pub run build_runner build
+      - name: "Running tests"
+        run: flutter test
