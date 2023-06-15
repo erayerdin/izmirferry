@@ -21,6 +21,7 @@
         "**/*.freezed.dart": true,
         "lib/firebase_options.dart": true,
         "test/**/*.mocks.dart": true,
+        "coverage": true,
     },
     "licenser.license": "MPLv2",
     "explorerExclude.backup": {}

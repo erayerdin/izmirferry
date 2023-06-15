@@ -46,3 +46,4 @@ app.*.map.json
 **/*.gr.dart
 lib/firebase_options.dart
 test/**/*.mocks.dart
+coverage/
