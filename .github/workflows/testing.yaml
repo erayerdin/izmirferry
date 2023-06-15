@@ -22,7 +22,8 @@ jobs:
         run: flutter test
       - name: "Generating coverage"
         run: flutter test --coverage
-      - uses: codecov/codecov-action@v3
+      - name: "Uploading coverage"
+        uses: codecov/codecov-action@v3
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           files: ./coverage/lcov.info
